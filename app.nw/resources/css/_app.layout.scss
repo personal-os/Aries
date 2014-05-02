@@ -1,0 +1,396 @@
+
+/////////////////////////////////////////////////////////////////////////////////// APP.LAYOUT/SCSS ///
+
+html, body {
+	width: 100%; height: 100%;
+}
+
+html {
+	background-color: $white;
+	transition: background 0.5s ease;
+}
+
+body {
+	@include sans;
+	font-size: 11px;
+}
+
+// .playSound-embed, .playSound-audio { position: absolute; } // for when sounds are included
+
+#aries-titlebar, #aries-powerbar {
+	width: 100%; height: 31px;
+
+	align-items: center;
+	border: 0;
+	border-bottom: 1px solid rgba($black, 0.05);
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	user-select: none;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-webkit-box-orient: horizontal;
+	-webkit-flex-direction: row;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+#aries-titlebar {
+	margin: 0 0 -31px 0; padding: 0 0.8rem;
+
+	background-color: $dark-gray;
+	opacity: 0;
+	transition: all 0.2s ease;
+	user-select: none;
+
+	-webkit-app-region: drag;
+	-webkit-user-select: none;
+
+	h1 {
+		margin: 0; padding: 0;
+
+		align-items: center;
+		box-align: center;
+		box-orient: horizontal;
+		color: rgba($white, 0.6); // $white
+		cursor: default;
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+		font-size: 13px;
+		font-weight: 400;
+		height: 35px;
+		user-select: none;
+
+		-webkit-flex: 1;
+		-webkit-box-flex: 1;
+
+		display: -webkit-box;
+		display: -webkit-flex;
+
+		-webkit-align-items: center;
+		-webkit-box-align: center;
+		-webkit-box-orient: horizontal;
+		-webkit-flex-direction: row;
+		-webkit-user-select: none;
+		-webkit-touch-callout: none;
+	}
+}
+
+#aries-powerbar { background-color: lighten($dark-gray, 68%); }
+
+#browsing-actions, #url-bar, #window-actions {
+	position: absolute;
+}
+
+#browsing-actions, #window-actions {
+}
+
+#browsing-actions { left: 0; }
+#window-actions { right: 0; }
+
+#url-bar {
+	background-color: transparent;
+	border: none;
+	height: 31px;
+	left: 94px;
+	line-height: 2;
+	overflow: hidden;
+	padding: 0 0.5rem;
+	white-space: pre; //
+}
+
+#tab-wrapper {
+	width: auto; height: 31px;
+
+	background-color: lighten($dark-gray, 68%);
+	display: none;
+	position: absolute;
+	right: 92px;
+	visibility: hidden;
+
+	.tab {
+		width: 160px; height: 100%;
+		margin: 0; padding: 0 0.5rem;
+
+		background-color: transparent;
+		border: 0;
+		border-bottom: 1px solid rgba($black, 0.05);
+		border-left: 1px solid rgba($black, 0.05);
+		color: rgba($black, 0.3);
+		float: left;
+		overflow: hidden;
+		position: relative;
+
+		@include ellipsis;
+
+		&.secure-site {
+			&:before {
+				bottom: 12px; left: 7px;
+
+				color: lighten($dark-gray, 68%);
+				content: "\f200";
+				font-family: "Ionicons";
+				font-size: 8px;
+				line-height: 0;
+				position: absolute;
+				text-shadow: 0 1px 10px rgba($black, 0.5);
+				z-index: 1;
+			}
+		}
+
+		.notification-count {
+			top: 16px; left: 16px;
+
+			background-color: $red;
+			color: $white;
+			font-size: 8px;
+			line-height: 0.8;
+			padding: 2px;
+			position: absolute;
+			z-index: 1;
+		}
+
+		.tab-favicon, .tab-title, .tab-close {
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			vertical-align: middle;
+		}
+
+		.tab-title {
+			@include sans;
+			font-size: 10px;
+			font-weight: 700;
+			// left: 28px;
+			line-height: 1.9rem;
+			right: 0;
+			text-align: left;
+			width: calc(100% - 29px);
+		}
+
+		.tab-favicon, .tab-close {
+			width: 16px; height: 16px;
+			top: 0; left: 0;
+
+			cursor: pointer;
+			margin: 7px;
+		}
+
+		.tab-favicon { opacity: 0.6; }
+
+		.tab-close {
+			color: rgba($black, 0.6);
+			display: none;
+			font-family: "Ionicons";
+			font-size: 16px;
+			transition: all 0.2s ease-in-out;
+
+			&:before { content: "\f2bd"; }
+
+			&:hover:before {
+				color: $red;
+				content: "\f2bc";
+			}
+		}
+
+		// add blur to right of tab for long titles
+		&:after {
+			width: 50px; height: 31px;
+			top: 0; right: 0;
+
+			background: linear-gradient(left, rgba($dark-gray, 0) 0%, lighten($dark-gray, 68%) 100%);
+			background: -webkit-linear-gradient(left, rgba($dark-gray, 0) 0%, lighten($dark-gray, 68%) 100%);
+			content: "";
+			position: absolute;
+		}
+	}
+
+	.active {
+		border-bottom: 1px solid transparent;
+		color: rgba($black, 0.9);
+
+		.tab-favicon { opacity: 1; }
+	}
+
+	&:before, &:after {
+		content: "";
+		display: table;
+	}
+
+	&:after { clear: both; }
+}
+
+//
+.js-tabby {
+	// Display tab navigation if javascript enabled
+	#tab-wrapper {
+		display: block;
+		visibility: visible;
+	}
+
+	// Hide tab content if javascript is enabled
+	.tabs-pane {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+// Show tab content when active class is added (which is via js).
+.tabs-pane.active {
+  display: block;
+  visibility: visible;
+}
+//
+
+.button-group {
+	align-items: center;
+	box-align: center;
+	box-orient: horizontal;
+	display: flex;
+	flex-direction: row;
+	padding-left: 2px;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-webkit-box-orient: horizontal;
+	-webkit-flex-direction: row;
+
+	button {
+		width: 31px; height: 31px;
+
+		display: inline-block;
+		float: left;
+
+		&:hover { color: rgba($black, 0.9); }
+	}
+}
+
+button.app-settings, button.app-go-back, button.app-go-forth {
+	border-right: 1px solid rgba($black, 0.05);
+}
+
+button.app-settings {
+	-webkit-app-region: drag;
+	-webkit-user-select: none;
+
+	&:active {
+		transform: translate(0, 2px);
+		-webkit-transform: translate(0, 2px);
+	}
+
+	&:before { content: "\f20e"; }
+}
+
+button.app-go-back {
+	&:active {
+		transform: translate(-2px, 0);
+		-webkit-transform: translate(-2px, 0);
+	}
+
+	&:before { content: "\f153"; }
+}
+
+button.app-go-forth {
+	&:active {
+		transform: translate(2px, 0);
+		-webkit-transform: translate(2px, 0);
+	}
+
+	&:before { content: "\f154"; }
+}
+
+button.app-minimize {
+	border-left: 1px solid rgba($black, 0.05);
+
+	&:active {
+		transform: translate(0, 2px);
+		-webkit-transform: translate(0, 2px);
+	}
+
+	&:before { content: "\f1ac"; }
+}
+
+button.app-maximize {
+	&:active {
+		transform: translate(0, 2px);
+		-webkit-transform: translate(0, 2px);
+	}
+
+	&:before { content: "\f1c9"; }
+}
+
+button.app-close {
+	color: $red;
+
+	&:active {
+		transform: translate(0, 2px);
+		-webkit-transform: translate(0, 2px);
+	}
+
+	&:before { content: "\f2bd"; }
+}
+
+#aries-showcase, iframe {
+	width: 100%; height: 100%;
+}
+
+#aries-showcase {
+	background-image: url("../images/speed-dial-bg2.png");
+	background-repeat: repeat;
+	background-size: 400px 299px;
+}
+
+#showcase__loader {
+	width: 100%; height: 10px;
+	top: 31px; left: 0;
+
+	position: absolute;
+}
+
+button.start-settings {
+	width: 100%; height: 31px;
+
+	color: rgba($black, 0.6);
+	font-size: 25px;
+	margin: 60px 0;
+
+	&:active {
+		transform: translate(0, 2px);
+		-webkit-transform: translate(0, 2px);
+	}
+
+	&:hover { color: rgba($black, 0.9); }
+	&:before { content: "\f13e"; }
+}
+
+#start-item-wrapper {
+	.start-item {
+		width: 260px; height: 162px;
+		margin: 0 auto; padding: 3rem 0;
+
+		background-color: $dark-gray;
+		text-align: center;
+
+		button {
+			&:active {
+				transform: translate(0, 2px);
+				-webkit-transform: translate(0, 2px);
+			}
+
+			&:before {
+				color: rgba($white, 1);
+				content: "\f218";
+				font-family: "Ionicons";
+				font-size: 4rem;
+			}
+		}
+	}
+}

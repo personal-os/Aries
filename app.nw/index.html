@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8"/>
+		<title>Aries</title>
+
+		<!--/
+		░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+		010000010111001011010010110010101110011
+		░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+		A R I E S
+		░░░░░░░░░
+		/-->
+
+		<meta name="application-name" content="Aries"/>
+		<meta name="author" content="Paul Anthony Webb × Ideas Never Cease"/>
+		<meta name="description" content="Browser for the OS of the future. http://hikar.io"/>
+
+		<link rel="stylesheet" href="resources/css/style.css"/>
+		<link rel="shortcut icon" href="resources/images/favicon-default.png"/>
+
+		<script src="resources/scripts/vendor/jquery-2.1.0.min.js"></script>
+		<script src="resources/scripts/nprogress.js"></script>
+		<script src="resources/scripts/URI.min.js"></script>
+		<script src="resources/scripts/vendor/require.js"></script>
+
+		<script src="resources/scripts/tabby.js"></script>
+		<script src="resources/scripts/include.js"></script>
+		<script src="resources/scripts/aries.js"></script>
+
+		<script>
+			// Track the usage of Aries
+			// I'm not tracking your browsing habits, Scout's honor!
+		  var _gauges = _gauges || [];
+
+		  (function() {
+		    var t   = document.createElement("script");
+		    t.type  = "text/javascript";
+		    t.async = true;
+		    t.id    = "gauges-tracker";
+		    t.setAttribute("data-site-id", "53d9955beddd5b213d0030e8");
+		    t.src = "https://secure.gaug.es/track.js";
+		    var s = document.getElementsByTagName("script")[0];
+		    s.parentNode.insertBefore(t, s);
+		  })();
+		</script>
+
+	</head>
+
+	<body>
+
+		<section id="aries-titlebar">
+			<h1>Aries</h1>
+		</section>
+
+		<section id="aries-powerbar">
+			<div id="browsing-actions" class="button-group">
+				<button class="app-settings"></button>
+				<button class="app-go-back"></button>
+				<button class="app-go-forth"></button>
+			</div>
+
+			<input id="url-bar" type="text" placeholder="Input an address or query" onkeydown="if (event.keyCode == 13 || event.which == 13) { goThere(); }"/>
+
+			<div id="tab-wrapper">
+				<button class="tab active" data-page="start.html" data-tab="#tab1"><img class="tab-favicon" type="image/x-icon" src="resources/images/favicon-default.png"><span class="tab-close"></span><span class="tab-title"></span></button>
+			</div>
+
+			<div id="window-actions" class="button-group">
+				<button class="app-minimize"></button>
+				<button class="app-maximize"></button>
+				<button class="app-close"></button>
+			</div>
+		</section>
+
+		<section id="aries-showcase">
+			<nav id="bt-menu" class="bt-menu">
+
+				<ul>
+					<li><a href="#">Link #01</a></li>
+					<li><a href="#">Link #02</a></li>
+					<li><a href="#">Link #03</a></li>
+					<li><a href="#">Link #04</a></li>
+					<li><a href="#">Link #05</a></li>
+				</ul>
+			</nav>
+
+			<div id="showcase__loader"></div>
+		</section>
+
+		<script>
+			tabby.init();
+
+			/*
+			// Live Reload
+			// https://github.com/rogerwang/node-webkit/wiki/Livereload-node-webkit-on-changes
+			var path = "./";
+			var fs = require("fs");
+
+			fs.watch(path, function() {
+				if (location)
+				location.reload();
+			});
+			*/
+		</script>
+
+	</body>
+
+</html>
