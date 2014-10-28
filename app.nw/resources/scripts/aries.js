@@ -499,24 +499,13 @@
 
 	function browserLoad() {
 
-		// $("iframe.active").one("load").each(function () {
-		// $(document).on("iframe.active", "load", function () {
 		$("iframe.active").each(function () {
 			// include("resources/scripts/browser.js", "resources/scripts/vendor/jquery-2.1.0.min.js", function() {
 			include("resources/scripts/browser.js", function() {
 
 			  // browser.js has been loaded, now we can use it
 				$("iframe.active").contents().find("head").prepend(_stylesInit);
-				$("iframe.active").contents().find("body").append("<div id='aries-contextMenu'>test</div>");
-
-				// $("iframe.active").contents().find("head").append("<script src='app://aries/app.nw/resources/scripts/vendor/jquery-2.1.0.min.js'></script>");
-
-				// $("iframe.active").contents().find("head").append("<script src='app://aries/app.nw/resources/scripts/vendor/_myApp.js'></script>");
-
-				// Context Menu
-				// $("iframe.active").contents().find("head").append("<link rel='stylesheet' href='app://aries/app.nw/resources/css/context.css'/>");
-				// $("iframe.active").contents().find("head").append("<script src='app://aries/app.nw/resources/scripts/contextMenu.js'></script>");
-				// $("iframe.active").contents().find("head").append("<script src='app://aries/app.nw/resources/scripts/contextMenu/image.js'></script>");
+				$("iframe.active").contents().find("body").append(_contextInit);
 
 			});
 		});
@@ -667,33 +656,64 @@
 		// $("iframe.active").contents().find("head").append("<style>body { background-color: #07d0eb; }</style>");
 
 		// Context Menu
-		var $frameBody = jQuery("iframe.active").contents().find("body"), mouseX, mouseY;
+		var
+		$frameBody = jQuery("iframe.active").contents().find("body"),
+		mouseX, mouseY;
 
 		$frameBody[0].addEventListener("mousemove", function(e) {
+
 			mouseX = e.pageX;
 			mouseY = e.pageY;
 			// console.log(e.pageX + "px + " + e.pageY + "px");
+
 		});
+
+		// http://hikar.io/test.html
 
 		$frameBody[0].addEventListener("contextmenu", function(event) {
 
 			event.preventDefault();
-			// Show context menu
-			// Any selection obtained through: jQuery('#iframe').get(0).contentDocument.getSelection().toString()
-			console.log("got something");
+			var target = event.target;
 
-			$("iframe.active").contents().find("body #aries-contextMenu").css({
-				"top": mouseY + "px",
-				"left": mouseX + "px",
-				"display": "block"
-			});
+			if ($(target).is("img")) {
 
-			$("iframe.active").contents().find("body").bind('click', function(e) {
-				if($(e.target).closest('body #aries-contextMenu').length == 0) {
-					// click happened outside of menu, hide any visible menu items
-					$("iframe.active").contents().find("body #aries-contextMenu").fadeOut("fast");
-				}
-			});
+				// Show context menu
+				// Any selection obtained through: jQuery('#iframe').get(0).contentDocument.getSelection().toString()
+				console.log("Context Menu: Image");
+
+				$("iframe.active").contents().find("body #aries-contextMenu__image").css({
+					"top": mouseY + "px",
+					"left": mouseX + "px",
+					"display": "block"
+				});
+
+				$("iframe.active").contents().find("body").bind("click", function(e) {
+					if($(e.target).closest("body #aries-contextMenu__image").length == 0) {
+						// click happened outside of menu, hide any visible menu items
+						$("iframe.active").contents().find("body #aries-contextMenu__image").fadeOut("fast");
+					}
+				});
+
+			} else {
+
+				// Show context menu
+				// Any selection obtained through: jQuery('#iframe').get(0).contentDocument.getSelection().toString()
+				console.log("Context Menu: Default");
+
+				$("iframe.active").contents().find("body #aries-contextMenu__default").css({
+					"top": mouseY + "px",
+					"left": mouseX + "px",
+					"display": "block"
+				});
+
+				$("iframe.active").contents().find("body").bind("click", function(e) {
+					if($(e.target).closest("body #aries-contextMenu__default").length == 0) {
+						// click happened outside of menu, hide any visible menu items
+						$("iframe.active").contents().find("body #aries-contextMenu__default").fadeOut("fast");
+					}
+				});
+
+			}
 
 			// return false;
 

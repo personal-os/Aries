@@ -73,41 +73,76 @@ $(function () {
 			_stylesInit += "font-family: 'Source Code Pro', 'Courier New', monospace; ";
 			_stylesInit += "margin: 1rem 0; ";
 			_stylesInit += "white-space: pre; ";
-		_stylesInit += "}";
-
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "";
-		_stylesInit += "#aries-contextMenu { position: absolute; width: 300px; height: 150px; background-color: #07d0eb; display: none; z-index: 1000; }";
+		_stylesInit += "} ";
 
 		// Context Menu
-		_stylesInit += " .context-menu-list{margin:0;background-color:rgba(25,25,25,.55);color:#fcfcfc;cursor:default;font-family:'Courier New';font-size:12px;display:inline-block;transition:opacity 5s ease-out;padding:.5rem 0;position:absolute;width:auto;min-width:135px}.context-menu-item{line-height:1.5rem;padding:6px 15px;position:relative;user-select:none}.context-menu-item:hover{background-color:rgba(25,25,25,.55);color:#fcfcfc}.context-menu-separator:hover{background-color:transparent}.context-menu-submenu:after{content:'\00a0>';float:right}.context-menu-item>.context-menu-list{top:5px;right:-5px;border-left:5px solid rgba(25,25,25,.55);display:none}.context-menu-item.hover>.context-menu-list{display:block;margin:-8px 0 0!important}.context-menu-active{opacity:1}";
+		_stylesInit += "#aries-contextMenu__default, #aries-contextMenu__text, #aries-contextMenu__image { ";
+			_stylesInit += "width: auto; height: auto; ";
+			_stylesInit += "background-color: #eff0f1; ";
+			_stylesInit += "border-radius: 5px; ";
+			_stylesInit += "box-shadow: 0 0 5px 1px rgba(25, 25, 25, 0.15); ";
+			_stylesInit += "box-sizing: border-box; ";
+			_stylesInit += "cursor: default; ";
+			_stylesInit += "display: none; ";
+			_stylesInit += "font-size: 12px; ";
+			_stylesInit += "padding-top: 0.2rem; padding-bottom: 0.2rem; ";
+			_stylesInit += "overflow: hidden; ";
+			_stylesInit += "position: absolute; ";
+			_stylesInit += "text-align: left; ";
+			_stylesInit += "z-index: 1000; ";
+			_stylesInit += "-webkit-margin-before: 0; ";
+			_stylesInit += "-webkit-margin-after: 0; ";
+			_stylesInit += "-webkit-padding-start: 0; ";
+		_stylesInit += "} ";
+
+		_stylesInit += ".aries-contextMenu__item { ";
+			_stylesInit += "background-color: transparent; ";
+			// _stylesInit += "border-bottom: 1px solid rgba(25, 25, 25, 0.15); ";
+			_stylesInit += "color: #191919; ";
+			_stylesInit += "cursor: inherit; ";
+			_stylesInit += "padding: 0.5rem 1rem; ";
+			_stylesInit += "transition: background-color 0.05s ease-in-out; ";
+		_stylesInit += "} ";
+
+		_stylesInit += ".aries-contextMenu__item:hover { ";
+			_stylesInit += "background-color: #50bebf; ";
+			// _stylesInit += "border-bottom: 1px solid #50bebf; ";
+			_stylesInit += "color: #fefefe; ";
+		_stylesInit += "} ";
+
+		_stylesInit += ".aries-contextMenu__item:last-of-type, .aries-contextMenu__item:last-of-type:hover { ";
+			_stylesInit += "border-bottom: none; ";
+		_stylesInit += "} ";
+
+		_stylesInit += "#aries-contextMenu__image { width: 170px; } ";
+		_stylesInit += "#aries-contextMenu__default { width: 115px; } ";
+		_stylesInit += "";
+		_stylesInit += "";
+		_stylesInit += "";
+		_stylesInit += "";
+		_stylesInit += "";
+		_stylesInit += "";
 
 	_stylesInit += "</style>";
+
+	_contextInit = "";
+
+	_contextInit += "<ul id='aries-contextMenu__default'>";
+		_contextInit += "<li class='aries-contextMenu__item'>Back</li>";
+		_contextInit += "<li class='aries-contextMenu__item'>Forward</li>";
+		_contextInit += "<li class='aries-contextMenu__item'>Reload</li>";
+		_contextInit += "<li class='aries-contextMenu__item'>Copy Address</li>";
+	_contextInit += "</ul>";
+
+	_contextInit += "<ul id='aries-contextMenu__text'>";
+		_contextInit += "<li class='aries-contextMenu__item'>Search</li>";
+		_contextInit += "<li class='aries-contextMenu__item'>Copy</li>";
+	_contextInit += "</ul>";
+
+	_contextInit += "<ul id='aries-contextMenu__image'>";
+		_contextInit += "<li class='aries-contextMenu__item'>Copy Image Address</li>";
+		_contextInit += "<li class='aries-contextMenu__item'>Copy Image</li>";
+		_contextInit += "<li class='aries-contextMenu__item'>Open Image in New Tab</li>";
+	_contextInit += "</ul>";
 
 });
