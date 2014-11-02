@@ -10,6 +10,7 @@
 		var
 		$vW = $(window).width(),
 		$vH = $(window).height(),
+		// child_process = require("child_process"),
 		nw = {
 			gui: require("nw.gui"),
 			win: require("nw.gui").Window.get(),
@@ -406,6 +407,8 @@
 				nw.win.show();
 			}, 175);
 
+			pageLoad();
+
 		};
 
 		/*
@@ -688,7 +691,7 @@
 				});
 
 				$("iframe.active").contents().find("body").bind("click", function(e) {
-					if($(e.target).closest("body #aries-contextMenu__image").length == 0) {
+					if($(e.target).closest("body #aries-contextMenu__image").length === 0) {
 						// click happened outside of menu, hide any visible menu items
 						$("iframe.active").contents().find("body #aries-contextMenu__image").fadeOut("fast");
 					}
@@ -707,7 +710,7 @@
 				});
 
 				$("iframe.active").contents().find("body").bind("click", function(e) {
-					if($(e.target).closest("body #aries-contextMenu__default").length == 0) {
+					if($(e.target).closest("body #aries-contextMenu__default").length === 0) {
 						// click happened outside of menu, hide any visible menu items
 						$("iframe.active").contents().find("body #aries-contextMenu__default").fadeOut("fast");
 					}
@@ -787,24 +790,24 @@
 		// Figure out if we need to prepend "http://" to URLs
 		function decipher() {
 
-			if (encodeURL.match(/(^http:\/\/)|(^https:\/\/)/) != null) {
+			if (encodeURL.match(/(^http:\/\/)|(^https:\/\/)/) !== null) {
 
 				console.log("This URL already contains 'http://'");
 
 				$("iframe.active").attr("src", encodeURL);
 				$("button.active").attr("data-page", encodeURL);
 
-			} else if (encodeURL.match(/(%20)/) != null) {
+			} else if (encodeURL.match(/(%20)/) !== null) {
 
 				console.log("spaces!"); // almost deals with numbers in the URL bar. Almost.
 				_searchDDG();
 
-			} else if (encodeURL.match(/(^http:\/\/127.0.0.1:2000)/) != null) {
+			} else if (encodeURL.match(/(^http:\/\/127.0.0.1:2000)/) !== null) {
 
 				$("button.active .tab-title").html("Console");
 				console.log("console");
 
-			} else if (encodeURL.match(/(pdf)/) != null) {
+			} else if (encodeURL.match(/(pdf)/) !== null) {
 
 				// _pagePDF();
 
@@ -828,7 +831,7 @@
 			$("button.active .tab-title").html(currentTitle);
 			$("button.active .tab-favicon").attr("src", getFavicon);
 
-			if (encodeURL.match(/(^https:\/\/)/) != null) {
+			if (encodeURL.match(/(^https:\/\/)/) !== null) {
 				$("button.active").addClass("secure-site");
 			}
 
@@ -859,7 +862,7 @@
 
 		} else {
 
-			if (encodeURL.match(/(^aries:\/\/about)/) != null) {
+			if (encodeURL.match(/(^aries:\/\/about)/) !== null) {
 				_pageAbout();
 			} else {
 

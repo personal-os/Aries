@@ -13,6 +13,13 @@ html {
 body {
 	@include sans;
 	font-size: 11px;
+	margin: 0;
+}
+
+ul, ol, menu, dir {
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-padding-start: 0;
 }
 
 // .playSound-embed, .playSound-audio { position: absolute; } // for when sounds are included
@@ -43,11 +50,12 @@ body {
 	margin: 0 0 -31px 0; padding: 0 0.8rem;
 
 	background-color: $dark-gray;
+	display: none; //
 	opacity: 0;
 	transition: all 0.2s ease;
 	user-select: none;
 
-	-webkit-app-region: drag;
+	// -webkit-app-region: drag;
 	-webkit-user-select: none;
 
 	h1 {
@@ -278,7 +286,7 @@ button.app-settings, button.app-go-back, button.app-go-forth {
 }
 
 button.app-settings {
-	-webkit-app-region: drag;
+	// -webkit-app-region: drag;
 	-webkit-user-select: none;
 
 	&:active {
