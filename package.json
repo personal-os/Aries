@@ -21,8 +21,8 @@
 	"single-instance": true,
 	"version": "0.5-alpha",
 	"window": {
-		"width": 1366,
-		"height": 768,
+		"width": 1066,
+		"height": 568,
 		// "min_width": 320,
 		// "min_height": 640,
 		"focus": true,
@@ -33,6 +33,7 @@
 		"resizable": true,
 		"show": false,
 		"title": "Aries",
+		"toolbar": false,
 		"transparent": true
 	},
 	"webkit": {
