@@ -3,8 +3,6 @@
 	"name": "Aries",
 	"description": "A web browser for hikari",
 	"homepage": "http://hikar.io",
-	// "inject-js-start": "app.nw/resources/scripts/_check.js",
-	// "chromium-args": "--allow-file-access-from-files --enable-smooth-scrolling --start-fullscreen",
 	"chromium-args": "--remote-debugging-port=2000",
 	"main": "../app.nw/index.html",
 	"maintainers": [{
@@ -23,12 +21,10 @@
 	"window": {
 		"width": 1066,
 		"height": 568,
-		// "min_width": 320,
-		// "min_height": 640,
 		"focus": true,
 		"frame": false,
 		"fullscreen": false,
-		"icon": "../app.nw/resources/images/aries.icns",
+		"icon": "../app.nw/resources/images/aries.ico",
 		"position": "center",
 		"resizable": true,
 		"show": false,
