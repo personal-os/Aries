@@ -33,6 +33,7 @@
 
 
 
+        /*
 		// winstate.js
 		function initWindowState() {
 
@@ -103,6 +104,7 @@
 			localStorage.windowState = JSON.stringify(winState);
 
 		}
+        */
 
 		// Build initial tab
 		_tabInit = "";
@@ -155,7 +157,7 @@
 
 			nw.win.on("unmaximize", function() {
 				currWinMode = "normal";
-				restoreWindowState();
+				// restoreWindowState();
 			});
 
 			nw.win.maximize();
@@ -166,7 +168,7 @@
 		$(".app-close").on("click", function () {
 
 			nw.win.on("close", function() {
-				saveWindowState();
+				// saveWindowState();
 				this.close(true);
 			});
 
