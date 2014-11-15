@@ -128,15 +128,16 @@ $(function () {
 	_contextInit = "";
 
 	_contextInit += "<ul id='aries-contextMenu__default'>";
-		_contextInit += "<li class='aries-contextMenu__item'>Back</li>";
-		_contextInit += "<li class='aries-contextMenu__item'>Forward</li>";
-		_contextInit += "<li class='aries-contextMenu__item'>Reload</li>";
-		_contextInit += "<li class='aries-contextMenu__item'>Copy Address</li>";
+		_contextInit += "<li id='acMd__back' class='aries-contextMenu__item'>Back</li>";
+		_contextInit += "<li id='acMd__forward' class='aries-contextMenu__item'>Forward</li>";
+		_contextInit += "<li id='acMd__reload' class='aries-contextMenu__item'>Reload</li>";
+		_contextInit += "<li id='acMd__copy' class='aries-contextMenu__item'>Copy</li>";
+		// _contextInit += "<li class='aries-contextMenu__item'>Copy Address</li>";
 	_contextInit += "</ul>";
 
 	_contextInit += "<ul id='aries-contextMenu__text'>";
 		_contextInit += "<li class='aries-contextMenu__item'>Search</li>";
-		_contextInit += "<li class='aries-contextMenu__item'>Copy</li>";
+		// _contextInit += "<li class='aries-contextMenu__item'>Copy</li>";
 	_contextInit += "</ul>";
 
 	_contextInit += "<ul id='aries-contextMenu__image'>";

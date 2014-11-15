@@ -33,79 +33,6 @@
 
 
 
-        /*
-		// winstate.js
-		function initWindowState() {
-
-			winState = JSON.parse(localStorage.windowState || "null");
-
-			if (winState) {
-				currWinMode = winState.mode;
-
-				if (currWinMode === "maximized") {
-					nw.win.maximize();
-				} else {
-					restoreWindowState();
-				}
-			} else {
-				currWinMode = "normal";
-
-				if (deltaHeight !== "disabled") deltaHeight = 0;
-				dumpWindowState();
-			}
-
-			nw.win.show();
-
-		}
-
-		function dumpWindowState() {
-
-			if (!winState) { winState = {}; }
-
-			// we don't want to save minimized state, only maximized or normal
-			if (currWinMode === "maximized") {
-				winState.mode = "maximized";
-			} else {
-				winState.mode = "normal";
-			}
-
-			// when window is maximized you want to preserve normal
-			// window dimensions to restore them later (even between sessions)
-			if (currWinMode === "normal") {
-				winState.x = nw.win.x;
-				winState.y = nw.win.y;
-				winState.width = nw.win.width;
-				winState.height = nw.win.height;
-
-				// save delta only of it is not zero
-				if (deltaHeight !== "disabled" && deltaHeight !== 0 && currWinMode !== "maximized") {
-					winState.deltaHeight = deltaHeight;
-				}
-			}
-
-		}
-
-		function restoreWindowState() {
-
-			// deltaHeight already saved, so just restore it and adjust window height
-			if (deltaHeight !== "disabled" && typeof winState.deltaHeight !== "undefined") {
-				deltaHeight = winState.deltaHeight;
-				winState.height = winState.height - deltaHeight;
-			}
-
-			nw.win.resizeTo(winState.width, winState.height);
-			nw.win.moveTo(winState.x, winState.y);
-
-		}
-
-		function saveWindowState() {
-
-			dumpWindowState();
-			localStorage.windowState = JSON.stringify(winState);
-
-		}
-        */
-
 		// Build initial tab
 		_tabInit = "";
 		_tabInit += "<button class='tab active'";
@@ -209,43 +136,6 @@
 			process.setMaxListeners(0);
 
 		});
-
-		// Resize Aries
-		// Enable this when I have resizing implemented
-		/*
-		nw.win.window.addEventListener("resize", function () {
-
-			// resize event is fired many times on one resize action,
-			// this hack with setTiemout forces it to fire only once
-			clearTimeout(resizeTimeout);
-
-			resizeTimeout = setTimeout(function () {
-
-				// on MacOS you can resize maximized window, so it's no longer maximized
-				if (isMaximizationEvent) {
-					// first resize after maximization event should be ignored
-					isMaximizationEvent = false;
-				} else {
-					if (currWinMode === "maximized") {
-						currWinMode = "normal";
-					}
-				}
-
-				// there is no deltaHeight yet, calculate it and adjust window size
-				if (deltaHeight !== "disabled" && deltaHeight === false) {
-					deltaHeight = nw.win.height - winState.height;
-					// set correct size
-					if (deltaHeight !== 0) {
-						nw.win.resizeTo(winState.width, nw.win.height - deltaHeight);
-					}
-				}
-
-				dumpWindowState();
-
-			}, 500);
-
-		}, false);
-		*/
 
 		$(document).on("click", ".tab-title", function () {
 
@@ -413,51 +303,7 @@
 
 		};
 
-		/*
-		// This needs to be smoother. For now, just grab and drag window via URL bar
-		$(".button-group").hover(function () { showTitlebar(); });
-		$("#aries-showcase").hover(function () { hideTitlebar(); });
-		*/
-
 	});
-
-	/*
-	// This goes along with the code comment above that needs to be smoother
-	var timeoutId;
-
-	// Titlebar show functionality
-	function showTitlebar() {
-
-		if (!timeoutId) {
-			timeoutId = window.setTimeout(function () {
-
-				timeoutId = null; 
-
-				$("#aries-titlebar").css({
-					"margin": "0",
-					"opacity": "1"
-				});
-
-			}, 950);
-		}
-	
-	}
-
-	// Titlebar hide functionality
-	function hideTitlebar() {
-
-		if (timeoutId) {
-			window.clearTimeout(timeoutId);
-			timeoutId = null;
-		} else {
-			$("#aries-titlebar").css({
-				"margin": "0 0 -31px 0",
-				"opacity": "0"
-			});
-		}
-
-	}
-	*/
 
 	function tabHover() {
 
@@ -510,6 +356,7 @@
 
 			  // browser.js has been loaded, now we can use it
 				$("iframe.active").contents().find("head").prepend(_stylesInit);
+				// $("iframe.active").contents().find("head").prepend(_stuffInit);
 				$("iframe.active").contents().find("body").append(_contextInit);
 
 			});
@@ -647,18 +494,6 @@
 			*/
 
 		});
-
-		// Browser styles
-		/*
-		// Only works on local pages. UGH.
-		$("iframe.active").contents().find("head").append($("<link/>", {
-			rel: "stylesheet",
-			href: "app://aries/app.nw/resources/css/browser.css"
-			// type: "text/css"
-		}));
-		*/
-
-		// $("iframe.active").contents().find("head").append("<style>body { background-color: #07d0eb; }</style>");
 
 		// Context Menu
 		var
@@ -849,17 +684,6 @@
 			}
 
 			process.on("net::ERR_NAME_NOT_RESOLVED", function(error) { console.log("Aries Error: " + error); });
-
-			process.on("uncaughtException", function(error) {
-
-				console.dir(error);
-				console.log("!111!!1!0" + error.stack);
-				process.exit();
-
-				// window.location.href ="app://aries/notify-test.html";
-				// if (error == "net::ERR_NAME_NOT_RESOLVED") { console.log("Aries Error: " + error); }
-
-			});
 			*/
 
 		} else {
@@ -884,6 +708,21 @@
 	console.log("Platform: " + process.platform);
 	console.log("Processor architecture: " + process.arch);
 	console.log("PID: " + process.pid);
+
+	var process;
+
+	// This isn't the best way to deal with errors, but at least Aries doesn't crash
+	process.on("uncaughtException", function(err) {
+
+		// console.dir(err);
+		console.log(err);
+		console.log("Error trace: " + err.stack);
+		// process.exit(); // quits the app
+
+		// window.location.href ="app://aries/notify-test.html";
+		// if (error == "net::ERR_NAME_NOT_RESOLVED") { console.log("Aries Error: " + error); }
+
+	});
 
 	// http://127.0.0.1:2000/devtools/devtools.html?ws=127.0.0.1:2000/devtools/page/2E4B1554-529A-9ECF-D486-F3467A66E29D
 	// http://127.0.0.1:2000/devtools/Main.js
