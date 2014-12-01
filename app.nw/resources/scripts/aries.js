@@ -263,6 +263,24 @@
 		// Things to do before Aries starts
 		onload = function () {
 
+			// Check to see if system has 'Net access
+			var xhr;
+			if (window.XMLHttpRequest) xhr = new XMLHttpRequest();
+
+			xhr.open("GET", "http://192.241.240.201/aries", false);
+
+			xhr.onreadystatechange = function () {
+
+				if (xhr.readyState === 4) {
+					console.log("Has connection");
+				} else {
+					console.log("No connection!");
+				}
+
+			};
+
+			xhr.send();
+
 			// Reload tabs and windows of previous session
 			$("#tab-wrapper .tab").each(function () {
 
