@@ -70,6 +70,7 @@ $(function () {
 		
 		// Code styles
 		_stylesInit += "pre, code { ";
+			// _stylesInit += "display: inline; ";
 			_stylesInit += "font-family: 'Source Code Pro', 'Courier New', monospace; ";
 			_stylesInit += "margin: 1rem 0; ";
 			_stylesInit += "white-space: pre; ";

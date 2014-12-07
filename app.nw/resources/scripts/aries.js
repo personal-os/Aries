@@ -49,7 +49,7 @@
 		_iframeInit += "<iframe class='tabs-pane active'";
 		_iframeInit += "seamless='true'";
 		// _iframeInit += "sandbox='allow-same-origin allow-scripts allow-forms'";
-		_iframeInit += "nwUserAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.157 Aries/0.5-alpha'";
+		_iframeInit += "nwUserAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Aries/0.5-alpha'";
 		_iframeInit += "nwdisable nwfaketop ";
 		_iframeInit += "onLoad='pageLoad(); browserLoad();'";
 		_iframeInit += "id='tab1'>";
