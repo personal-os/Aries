@@ -103,8 +103,9 @@
 
 		});
 
-		// Set URL bar width
+		// Set URL/status bar width
 		$("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
+		$("#status-bar").css("width", nw.win.window.innerWidth - 190 + "px");
 
 		// Set showcase width and height
 		$("#aries-showcase, iframe").css({
@@ -447,11 +448,32 @@
 
 			});
 
+
+
+			// Mouseover fancy-pants stuff
+			iframe.find("a").not("a[href*='#'], a[href*='%'], a[href*='javascript:;']").bind("mouseenter", function() {
+
+				$("#url-bar").css("top", "-31px");
+				$("#status-bar").text($(this)[0].href).css("top", "0");
+
+			});
+
+			iframe.find("a").not("a[href*='#'], a[href*='%'], a[href*='javascript:;']").bind("mouseleave", function() {
+
+				$("#url-bar").css("top", "0");
+				$("#status-bar").css("top", "31px");
+
+			});
+
+
+
 			/*
 			if ($("a[href*='/pdf']").length > 0) {
 				_pagePDF();
 			}
 			*/
+
+
 
 			// Don't show anything in address bar if on start page,
 			// but put it in focus
