@@ -65,6 +65,7 @@
   position: relative;
 
 	#nprogress {
-		.spinner, .bar { position: absolute; }
+		.spinner,
+		.bar { position: absolute; }
 	}
 }

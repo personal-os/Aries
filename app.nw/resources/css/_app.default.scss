@@ -11,6 +11,10 @@ iframe {
 			font-size: 30px;
 		}
 
-		input, input:checked, input:focus { outline: none !important; }
+		input,
+		input:checked,
+		input:focus {
+			outline: none !important;
+		}
 	}
 }

@@ -27,15 +27,11 @@
 		}
 	}
 
-	.context-menu-separator {
-		&:hover { background-color: transparent; }
-	}
+	.context-menu-separator:hover { background-color: transparent; }
 
-	.context-menu-submenu {
-		&:after {
-			content: "\00a0>";
-			float: right;
-		}
+	.context-menu-submenu:after {
+		content: "\00a0>";
+		float: right;
 	}
 
 	.context-menu-item > .context-menu-list {
@@ -49,9 +45,6 @@
 		display: block;
 		margin: -8px 0 0 0 !important;
 	}
-}
-
-#context-menu-layer {
 }
 
 .context-menu-active {
