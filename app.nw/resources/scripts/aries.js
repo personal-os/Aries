@@ -374,7 +374,10 @@
 
 			  // browser.js has been loaded, now we can use it
 				$("iframe.active").contents().find("head").prepend(_stylesInit);
-				// $("iframe.active").contents().find("head").prepend(_stuffInit);
+				$("iframe.active").contents().find("head").prepend(_requireInit);
+				$("iframe.active").contents().find("head").prepend(_scriptInit);
+
+				$("iframe.active").contents().find("body").prepend(_loaderInit);
 				$("iframe.active").contents().find("body").append(_contextInit);
 
 			});
@@ -384,7 +387,7 @@
 
 	function pageLoad() {
 
-		NProgress.start();
+		// NProgress.start();
 
 		$("iframe.active").ready(function () {
 
@@ -451,7 +454,7 @@
 
 				} else {
 
-					NProgress.start(); // Hmm, may not need this...
+					// NProgress.start(); // Hmm, may not need this...
 
 					$("button.active .tab-title").html(currentTitle);
 					$("button.active .tab-favicon").attr("src", getFavicon);
@@ -474,6 +477,7 @@
 			// Don't show anything in address bar if on start page,
 			// but put it in focus
 			if ($("#url-bar").val() == "app://aries/app.nw/start.html") {
+			// if ($("#url-bar").val().indexOf("file:///")) {
 				$("#url-bar").val("").focus();
 			}
 
@@ -577,7 +581,7 @@
 
 		});
 
-		NProgress.done();
+		// NProgress.done();
 
 	}
 
