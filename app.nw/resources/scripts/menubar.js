@@ -20,7 +20,7 @@
 	isMaximizationEvent = false;
 
 	if (os.platform() === "win32") {
-		// Create a menubar for window menu 
+		// Create a menubar for window menu
 		var menubar = new nw.gui.Menu({ type: "menubar" });
 
 		/***********************************************/
@@ -707,7 +707,7 @@
 		// menu.createMacBuiltin("Aries");
 		// nw.win.menu = menu;
 
-		// Create a menubar for window menu 
+		// Create a menubar for window menu
 		var menubar = new nw.gui.Menu({ type: "menubar" });
 
 		/***********************************************/
@@ -866,9 +866,8 @@
 				// Remove focus from other tabs and windows
 				$(".tab, .tabs-pane").removeClass("active");
 
-				$("#tab-wrapper").append("<button class='tab active' data-page='start.html'><img class='tab-favicon' type='image/x-icon' src='resources/images/favicon-default.png'><span class='tab-close'></span><span class='tab-title'>Start Page</span></button>");
-
-				$("#aries-showcase").append("<iframe class='tabs-pane active' seamless='true' nwUserAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.157 Aries/0.5-alpha' nwdisable nwfaketop onLoad='pageLoad();' src='start.html'></iframe>");
+				$("#tab-wrapper").append(tabInit);
+				$("#aries-showcase").append(iframeInit);
 
 				$("#url-bar").val("").focus();
 

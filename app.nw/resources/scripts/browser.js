@@ -1,7 +1,7 @@
 $(function () {
 
 	_stylesInit = "";
-	_stylesInit += "<style>";
+	_stylesInit += "<style id='aries__style'>";
 
 		// Basic styles
 		_stylesInit += "html, body, article, aside, footer, header, hgroup, main, nav, section, h1, h2, h3, h4, h5, h6," +
@@ -146,5 +146,91 @@ $(function () {
 		_contextInit += "<li class='aries-contextMenu__item'>Copy Image</li>";
 		_contextInit += "<li class='aries-contextMenu__item'>Open Image in New Tab</li>";
 	_contextInit += "</ul>";
+
+	$.each($("iframe"), function() {
+
+		//
+		//
+		// Context Menu
+
+		var
+		$frameHead = $(this).contents().find("head"),
+		$frameBody = $(this).contents().find("body"),
+		mouseX, mouseY;
+
+		if ($frameHead.find("#aries__style").length > 0) {
+			console.log("Styles already exist");
+		} else {
+			$frameHead.prepend(_stylesInit);
+			console.log("Injected default Aries styles");
+		}
+
+		if ($frameBody.find("#aries-contextMenu__default, #aries-contextMenu__text, #aries-contextMenu__image").length > 0) {
+			console.log("Menus already exist");
+		} else {
+			$frameBody.append(_contextInit);
+			console.log("Injected context menus");
+		}
+
+		$frameBody[0].addEventListener("mousemove", function (e) {
+
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+			// console.log(e.pageX + "px + " + e.pageY + "px");
+
+		});
+
+		// http://hikar.io/test.html
+
+		$frameBody[0].addEventListener("contextmenu", function (event) {
+
+			event.preventDefault();
+			var target = event.target;
+
+			if ($(target).is("img")) {
+
+				// Show context menu
+				// Any selection obtained through: jQuery('#iframe').get(0).contentDocument.getSelection().toString()
+				console.log("Context Menu: Image");
+
+				$("iframe.active").contents().find("body #aries-contextMenu__image").css({
+					"top": mouseY + "px",
+					"left": mouseX + "px",
+					"display": "block"
+				});
+
+				$("iframe.active").contents().find("body").bind("click", function (e) {
+					if($(e.target).closest("body #aries-contextMenu__image").length === 0) {
+						// click happened outside of menu, hide any visible menu items
+						$("iframe.active").contents().find("body #aries-contextMenu__image").fadeOut("fast");
+					}
+				});
+
+			} else {
+
+				// Show context menu
+				// Any selection obtained through: jQuery('#iframe').get(0).contentDocument.getSelection().toString()
+				console.log("Context Menu: Default");
+
+				$("iframe.active").contents().find("body #aries-contextMenu__default").css({
+					"top": mouseY + "px",
+					"left": mouseX + "px",
+					"display": "block"
+				});
+
+				$("iframe.active").contents().find("body").bind("click", function (e) {
+					if($(e.target).closest("body #aries-contextMenu__default").length === 0) {
+						// click happened outside of menu, hide any visible menu items
+						$("iframe.active").contents().find("body #aries-contextMenu__default").fadeOut("fast");
+					}
+				});
+
+			}
+
+			// return false;
+
+		});
+
+	});
 
 });
