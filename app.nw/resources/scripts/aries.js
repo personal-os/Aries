@@ -121,9 +121,10 @@ $(function () {
 	$("#status-bar").css("width", nw.win.window.innerWidth - 190 + "px");
 
 	// Set showcase width and height
-	$("#aries-showcase, iframe").css({
-		"width": nw.win.window.innerWidth,
-		"height": nw.win.window.innerHeight - 31 + "px" // minus URL bar height
+	// $("#aries-showcase, iframe").css({
+	$("#aries-showcase").css({
+		"width": nw.win.window.innerWidth - 1 + "px",
+		"height": nw.win.window.innerHeight - 32 + "px" // minus URL bar height + 1px
 	});
 
 	// Prevent popups from occurring
@@ -142,9 +143,10 @@ $(function () {
 		$("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
 
 		// Set showcase width and height
-		$("#aries-showcase, iframe").css({
-			"width": nw.win.window.innerWidth,
-			"height": nw.win.window.innerHeight - 31 + "px"
+		// $("#aries-showcase, iframe").css({
+		$("#aries-showcase").css({
+			"width": nw.win.window.innerWidth - 1 + "px",
+			"height": nw.win.window.innerHeight - 32 + "px"
 		});
 
 		process.setMaxListeners(0);
@@ -494,13 +496,10 @@ function pageLoad() {
 			$("#url-bar").val("").focus();
 		}
 
-		/*
 		// Set iframe to start page on blank page
-		// messing up things at the moment
-		if ($("#url-bar").val() === "about:blank") {
-			$("iframe").attr("src", "start.html");
+		if ($("#url-bar").val() == "about:blank") {
+			$("iframe.active").attr("src", "start.html");
 		}
-		*/
 
 		// Notification when on certain sites
 		var uri = new URI(baseURL);
@@ -668,7 +667,13 @@ function goThere() {
 	} else {
 
 		if (encodeURL.match(/(^aries:\/\/about)/) !== null) {
+
 			_pageAbout();
+
+		} else if (encodeURL.match(/(^about:blank)/) !== null) {
+
+			$("iframe.active").attr("src", "start.html");
+
 		} else {
 
 			console.log(a); // should be false, search DDG
