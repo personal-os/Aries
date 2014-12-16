@@ -3,7 +3,6 @@
 // @IdeasNeverCease
 // ========================================================
 
-// Window Actions!
 $(function () {
 
 	// Initialize Node Webkit
@@ -25,15 +24,6 @@ $(function () {
 	currWinMode,
 	resizeTimeout,
 	isMaximizationEvent = false;
-	
-	// Stuff
-	console.log("Node version: " + process.version); // v.0.11.13-pre
-	console.log("OS type: " + os.type()); // Darwin
-	console.log("OS: " + os.platform()); // darwin
-	console.log("Arch: " + os.arch()); // x64
-	console.log("Release: " + os.release()); // 14.0.0
-	console.log("Hostname: " + os.hostname()); // HQ.home
-	console.log("Temp dir: " + os.tmpdir()); // /var/folders/3l/sfgsfdsfdfssdfsdf/T/
 
 
 
@@ -65,9 +55,6 @@ $(function () {
 	iframeInit += "onLoad='pageLoad();' ";
 	// iframeInit += "id='tab1'>";
 	iframeInit += "id=''>";
-
-	$("#tab-wrapper").append(tabInit);
-	$("#aries-showcase").append(iframeInit);
 
 	// Minimize Aries
 	$(".app-minimize").on("click", function () {
@@ -124,7 +111,7 @@ $(function () {
 	// $("#aries-showcase, iframe").css({
 	$("#aries-showcase").css({
 		"width": nw.win.window.innerWidth - 1 + "px",
-		"height": nw.win.window.innerHeight - 32 + "px" // minus URL bar height + 1px
+		"height": nw.win.window.innerHeight - 33 + "px" // minus URL bar height + 1px
 	});
 
 	// Prevent popups from occurring
@@ -146,7 +133,7 @@ $(function () {
 		// $("#aries-showcase, iframe").css({
 		$("#aries-showcase").css({
 			"width": nw.win.window.innerWidth - 1 + "px",
-			"height": nw.win.window.innerHeight - 32 + "px"
+			"height": nw.win.window.innerHeight - 33 + "px"
 		});
 
 		process.setMaxListeners(0);
@@ -279,6 +266,9 @@ $(function () {
 	// Things to do before Aries starts
 	onload = function () {
 
+		$("#tab-wrapper").append(tabInit);
+		$("#aries-showcase").append(iframeInit);
+
 		// Reload tabs and windows of previous session
 		$("#tab-wrapper .tab").each(function () {
 
@@ -315,7 +305,7 @@ $(function () {
 			nw.win.show();
 		}, 175);
 
-		pageLoad();
+		// pageLoad();
 
 	};
 
@@ -371,7 +361,7 @@ function pageLoad() {
 
 	NProgress.start();
 
-	$("iframe").ready(function () {
+	$("iframe").one("load", function () {
 
 		var nw = {
 			gui: require("nw.gui"), // Load native UI library
@@ -389,8 +379,6 @@ function pageLoad() {
 			isMaximizationEvent = false;
 			*/
 		};
-
-	}).on("load", function () {
 
 		var baseURL = this.contentWindow.location.href;
 		var currentTitle = $(this).contents().find("title").html();
@@ -422,9 +410,55 @@ function pageLoad() {
 
 		iframe.find("a").not("a[href*='#'], a[href*='%'], a[href*='javascript:;']").bind("click", function () {
 
-			// Hamburger menu on Dockyard.com has no href
+			// Why do people create <a> with no hrefs? Annoying...
 			if ($(this).attr("href").length === 0) { return false; }
 
+			if ($(this).attr("target") === "_blank") {
+				console.log("New tab from _blank");
+
+				/*
+				// Remove focus from other tabs and windows
+				$(".tab, .tabs-pane").removeClass("active");
+
+				$("#tab-wrapper").append(tabInit);
+				$("#aries-showcase").append(iframeInit);
+
+				$("#url-bar").val("").focus();
+
+				var tabID = 0, windowID = 0;
+
+				// Add a new tab
+				$("#tab-wrapper .tab").each(function () {
+
+					tabID++;
+					$(this).attr("data-tab", "#tab" + tabID);
+
+					var dataPage = $(this).attr("data-page");
+					console.log(dataPage);
+
+				});
+
+				// Add a new window
+				$("#aries-showcase iframe").each(function () {
+
+					windowID++;
+					$(this).attr("id", "tab" + windowID);
+					// $(this).attr("src", dataPage);
+
+				}).css({ "width": nw.win.window.innerWidth, "height": nw.win.window.innerHeight - 31 + "px" });
+
+				$("iframe.active").each(function () {
+					this.contentWindow.location.reload(true);
+				});
+				*/
+
+				/*
+				// Reinitialize tabby to recognize new tab and window
+				tabby.init();
+				tabHover();
+				*/
+			}
+ 
 			if ($(this).attr("href").indexOf(".pdf") >-1) {
 
 				console.log("This is a PDF: " + $(this).attr("href"));
@@ -449,19 +483,17 @@ function pageLoad() {
 					$("#url-bar").val("");
 				}, 100);
 
-			} else {
-
-				NProgress.start(); // Hmm, may not need this...
-
-				$("button.active .tab-title").html(currentTitle);
-				$("button.active .tab-favicon").attr("src", getFavicon);
-
-				var location = $(this)[0].href;
-				$("iframe.active").attr("src", location);
-
-				console.log("Hmm, " + location);
-
 			}
+
+			NProgress.start(); // Hmm, may not need this...
+
+			$("button.active .tab-title").html(currentTitle);
+			$("button.active .tab-favicon").attr("src", getFavicon);
+
+			var location = $(this)[0].href;
+			$("iframe.active").attr("src", location);
+
+			console.log("Hmm, " + location);
 
 		});
 
@@ -480,15 +512,11 @@ function pageLoad() {
 
 		});
 
-
-
 		/*
 		if ($("a[href*='/pdf']").length > 0) {
 			_pagePDF();
 		}
 		*/
-
-
 
 		// Don't show anything in address bar if on start page,
 		// but put it in focus
@@ -707,6 +735,16 @@ process.on("uncaughtException", function (err) {
 	// if (error == "net::ERR_NAME_NOT_RESOLVED") { console.log("Aries Error: " + error); }
 
 });
+
+/*
+console.log("Node version: " + process.version); // v.0.11.13-pre
+console.log("OS type: " + os.type()); // Darwin
+console.log("OS: " + os.platform()); // darwin
+console.log("Arch: " + os.arch()); // x64
+console.log("Release: " + os.release()); // 14.0.0
+console.log("Hostname: " + os.hostname()); // HQ.home
+console.log("Temp dir: " + os.tmpdir()); // /var/folders/3l/sfgsfdsfdfssdfsdf/T/
+*/
 
 // http://127.0.0.1:2000/devtools/devtools.html?ws=127.0.0.1:2000/devtools/page/2E4B1554-529A-9ECF-D486-F3467A66E29D
 // http://127.0.0.1:2000/devtools/Main.js

@@ -117,7 +117,9 @@ $(function () {
 
 		_stylesInit += "#aries-contextMenu__image { width: 170px; } ";
 		_stylesInit += "#aries-contextMenu__default { width: 115px; } ";
-		_stylesInit += "";
+
+		// GitHub fix
+		_stylesInit += ".markdown-body code { display: inline-block; } ";
 		_stylesInit += "";
 		_stylesInit += "";
 		_stylesInit += "";

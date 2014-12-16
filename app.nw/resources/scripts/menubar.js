@@ -907,6 +907,10 @@
 				tabby.init();
 				tabHover();
 
+				// Make sure URL bar shows. Gets stuck when clicking links with _target.
+				$("#url-bar").css("top", "0");
+				$("#status-bar").css("top", "31px");
+
 				console.log("New tab added to Aries");
 			},
 		  key: "t",
