@@ -85,7 +85,10 @@ $(function () {
 			_stylesInit += "box-sizing: border-box; ";
 			_stylesInit += "cursor: default; ";
 			_stylesInit += "display: none; ";
+			_stylesInit += "font-family: 'Libre Baskerville', 'Source Code Pro', 'Courier New', monospace; ";
 			_stylesInit += "font-size: 12px; ";
+			_stylesInit += "line-height: 1; ";
+			_stylesInit += "margin: 0; ";
 			_stylesInit += "padding-top: 0.2rem; padding-bottom: 0.2rem; ";
 			_stylesInit += "overflow: hidden; ";
 			_stylesInit += "position: absolute; ";
