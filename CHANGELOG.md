@@ -1,3 +1,7 @@
+1.0.0 / 01-18-2015
+==================
+* migrated from node-webkit to NW.js
+
 0.6.0 / 12-24-2014
 ==================
 * created a CHANGELOG

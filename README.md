@@ -1,5 +1,4 @@
-Aries
-=
+# Aries
 
 [![GitHub](http://img.shields.io/badge/GitHub-IdeasNeverCease/Aries-a0a060.svg?style=flat)](https://github.com/IdeasNeverCease/Aries)
 
@@ -7,6 +6,10 @@ Default browser for [hikari](https://github.com/IdeasNeverCease/hikari)
 
 ![Awesomesauce](https://cloud.githubusercontent.com/assets/1288356/4346885/d8127aba-411d-11e4-91d6-75f73d19058b.png)
 
-##### Note: I have included the node-webkit binaries for both Windows and Mac, for the time being. Whichever your platform, go into that folder and run nw.exe/nw.app.
+##### Note: I am developing Aries on Mac OS X. If you would like to test/use Aries on your platform of choice, you can first download and unzip this repo to your computer, download the latest node-webkit binary [for your system](http://dl.nwjs.io), drop it in the root directory of this repo, and double-click on it.
 
-##### <del>Uhhh, figure out how to run node-webkit for your system.</del> A fleshed out readme will be available later (as well as binaries for Linux and Windows), when Aries hits 1.0. For now, you can download the latest node-webkit binary [for your system](http://dl.node-webkit.org), drop it in the root directory of this repo, and double-click on it.
+Please let me know if you find issues for your system.
+
+For updates on [hikari](https://github.com/IdeasNeverCease/hikari) and [Aries](https://github.com/IdeasNeverCease/Aries), you can follow me on [Twitter](https://twitter.com/TadashiHikari). I will continue to try and provide regular updates to these projects, but you know how life goes.
+
+&copy; [!NC](http://the-inc.co)
