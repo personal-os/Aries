@@ -384,6 +384,8 @@ function pageLoad() {
 		var currentTitle = $(this).contents().find("title").html();
 		var currentURL = $("#url-bar").val(baseURL);
 
+
+
 		/*
 		$("#tab-wrapper .tab").each(function () {
 			var dataTab = $(this).attr("data-tab");
@@ -393,6 +395,8 @@ function pageLoad() {
 			$("#aries-showcase iframe" + dataTab).attr("src", dataPage);
 		});
 		*/
+
+
 
 		$("#url-bar").val(baseURL);
 		$("button.active .tab-title").html(currentTitle);
@@ -512,11 +516,17 @@ function pageLoad() {
 
 		});
 
+
+
 		/*
 		if ($("a[href*='/pdf']").length > 0) {
 			_pagePDF();
 		}
 		*/
+
+
+
+
 
 		// Don't show anything in address bar if on start page,
 		// but put it in focus

@@ -29,7 +29,7 @@
 		"resizable": true,
 		"show": false,
 		"title": "Aries",
-		"toolbar": false,
+		// "toolbar": false,
 		"transparent": true
 	},
 	"webkit": {
