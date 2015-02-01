@@ -22,42 +22,7 @@
 	  position: absolute;
 	  right: 0;
 		transform: rotate(3deg) translate(0, -4px);
-
-		-webkit-transform: rotate(3deg) translate(0, -4px);
 	}
-
-	// Remove these to get rid of the spinner
-
-	.spinner {
-		top: 15px; right: 15px;
-
-	  display: block;
-	  position: fixed;
-	  z-index: 1031;
-	}
-
-	.spinner-icon {
-	  width: 18px; height: 18px;
-
-		animation: nprogress-spinner 400ms linear infinite;
-	  border: 5px solid transparent;
-	  border-top-color: $teal;
-	  border-left-color: $teal;
-	  border-radius: 50%;
-		box-sizing: border-box;
-
-	  -webkit-animation: nprogress-spinner 400ms linear infinite;
-	}
-}
-
-@keyframes nprogress-spinner {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-}
-
-@-webkit-keyframes nprogress-spinner {
-	0% { -webkit-transform: rotate(0deg); }
-	100% { -webkit-transform: rotate(360deg); }
 }
 
 .nprogress-custom-parent {
@@ -66,6 +31,8 @@
 
 	#nprogress {
 		.spinner,
-		.bar { position: absolute; }
+		.bar {
+			position: absolute;
+		}
 	}
 }

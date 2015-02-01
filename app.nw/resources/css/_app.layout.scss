@@ -1,7 +1,8 @@
 
 /////////////////////////////////////////////////////////////////////////////////// APP.LAYOUT/SCSS ///
 
-html, body {
+html,
+body {
 	width: 100%; height: 100%;
 }
 
@@ -25,74 +26,10 @@ ul, ol, menu, dir {
 
 // .playSound-embed, .playSound-audio { position: absolute; } // for when sounds are included
 
-#aries-titlebar,
 #aries-powerbar {
-	width: 100%; height: 31px;
-
-	align-items: center;
-	border: 0;
-	border-bottom: 1px solid rgba($black, 0.05);
-	display: flex;
-	flex-direction: row;
-	overflow: hidden;
-	position: relative;
-	user-select: none;
-
-	display: -webkit-box;
-	display: -webkit-flex;
-
-	-webkit-align-items: center;
-	-webkit-box-align: center;
-	-webkit-box-orient: horizontal;
-	-webkit-flex-direction: row;
-	-webkit-user-select: none;
-	-webkit-touch-callout: none;
+	background-color: lighten($dark-gray, 68%);
+	height: 31px;
 }
-
-#aries-titlebar {
-	margin: 0 0 -31px 0; padding: 0 0.8rem;
-
-	background-color: $dark-gray;
-	display: none; //
-	opacity: 0;
-	transition: all 0.2s ease;
-	user-select: none;
-
-	// -webkit-app-region: drag;
-	-webkit-user-select: none;
-
-	h1 {
-		margin: 0; padding: 0;
-
-		align-items: center;
-		box-align: center;
-		box-orient: horizontal;
-		color: rgba($white, 0.6); // $white
-		cursor: default;
-		display: flex;
-		flex: 1;
-		flex-direction: row;
-		font-size: 13px;
-		font-weight: 400;
-		height: 35px;
-		user-select: none;
-
-		-webkit-flex: 1;
-		-webkit-box-flex: 1;
-
-		display: -webkit-box;
-		display: -webkit-flex;
-
-		-webkit-align-items: center;
-		-webkit-box-align: center;
-		-webkit-box-orient: horizontal;
-		-webkit-flex-direction: row;
-		-webkit-user-select: none;
-		-webkit-touch-callout: none;
-	}
-}
-
-#aries-powerbar { background-color: lighten($dark-gray, 68%); }
 
 #browsing-actions,
 #url-bar,
@@ -101,12 +38,13 @@ ul, ol, menu, dir {
 	position: absolute;
 }
 
-#browsing-actions,
-#window-actions {
+#browsing-actions {
+	left: 0;
 }
 
-#browsing-actions { left: 0; }
-#window-actions { right: 0; }
+#window-actions {
+	right: 0;
+}
 
 #url-bar,
 #status-bar {
@@ -200,7 +138,8 @@ ul, ol, menu, dir {
 			width: calc(100% - 29px);
 		}
 
-		.tab-favicon, .tab-close {
+		.tab-favicon,
+		.tab-close {
 			width: 16px; height: 16px;
 			top: 0; left: 0;
 
@@ -208,7 +147,9 @@ ul, ol, menu, dir {
 			margin: 7px;
 		}
 
-		.tab-favicon { opacity: 0.6; }
+		.tab-favicon {
+			opacity: 0.6;
+		}
 
 		.tab-close {
 			color: rgba($black, 0.6);
@@ -217,7 +158,9 @@ ul, ol, menu, dir {
 			font-size: 16px;
 			transition: all 0.2s ease-in-out;
 
-			&:before { content: "\f2bd"; }
+			&:before {
+				content: "\f2bd";
+			}
 
 			&:hover:before {
 				color: $red;
@@ -230,7 +173,6 @@ ul, ol, menu, dir {
 			width: 50px; height: 31px;
 			top: 0; right: 0;
 
-			background: linear-gradient(left, rgba($dark-gray, 0) 0%, lighten($dark-gray, 68%) 100%);
 			background: -webkit-linear-gradient(left, rgba($dark-gray, 0) 0%, lighten($dark-gray, 68%) 100%);
 			content: "";
 			position: absolute;
@@ -241,7 +183,9 @@ ul, ol, menu, dir {
 		border-bottom: 1px solid transparent;
 		color: rgba($black, 0.9);
 
-		.tab-favicon { opacity: 1; }
+		.tab-favicon {
+			opacity: 1;
+		}
 	}
 
 	&:before,
@@ -250,7 +194,9 @@ ul, ol, menu, dir {
 		display: table;
 	}
 
-	&:after { clear: both; }
+	&:after {
+		clear: both;
+	}
 }
 
 //
@@ -276,20 +222,9 @@ ul, ol, menu, dir {
 //
 
 .button-group {
-	align-items: center;
-	box-align: center;
-	box-orient: horizontal;
 	display: flex;
 	flex-direction: row;
 	padding-left: 2px;
-
-	display: -webkit-box;
-	display: -webkit-flex;
-
-	-webkit-align-items: center;
-	-webkit-box-align: center;
-	-webkit-box-orient: horizontal;
-	-webkit-flex-direction: row;
 
 	button {
 		width: 31px; height: 31px;
@@ -297,7 +232,9 @@ ul, ol, menu, dir {
 		display: inline-block;
 		float: left;
 
-		&:hover { color: rgba($black, 0.9); }
+		&:hover {
+			color: rgba($black, 0.9);
+		}
 	}
 }
 
@@ -316,7 +253,9 @@ button.app-settings {
 		-webkit-transform: translate(0, 2px);
 	}
 
-	&:before { content: "\f20e"; }
+	&:before {
+		content: "\f20e";
+	}
 }
 
 button.app-go-back {
@@ -325,16 +264,19 @@ button.app-go-back {
 		-webkit-transform: translate(-2px, 0);
 	}
 
-	&:before { content: "\f153"; }
+	&:before {
+		content: "\f153";
+	}
 }
 
 button.app-go-forth {
 	&:active {
 		transform: translate(2px, 0);
-		-webkit-transform: translate(2px, 0);
 	}
 
-	&:before { content: "\f154"; }
+	&:before {
+		content: "\f154";
+	}
 }
 
 button.app-minimize {
@@ -342,19 +284,21 @@ button.app-minimize {
 
 	&:active {
 		transform: translate(0, 2px);
-		-webkit-transform: translate(0, 2px);
 	}
 
-	&:before { content: "\f1ac"; }
+	&:before {
+		content: "\f1ac";
+	}
 }
 
 button.app-maximize {
 	&:active {
 		transform: translate(0, 2px);
-		-webkit-transform: translate(0, 2px);
 	}
 
-	&:before { content: "\f1c9"; }
+	&:before {
+		content: "\f1c9";
+	}
 }
 
 button.app-close {
@@ -362,15 +306,17 @@ button.app-close {
 
 	&:active {
 		transform: translate(0, 2px);
-		-webkit-transform: translate(0, 2px);
 	}
 
-	&:before { content: "\f2bd"; }
+	&:before {
+		content: "\f2bd";
+	}
 }
 
 #aries-showcase,
 iframe {
-	width: 100%; height: 100%;
+	// width: 100%; height: 100%;
+	width: 100vw; height: calc(100vh - 56px);
 }
 
 #aries-showcase {
@@ -381,7 +327,7 @@ iframe {
 
 #showcase__loader {
 	width: 100%; height: 10px;
-	top: 31px; left: 0;
+	top: 56px; left: 0;
 
 	position: absolute;
 }
@@ -395,11 +341,15 @@ button.start-settings {
 
 	&:active {
 		transform: translate(0, 2px);
-		-webkit-transform: translate(0, 2px);
 	}
 
-	&:hover { color: rgba($black, 0.9); }
-	&:before { content: "\f13e"; }
+	&:hover {
+		color: rgba($black, 0.9);
+	}
+
+	&:before {
+		content: "\f13e";
+	}
 }
 
 #start-item-wrapper {
@@ -413,7 +363,6 @@ button.start-settings {
 		button {
 			&:active {
 				transform: translate(0, 2px);
-				-webkit-transform: translate(0, 2px);
 			}
 
 			&:before {

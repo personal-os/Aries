@@ -17,7 +17,7 @@
 		"url": "https://github.com/IdeasNeverCease/Aries.git"
 	}],
 	"single-instance": true,
-	"version": "0.5-alpha",
+	"version": "1.0.0",
 	"window": {
 		"width": 1066,
 		"height": 568,
@@ -29,7 +29,6 @@
 		"resizable": true,
 		"show": false,
 		"title": "Aries",
-		// "toolbar": false,
 		"transparent": true
 	},
 	"webkit": {

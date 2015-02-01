@@ -1,0 +1,17 @@
+#aries-titlebar {
+	background-color: $dark-gray;
+	padding: 0.4rem 0.8rem;
+	transition: all 0.2s ease;
+
+	-webkit-app-region: drag;
+
+	h1 {
+		margin: 0; padding: 0;
+
+		color: rgba($white, 0.6); // $white
+		cursor: default;
+		font-size: 11px;
+
+		-webkit-user-select: none;
+	}
+}

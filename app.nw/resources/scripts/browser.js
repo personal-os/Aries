@@ -156,30 +156,7 @@ _contextInit += "</ul>";
 
 $.each($("iframe.active"), function() {
 
-	///
-	$("#-aries-history-back").one("click", function() {
-
-		$.each($("iframe.active"), function() {
-			window.history.back();
-			console.log("--- Went back");
-		});
-
-	});
-
-	$("#-aries-history-forth").one("click", function() {
-
-		$.each($("iframe.active"), function() {
-			window.history.forward();
-			console.log("--- Went forward");
-		});
-
-	});
-	///
-
-	//
-	//
 	// Context Menu
-
 	var
 	$frameHead = $(this).contents().find("head"),
 	$frameBody = $(this).contents().find("body"),
