@@ -1,4 +1,3 @@
-
 // Aries.js
 // @IdeasNeverCease
 // ========================================================
@@ -29,8 +28,6 @@ $(function () {
 
 	// menubar.js
 	include("resources/scripts/menubar.js");
-
-
 
 	// Build initial tab
 	tabInit = "";
@@ -385,6 +382,60 @@ function pageLoad() {
 		// Inject menus and default styles
 		include("resources/scripts/browser.js");
 
+		///
+		/*
+		blockers = [
+			/platform.twitter.com\/widgets.js/,
+			/twitter.com\/widgets\/tweet_button.html/,
+			/linkedin.com\/analytics/,
+			/platform.linkedin.com\/in.js/,
+			/platform.linkedin.com\/js\/nonSecureAnonymousFramework/,
+			/connect.facebook.net\/en_US\/all.js/,
+			/facebook.com\/plugins\/like/,
+			/plusone.google.com/,
+			/googleapis.client__plusone.js/,
+			/plusone.*png/,
+			/sharethis.com/,
+			/stumbleupon.com\/.*badge/,
+			/cdn.stumble-upon.com/
+		]
+		*/
+		
+		/*
+		http://s0.2mdn.net/instream/video/client.js
+		//connect.facebook.net/en_US/all.js#xfbml=1
+		https://apis.google.com/js/plusone.js
+		//platform.twitter.com/widgets.js
+		https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en_GB.qQyfm_LIxiY.O/m=client,plusone/rt=j/sv=1/d=1/ed=1/am=AQ/rs=AGLTcCMoslli_HVapaVbAWpnN45jIl8ZEw/t=zcms/cb=gapi.loaded_0
+		https://plus.google.com/js/client:plusone.js
+		http://edge.quantserve.com/quant.js
+		http://b.scorecardresearch.com/beacon.js
+		http://static.chartbeat.com/js/chartbeat_pub.js
+		http://js.moatads.com/essencedigital34895338176918191/moatcontent.js
+		https://s.yimg.com/uq/syndication/yad.js
+		*/
+
+		/*
+		// document
+		// iframe.contentWindow.document.body
+		var IF = $(this).contents().find("body");
+		IF.addEventListener("beforeload", function(event) {
+			console.log("DOES THIS WORK");
+
+			for (var i = 0; i < blockers.length; i++) {
+				var blocker = blockers[i];
+
+				if (event.url.match(blocker)) {
+					event.preventDefault();
+					return false;
+
+					console.log("Blocked some shit");
+				}
+			}
+		}, true);
+		///
+		*/
+
 		var nw = {
 			gui: require("nw.gui"), // Load native UI library
 			win: require("nw.gui").Window.get(), // Get the current window
@@ -402,7 +453,18 @@ function pageLoad() {
 			*/
 		};
 
-		// var process;
+		nw.win.on("resize", function () {
+
+			// Set iframe width and height
+			$("iframe").css({
+				"width": "100vw",
+				"height": "100vh"
+			});
+
+			process.setMaxListeners(0);
+
+		});
+
 		var baseURL = this.contentWindow.location.href;
 		var currentTitle = $(this).contents().find("title").html();
 		var currentURL = $("#url-bar").val(baseURL);
@@ -654,6 +716,21 @@ function _pageCredits() {
 
 }
 
+function _ghostery() {
+
+	console.log("Internal Aries link!");
+
+	$("iframe.active").attr("src", "resources/ghostery/walkthrough.html");
+	$("button.active").attr("data-page", "resources/ghostery/walkthrough.html");
+
+	setTimeout(function () {
+		$("#url-bar").val("ghostery");
+		$("#aries-titlebar h1").text("Aries /// Ghostery");
+		$("button.active .tab-title").text("Ghostery");
+	}, 100);
+
+}
+
 // Search, using DuckDuckGo
 function _searchDDG() {
 
@@ -779,6 +856,7 @@ console.log("Platform: " + process.platform);
 console.log("Processor architecture: " + process.arch);
 console.log("PID: " + process.pid);
 
+/*
 // This isn't the best way to deal with errors, but at least Aries doesn't crash
 process.on("uncaughtException", function (err) {
 
@@ -788,3 +866,4 @@ process.on("uncaughtException", function (err) {
 	// process.exit(); // quits the app
 
 });
+*/

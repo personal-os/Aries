@@ -587,7 +587,13 @@
 			click: function() {
 
 				nw.win.showDevTools();
-				// win.showDevTools([id | iframe, headless]);
+
+				// nw.win.showDevTools([id | iframe, headless]);
+				// nw.win.showDevTools("", false);
+				// nw.win.showDevTools("devtools", headless);
+
+				// http://127.0.0.1:2000/devtools/inspector.html
+
 				console.log("Dev Mode, ON");
 
 			},
@@ -595,7 +601,31 @@
 		  modifiers: "shift-cmd",
 		}));
 
+		/*
+		var win = nwgui.Window.get();
 
+		win.showDevTools("", true);
+
+		win.on("devtools-opened", function(url) {
+
+			console.log("devtools-opened: " + url);
+			document.getElementById('devtools').src = url;
+
+		});
+		*/
+
+		// Ghostery
+		_developer.append(new nw.gui.MenuItem({
+			label: "Ghostery",
+			click: function() {
+
+				console.log("Ghostery!");
+				_ghostery();
+
+			},
+			key: "g",
+			modifiers: "shift-cmd",
+		}));
 
 		// Reload Aries
 	  _developer.append(new nw.gui.MenuItem({

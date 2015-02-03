@@ -1,3 +1,10 @@
+1.1.1 / 02-03-2015
+==================
+* resizing the browser doesn't mess up windows. Need to make this more fluid though.
+* made user-agent dynamic
+
+
+
 1.1.0 / 01-31-2015
 ==================
 * refactored and deleted lots of stuff
@@ -9,7 +16,7 @@
 * added GitHub to About page
 * added Credits page to show what 3rd-party plugins make Aries work
 * removed Modernizr and classie because they're irrelevant for Aries
-* bump Aries version to 1.0.0. Gonna try this "Semantic Versioning" thing.
+* bump Aries version to 1.1.0. Gonna try this "Semantic Versioning" thing.
 * updated jQuery to latest version
 
 

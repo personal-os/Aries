@@ -140,6 +140,7 @@ _contextInit += "<ul id='aries-contextMenu__default'>";
 	_contextInit += "<li id='acMd__forward' class='aries-contextMenu__item'>Forward</li>";
 	_contextInit += "<li id='acMd__reload' class='aries-contextMenu__item'>Reload</li>";
 	_contextInit += "<li id='acMd__copy' class='aries-contextMenu__item'>Copy</li>";
+	_contextInit += "<li id='acMd__source' class='aries-contextMenu__item'>View Source</li>";
 	// _contextInit += "<li class='aries-contextMenu__item'>Copy Address</li>";
 _contextInit += "</ul>";
 
@@ -222,8 +223,12 @@ $.each($("iframe.active"), function() {
 				"display": "block"
 			});
 
+			$("iframe.active").contents().find("body #acMd__source").bind("click", function () {
+				console.log("Viewing source?");
+			});
+
 			$("iframe.active").contents().find("body").bind("click", function (e) {
-				if($(e.target).closest("body #aries-contextMenu__default").length === 0) {
+				if ($(e.target).closest("body #aries-contextMenu__default").length === 0) {
 					// click happened outside of menu, hide any visible menu items
 					$("iframe.active").contents().find("body #aries-contextMenu__default").fadeOut("fast");
 				}

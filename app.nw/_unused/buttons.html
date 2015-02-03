@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<title>My buttons for Opera on JavaScript</title>
+
+		<meta charset="utf-8"/>
+		<meta name="author" content="A.Ruzanov"/>
+		<meta name="design" content="Moose-like"/>
+
+		<style>
+			body {
+				font-family: "Source Code Pro", sans-serif;
+			}
+
+			a {
+				display: inline-block;
+				text-decoration: none;
+				vertical-align: middle;
+			}
+
+			a.button {
+				background-color: #92abbc;
+				border: 1px solid #6c8b9b;
+				color: #141d21;
+				font-size: 90%;
+				padding: 0 3px;
+			}
+
+			a.simple {
+				color: #141d21;
+				text-decoration: underline;
+			}
+
+			a:hover{
+				background-color: #829bac;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<h3>Bookmarklets:</h3>
+
+		<h5>Show info about page</h5>
+		<a class="button" href="javascript:(function(){var meta='';var scripts='';var embed='';var m=document.getElementsByTagName('meta');for(var i=0,mi;mi=m[i];i++){meta+=(mi.name?mi.name+': ':(mi.httpEquiv?mi.httpEquiv+': ':''))+mi.content+'\n'};var s=document.getElementsByTagName('script');for(var i=0,si;si=s[i];i++){if(si.src)scripts+=si.src+'\n'};var e=document.getElementsByTagName('embed');var o=document.getElementsByTagName('object');var fullUrl=function(url){var a=document.createElement('a');a.href=url;return url?a.href+'\n':''};for(var i=0,ei;ei=e[i];i++){embed+=fullUrl(ei.getAttribute('src'))};for(var i=0,oi;oi=o[i];i++){var src=oi.getAttribute('data')||oi.getAttribute('src');if(!src){for(var j=0,p;p=oi.childNodes[j];j++){if(p.tagName&&p.tagName.toLowerCase()=='param'&&p.getAttribute('name').match(/^(movie|data|src|code|filename|url)$/i)){src=p.getAttribute('value');break}}};var lnk=fullUrl(src);if(embed.indexOf(lnk)==-1)embed+=lnk};var lastmod=(Date.parse(document.lastModified)==0)?'':document.lastModified;var mode=document.getElementsByTagName('HTmL').length==0?'Really strict':(document.compatMode=='CSS1Compat'?'Normal strict':'Quirks');var title=document.title||(document.getElementsByTagName('title')[0]&&document.getElementsByTagName('title')[0].text)||'';if(meta)meta='\nMeta:\n'+meta;if(scripts)scripts='\nScripts:\n'+scripts;if(embed)embed='\nEmbedded:\n'+embed;alert('User Agent: '+navigator.userAgent+'\n\nTitle: '+title+'\n\nURL: '+location.href+'\n\nReferrer: '+document.referrer+'\n\nLast Modified: '+lastmod+'\n\nDisplay mode: '+mode+' mode\n'+meta+scripts+embed)})()">Info</a>
+
+		<h5>Creates panel for uploading to <a class="simple" href="http://www.imageshack.us/index.php">imageshack.us</a> and <a class="simple" href="http://www.rapidshare.com/">rapidshare.com</a></h5>
+		<a class="button" href="javascript:(function(){var b=document.getElementById('uploadt00lbar');if(b){b.parentNode.removeChild(b)}else{b=document.createElement('div');b.setAttribute('style','position:fixed;right:0;bottom:0;background:-o-skin(\x22Window Skin\x22);border:1px solid;padding:10px;z-index:9999;');b.id='uploadt00lbar';b.innerHTML='&lt;img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==\' title=\'Close\' width=\'18\' height=\'18\' style=\'position:relative;display:block;float:right;left:5px;bottom:5px;margin:1px;background:-o-skin(\x22Caption Close Button Skin\x22);cursor:pointer;\' onclick=\'this.parentNode.parentNode.removeChild(this.parentNode)\'&gt;&lt;a href=\'http://www.imageshack.us\' target=\'_blank\' style=\'text-decoration:none;color:#0000cc;font:14px Times New Roman;\'&gt;Imageshack.us&lt;/a&gt;&lt;form style=\'margin:5px;display:block;\' action=\'http://www.imageshack.us/index.php\' method=\'post\' target=\'_blank\' enctype=\'multipart/form-data\'&gt;&lt;input type=\'hidden\' value=\'1048576\' name=\'MAX_FILE_SIZE\' /&gt;&lt;input type=\'hidden\' value=\'blank\' name=\'type\' /&gt;&lt;input type=\'file\' name=\'fileupload\' style=\'font:13px Arial;\' /&gt;&lt;input name=\'submit\' type=\'submit\' value=\'Upload \' style=\'font:13px Arial;\' /&gt;&lt;/form&gt;&lt;a href=\'http://www.rapidshare.com\' target=\'_blank\' style=\'text-decoration:none;color:#0000cc;font:14px Times New Roman;\'&gt;Rapidshare.com&lt;/a&gt;&lt;form style=\'margin:5px;display:block;\' action=\'http://rs3l3.rapidshare.com/cgi-bin/upload.cgi?rsuploadid=142773989068418119\' method=\'post\' target=\'_blank\' enctype=\'multipart/form-data\' name=\'ul\' id=\'ul\'&gt;&lt;input type=\'file\' name=\'filecontent\' style=\'font:13px Arial;\' /&gt;&lt;input type=\'submit\' name=\'u\' value=\'Upload \' style=\'font:13px Arial;\' /&gt;&lt;/form&gt;';document.documentElement.appendChild(b);}})()">Upload</a>
+
+		<h5>Show source code of page or selection. Based on liveSource.js by <strong>aleto</strong></h5>
+		<a class="button" href="javascript:(function(){var k='  ';var l={img:1,br:1,link:1,input:1,hr:1,meta:1};var m=false;var n=0;var o=1;var p=1;var q=function(a){return'&lt;span class=%5C'tag%5C'&gt;&amp;lt;'+a+''};var r=function(a){return(a%3F'/':'')+'&amp;gt;&lt;/span&gt;'};var s=function(a,b){if(b||l[a.toLowerCase()])return'';return'&lt;span class=%5C'tag%5C'&gt;&amp;lt;/'+a+'&amp;gt;&lt;/span&gt;'};var t=function(){var a=document.doctype,code='';if(a){code=x()+q('!DOCTYPE')+' &lt;span class=%5C'attrDoc%5C'&gt;'+a.nodeName+(a.publicId%3F' PUBLIC %5C''+a.publicId+'%5C'':'')+(a.systemId%3F'&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;'+x()+'&lt;span class=%5C'tag%5C'&gt;&lt;span class=%5C'attrDoc%5C'&gt;'+k+'%5C''+a.systemId+'%5C'':'')+'&lt;/span&gt;'+r()+'&lt;/span&gt;&lt;/li&gt;'}return code};var u=function(a){var b=a.attributes,attr=null,realAttr=null,ret='',i=0;for(;attr=b[i];i++){realAttr=a.getAttribute(attr.name)||attr.value;if(realAttr&amp;&amp;!(a.nodeName.toLowerCase()=='a'&amp;&amp;attr.name=='SHAPE'&amp;&amp;realAttr=='rect')){realAttr=realAttr.replace(/&lt;/g,'&amp;lt;').replace(/&lt;/g,'&amp;lt;').replace(/%5Ct/g,k);ret+=' &lt;span class=%5C'attrTitle%5C'&gt;'+attr.name+'&lt;/span&gt;'+'='+'&lt;span class=%5C'attrValue%5C'&gt;%5Cx22'+realAttr+'%5Cx22&lt;/span&gt; '}}return ret};var v=function(a){return text=a.nodeValue.replace(/[%5Cn%5Ct%5Cr%5Cu00A0]+ */g,'').replace(/ +/g,' ').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')};var w=function(a){var i=0,ret='';while(i&lt;a){ret+=k;i++}return ret};var x=function(){var a=n.toString();while(a.length&lt;3)a='0'+a;return'&lt;li class=%5C'line'+(p&amp;&amp;((n++)&amp;1)%3F' dark%5C'':'%5C'')+'&gt;&lt;span&gt;'};this.updateNumbers=function(a){if(a.checked){a.ownerDocument.body.className=''}else{a.ownerDocument.body.className='hideLineNumbers'}};var y=function(a,b,c){var d=w(b++);var e='';switch(a.nodeType){case 1:{var f=a.childNodes,child=null,i=0;var g=(f.length==0)||(f.length==1&amp;&amp;f[0].nodeType==3);var h=m&amp;&amp;f.length==0;var j=x()+d+q(a.nodeName)+u(a)+r(h);if(!g)j+='&lt;/span&gt;&lt;/li&gt;';for(;child=f[i];i++){j+=y(child,b,!g&amp;&amp;child.nodeType==3)}if(g){j+=(/textarea/i.test(a.nodeName)%3Fa.value:'')+s(a.nodeName,h)+'&lt;/span&gt;&lt;/li&gt;'}else{j+=x()+d+s(a.nodeName,h)+'&lt;/span&gt;&lt;/li&gt;'}return j}case 3:{if((e=v(a))&amp;&amp;c){return x()+d+e+'&lt;/span&gt;&lt;/li&gt;'}else{return e}}case 8:{e=v(a);return x()+d+'&lt;span class=%5C'comment%5C'&gt;&amp;lt;!--'+e+'--&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;'}case 4:{e=v(a);return x()+d+'&lt;span class=%5C'cdata%5C'&gt;&amp;lt;![CDATA[&lt;/span&gt;'+e+'&lt;span class=%5C'cdata%5C'&gt;]]&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;'}}return a.nodeType};var z=function(){var a=t();var b=document.documentElement;if(window.getSelection&amp;&amp;window.getSelection()!=''){b=document.createDocumentFragment();var c=window.getSelection().getRangeAt(0);var d=c.commonAncestorContainer;b.appendChild(document.createTextNode('%5Cu2026'));b.appendChild(c.cloneContents());b.appendChild(document.createTextNode('%5Cu2026'));while(d){if(d.nodeType==1){var e=d.cloneNode(false);e.appendChild(b);b=e};d=d.parentNode}};a+=y(b,0);return a};m=/[a-z]/.test(document.documentElement.nodeName);var A='&lt;!DOCTYPE html PUBLIC&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;&lt;/title&gt;'+'&lt;style type=%5C'text/css%5C'&gt;'+'body {padding:5px;margin:0;font-family:sans-serif;font-size:.7em;background-color:%23FFF;color:%23000;} p.title, p.url{margin:0;padding:0;line-height:1.4em;font-weight:bold;margin-left:5px;}p.url{color:%23666;margin-bottom:5px;}%23content{white-space:pre-wrap}ol {color:%23999;}.hideLineNumbers ol{margin:0;padding:0;}span{color:%23000}.tag{color:%2305F}.attrTitle{color:%23E00}.attrValue{color:%23C0C}.attrDoc{color:%23800080}.comment{color:green}.line{margin:0;padding:0}.dark{background-color:%23FAFAFA}label{float:right;font-weight:normal;font-size:11px;}'+'&lt;/style&gt;&lt;/head&gt;&lt;body&gt;'+'&lt;p class=%5C'title%5C' &gt;'+(document.title||(document.getElementsByTagName('title')[0]&amp;&amp;document.getElementsByTagName('title')[0].text)||'untitled').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')+'&lt;/p&gt;'+'&lt;p class=%5C'url%5C' &gt;[ '+location.protocol+'//'+location.host+location.pathname+' ]&lt;/p&gt;'+'&lt;ol id=%5C'content%5C'&gt;'+z()+'&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;';var B=window.open('about:blank','_blank');var C=B.document;C.write(A);C.close()})()">Source</a>
+
+		<h5>Creates links for download of Flash</h5>
+		<a class="button" href="javascript:(function(){var createLink=function(l,t){var oLnk=document.createElement('a');oLnk.setAttribute('href',l);oLnk.appendChild(document.createTextNode(t));oLnk.setAttribute('style','display:inline-block;text-decoration:underline;font:14px Times New Roman;');return oLnk};var showLink=function(oEle,oSrc,oFlv){var cName='ujs_downlink';var p=oEle.previousSibling;if(p&amp;&amp;p.className==cName){oEle.parentNode.removeChild(p);return};var oDiv=document.createElement('div');oDiv.className=cName;oDiv.appendChild(createLink(oSrc,'Download'));var r=/%5Cw=([%5Cw %5C/:.-]+flv)/i.exec(decodeURIComponent(oFlv));if(r){oDiv.appendChild(document.createTextNode(' ('));oDiv.appendChild(createLink(r[1],'flv'));oDiv.appendChild(document.createTextNode(')'))};oEle.parentNode.insertBefore(oDiv,oEle)};var getParam=function(e,n){var re=new RegExp('^('+n+')$','i');var param=e.getElementsByTagName('param');for(var i=0,p;p=param[i];i++){if(p.getAttribute('name').match(re))return p.getAttribute('value')}};var searchEmbed=function(w){if(!w)return;var obj=w.document.getElementsByTagName('object');for(var i=0,oi;oi=obj[i];i++){var src=oi.getAttribute('data')||oi.getAttribute('src');if(!src)src=getParam(oi,'movie|data|src|code|filename|url');showLink(oi,src,getParam(oi,'flashvars'))};var em=w.document.getElementsByTagName('embed');for(var i=0,ei;ei=em[i];i++){if(ei.parentNode.tagName.toLowerCase()!='object')showLink(ei,ei.getAttribute('src'),ei.getAttribute('flashvars'))};for(var j=0,f;f=w.frames[j];j++){try{arguments.callee(f)}catch(e){}}};searchEmbed(window.top)})()">Get flash</a>
+
+		<h5>For forums. Copy text with formatting to textarea</h5>
+		<a class="button" href="javascript:(function(){var txt='';var s=window.getSelection();if(s!=''){var sel=document.createElement('div');sel.appendChild(s.getRangeAt(0).cloneContents());var ele=sel.getElementsByTagName('*');for(var i=0,e;e=ele[i];i++){switch(e.tagName.toUpperCase()){case'A':e.innerHTML='[url='+e.href+']'+e.innerHTML+'[/url]';break;case'FONT':if(e.color){e.innerHTML='[color='+e.color+']'+e.innerHTML+'[/color]'};break;case'DIV':if(e.className=='code'){e.innerHTML='[code]'+e.innerHTML+'[/code]'}else{if(e.className=='quote'){e.innerHTML='[quote]'+e.innerHTML+'[/quote]'}else{e.innerHTML=''+e.innerHTML}};break;case'B':e.innerHTML='[b]'+e.innerHTML+'[/b]';break;case'STRONG':e.innerHTML='[b]'+e.innerHTML+'[/b]';break;case'I':e.innerHTML='[i]'+e.innerHTML+'[/i]';break;case'U':e.innerHTML='[u]'+e.innerHTML+'[/u]';break;case'PRE':e.innerHTML='[code]'+e.innerHTML+'[/code]';break;case'BLOCKQUOTE':e.innerHTML='[quote]'+e.innerHTML+'[/quote]';break;case'IMG':e.outerHTML+='[img]'+e.src+'[/img]';break}};txt=sel.innerText};var n=txt.split('\n').length;var ta=document.getElementsByTagName('textarea');var tl=ta.length-1;var t;do{t=ta[tl];tl--}while(t&&(t.rows<5||t.offsetHeight==0));if(!t){if(txt)prompt('Please copy BBCode',txt);return}if(t.rows<15){t.rows+n<=15?t.rows+=n:t.rows=15};var r=t.value.length;t.value+='[quote]'+txt+'[/quote]\r\n';r=txt?t.value.length:r+7;t.setSelectionRange(r,r);t.focus()})()">Quote+</a>
+
+	</body>
+
+</html>
