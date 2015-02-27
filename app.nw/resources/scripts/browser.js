@@ -120,7 +120,7 @@ _stylesInit += "<style id='aries__style'>";
 	_stylesInit += "#aries-contextMenu__default { width: 115px; } ";
 
 	// GitHub
-	_stylesInit += ".markdown-body code { display: inline-block; } ";
+	_stylesInit += ".markdown-body code { display: inline; } ";
 
 	// YouTube
 	_stylesInit += "#watch7-sidebar-offer, #watch7-sidebar-ads { display: none !important; }";

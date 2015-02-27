@@ -379,6 +379,15 @@ function pageLoad() {
 
 	$("iframe").on("load", function () {
 
+		var iframe = $(this)[0];
+		$frameHead = $(this).contents().find("head");
+
+		var m = document.createElement("meta");
+		m.httpEquiv = "content-security-policy";
+		// m.content = "script-src 'self' 'unsafe-inline';";
+		m.content = "script-src 'self' 'unsafe-inline' *.google.com platform.twitter.com https://facebook.com *.facebook.net *.skimresources.com;";
+		$frameHead.prepend(m);
+
 		// Inject menus and default styles
 		include("resources/scripts/browser.js");
 
@@ -399,41 +408,6 @@ function pageLoad() {
 			/stumbleupon.com\/.*badge/,
 			/cdn.stumble-upon.com/
 		]
-		*/
-		
-		/*
-		http://s0.2mdn.net/instream/video/client.js
-		//connect.facebook.net/en_US/all.js#xfbml=1
-		https://apis.google.com/js/plusone.js
-		//platform.twitter.com/widgets.js
-		https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en_GB.qQyfm_LIxiY.O/m=client,plusone/rt=j/sv=1/d=1/ed=1/am=AQ/rs=AGLTcCMoslli_HVapaVbAWpnN45jIl8ZEw/t=zcms/cb=gapi.loaded_0
-		https://plus.google.com/js/client:plusone.js
-		http://edge.quantserve.com/quant.js
-		http://b.scorecardresearch.com/beacon.js
-		http://static.chartbeat.com/js/chartbeat_pub.js
-		http://js.moatads.com/essencedigital34895338176918191/moatcontent.js
-		https://s.yimg.com/uq/syndication/yad.js
-		*/
-
-		/*
-		// document
-		// iframe.contentWindow.document.body
-		var IF = $(this).contents().find("body");
-		IF.addEventListener("beforeload", function(event) {
-			console.log("DOES THIS WORK");
-
-			for (var i = 0; i < blockers.length; i++) {
-				var blocker = blockers[i];
-
-				if (event.url.match(blocker)) {
-					event.preventDefault();
-					return false;
-
-					console.log("Blocked some shit");
-				}
-			}
-		}, true);
-		///
 		*/
 
 		var nw = {

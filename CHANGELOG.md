@@ -1,3 +1,7 @@
+1.1.3 / 02-27-2015
+==================
+* started working on ad-blocking via Content Security Policy (need to work on whitelisting so social buttons work
+
 1.1.1 / 02-03-2015
 ==================
 * resizing the browser doesn't mess up windows. Need to make this more fluid though.
