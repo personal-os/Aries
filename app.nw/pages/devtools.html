@@ -1,53 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Aries | Developer Tools</title>
 
-		<meta charset="utf-8"/>
-		<title>Aries | Developer Tools</title>
+    <!--/
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    010000010111001011010010110010101110011
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    A R I E S
+    ░░░░░░░░░
+    /-->
 
-		<!--/
-		░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-		010000010111001011010010110010101110011
-		░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-		A R I E S
-		░░░░░░░░░
-		/-->
+    <meta name="application-name" content="Aries"/>
+    <meta name="author" content="Paul Anthony Webb × Ideas Never Cease"/>
+    <meta name="description" content="Browser for the OS of the future. http://hikar.io"/>
 
-		<meta name="application-name" content="Aries"/>
-		<meta name="author" content="Paul Anthony Webb × Ideas Never Cease"/>
-		<meta name="description" content="Browser for the OS of the future. http://hikar.io"/>
+    <link rel="stylesheet" href="../resources/css/style.css"/>
 
-		<link rel="stylesheet" href="../resources/css/style.css"/>
+    <script src="../resources/scripts/vendor/jquery-2.1.3.min.js"></script>
 
-		<script src="../resources/scripts/vendor/jquery-2.1.3.min.js"></script>
+    <script src="../resources/scripts/vendor/require.js"></script>
+    <script src="../resources/scripts/aries.js"></script>
+  </head>
 
-		<script>
-		</script>
+  <body>
+    <section id="aries-titlebar">
+      <h1>Aries | Developer Tools</h1>
+    </section>
 
-		<script src="../resources/scripts/vendor/require.js"></script>
-		<script src="../resources/scripts/aries.js"></script>
+    <section id="aries-powerbar">
+      <div id="window-actions" class="button-group">
+        <button class="app-minimize"></button>
+        <button class="app-maximize"></button>
+        <button class="app-close"></button>
+      </div>
+    </section>
 
-	</head>
-
-	<body>
-
-		<section id="aries-titlebar">
-			<h1>Aries | Developer Tools</h1>
-		</section>
-
-		<section id="aries-powerbar">
-			<div id="window-actions" class="button-group">
-				<button class="app-minimize"></button>
-				<button class="app-maximize"></button>
-				<button class="app-close"></button>
-			</div>
-		</section>
-
-		<section id="aries-showcase">
-			<iframe class="tabs-pane active" seamless="true" nwdisable nwfaketop id="devtools" src="http://127.0.0.1:2000/devtools/inspector.html"></iframe>
-		</section>
-
-	</body>
+    <section id="aries-showcase">
+      <iframe class="tabs-pane active" seamless="true" nwdisable nwfaketop id="devtools" src="http://127.0.0.1:2000/devtools/inspector.html"></iframe>
+    </section>
+  </body>
 
 </html>

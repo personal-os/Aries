@@ -19,11 +19,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>41.0.2236.2</string>
+	<string>41.0.2272.76</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2236.2</string>
+	<string>2272.76</string>
 	<key>DTSDKBuild</key>
 	<string>12F37</string>
 	<key>DTSDKName</key>
@@ -41,6 +41,6 @@
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
 	<key>SCMRevision</key>
-	<string>df30fb73b312044486237d93cf96f3606862f2a3</string>
+	<string>072d56ad45f528d86ca62d8709be879fd2e7644c</string>
 </dict>
 </plist>

@@ -1,37 +1,8 @@
-include = function() {
+// include.js
+// @IdeasNeverCease
+// ========================================================
+// ScriptInclude
+// Evan Hahn (https://github.com/EvanHahn/ScriptInclude)
+// Unlicensed
 
-	// save references to save a few bytes
-	var args = arguments;
-	var doc = document;
-
-	var toLoad = args.length; // load this many scripts
-	var lastArgument = args[toLoad - 1];
-	var hasCallback = lastArgument.call; // is the last arg a callback?
-
-	if (hasCallback) { toLoad--; }
-
-	function onScriptLoaded() {
-
-		var readyState = this.readyState; // we test for "complete" or "loaded" if on IE
-
-		if (!readyState || /ded|te/.test(readyState)) {
-			toLoad--;
-			if (!toLoad && hasCallback) { lastArgument(); }
-		}
-
-	}
-
-	var script;
-
-	for (var i = 0; i < toLoad; i++) {
-		script = doc.createElement("script");
-		script.src = arguments[i];
-		script.async = true;
-		script.onload = script.onerror = script.onreadystatechange = onScriptLoaded;
-		(
-			doc.head ||
-			doc.getElementsByTagName("head")[0]
-		).appendChild(script);
-	}
-
-};
+include=function(){function e(){var e=this.readyState;(!e||/ded|te/.test(e))&&(n--,!n&&d&&r())}var a=arguments,t=document,n=a.length,r=a[n-1],d=r.call;d&&n--;for(var c,o=0;n>o;o++)c=t.createElement("script"),c.src=arguments[o],c.async=!0,c.onload=c.onerror=c.onreadystatechange=e,(t.head||t.getElementsByTagName("head")[0]).appendChild(c)};

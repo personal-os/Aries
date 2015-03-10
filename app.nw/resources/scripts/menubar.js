@@ -1,780 +1,830 @@
+// menubar.js
+// @IdeasNeverCease
+// ========================================================
 
-	// menubar.js
-	// @IdeasNeverCease
-	// ========================================================
+// Initialize Node Webkit
+var nw = {
+  gui: require("nw.gui"),
+  win: require("nw.gui").Window.get(),
+  platform: require("os").platform,
+  spawn: require("child_process").spawn,
+  exec: require("child_process").exec,
+  fs: require("fs"),
+  path: require("path")
+},
+os = require("os"),
+winState,
+currWinMode,
+resizeTimeout,
+isMaximizationEvent = false;
 
-	// Initialize Node Webkit
-	var nw = {
-		gui: require("nw.gui"),
-		win: require("nw.gui").Window.get(),
-		platform: require("os").platform,
-		spawn: require("child_process").spawn,
-		exec: require("child_process").exec,
-		fs: require("fs"),
-		path: require("path")
-	},
-	os = require("os"),
-	winState,
-	currWinMode,
-	resizeTimeout,
-	isMaximizationEvent = false;
+// Should really put platform specific things in conditionals,
+// instead of duplicating functionality.
+// `if (os.platform() === "win32")`, &c
 
-	// Should really put platform specific things in conditionals,
-	// instead of duplicating functionality.
-	// `if (os.platform() === "win32")`, &c
+// Mac first
+if (os.platform() === "darwin") {
+  // var menu = new nw.gui.Menu({ type: "menubar" });
+  // menu.createMacBuiltin("Aries");
+  // nw.win.menu = menu;
 
-	// Mac first
-	if (os.platform() === "darwin") {
-		// var menu = new nw.gui.Menu({ type: "menubar" });
-		// menu.createMacBuiltin("Aries");
-		// nw.win.menu = menu;
+  // Create a menubar for window menu
+  var menubar = new nw.gui.Menu({ type: "menubar" });
 
-		// Create a menubar for window menu
-		var menubar = new nw.gui.Menu({ type: "menubar" });
+  /***********************************************/
 
-		/***********************************************/
+  // Aries Menu
+  var _aries = new nw.gui.Menu();
 
-		// Aries Menu
-		var _aries = new nw.gui.Menu();
+  // About
+  _aries.append(new nw.gui.MenuItem({
+    label: "About Aries",
 
-		// About
-		_aries.append(new nw.gui.MenuItem({
-			label: "About Aries",
-			click: function () {
+    click: function () {
+      console.log("Clicked 'About Aries'");
 
-				console.log("Clicked 'About Aries'");
+      /*
+      // iTunes-style About window
+      var win = nw.gui.Window.open("about.html", {
+        "position": "center",
+        "width": 600,
+        "height": 297,
+        "frame": false,
+        "toolbar": false
+      });
 
-				/*
-				// iTunes-style About window
-				var win = nw.gui.Window.open("about.html", {
-				  "position": "center",
-				  "width": 600,
-				  "height": 297,
-				  "frame": false,
-				  "toolbar": false
-				});
+      win.on("load", function () { this.focus(true); });
+      */
 
-				win.on("load", function () { this.focus(true); });
-				*/
+      _pageAbout();
+    }
+  }));
 
-				_pageAbout();
+  // _aries.append(new nw.gui.MenuItem({ type: "separator" }));
 
-			}
-		}));
 
-		// _aries.append(new nw.gui.MenuItem({ type: "separator" }));
 
+  /*
+  // Preferences
+  _aries.append(new nw.gui.MenuItem({
+    label: "Preferences",
 
+    click: function () {
+      console.log("Clicked 'Preferences'");
+    },
 
-		/*
-		// Preferences
-		_aries.append(new nw.gui.MenuItem({
-			label: "Preferences",
-			click: function () {
-				console.log("Clicked 'Preferences'");
-			},
-		  key: ",",
-		  modifiers: "cmd",
-		}));
+    key: ",",
+    modifiers: "cmd"
+  }));
 
-		_aries.append(new nw.gui.MenuItem({ type: "separator" }));
+  _aries.append(new nw.gui.MenuItem({ type: "separator" }));
 
 
 
-		// Synchronize
-		_aries.append(new nw.gui.MenuItem({
-			label: "Synchronize", // Aries Connect
-			click: function () {
-				console.log("Clicked 'Synchronize'");
-			}
-		}));
+  // Synchronize
+  _aries.append(new nw.gui.MenuItem({
+    label: "Synchronize", // Aries Connect
 
+    click: function () {
+      console.log("Clicked 'Synchronize'");
+    }
+  }));
 
 
-		// Clear Private Data
-		_aries.append(new nw.gui.MenuItem({
-			label: "Clear Private Data",
-			click: function () {
-				console.log("Clicked 'Clear Private Data'");
-			}
-		}));
 
-		_aries.append(new nw.gui.MenuItem({ type: "separator" }));
+  // Clear Private Data
+  _aries.append(new nw.gui.MenuItem({
+    label: "Clear Private Data",
 
+    click: function () {
+      console.log("Clicked 'Clear Private Data'");
+    }
+  }));
 
+  _aries.append(new nw.gui.MenuItem({ type: "separator" }));
 
-		// Streamline
-		_aries.append(new nw.gui.MenuItem({
-			label: "Streamline", // like Opera Turbo
-			click: function () {
-				console.log("Clicked 'Streamline'");
-			}
-		}));
 
-		_aries.append(new nw.gui.MenuItem({ type: "separator" }));
 
+  // Streamline
+  _aries.append(new nw.gui.MenuItem({
+    label: "Streamline", // like Opera Turbo
 
+    click: function () {
+      console.log("Clicked 'Streamline'");
+    }
+  }));
 
-		// Hide Aries
-		_aries.append(new nw.gui.MenuItem({
-			label: "Hide Aries",
-			click: function () {
-				console.log("Clicked 'Hide Aries'");
-			},
-		  key: "h",
-		  modifiers: "cmd",
-		}));
+  _aries.append(new nw.gui.MenuItem({ type: "separator" }));
 
 
 
-		// Hide Others
-		_aries.append(new nw.gui.MenuItem({
-			label: "Hide Others",
-			click: function () {
-				console.log("Clicked 'Hide Others'");
-			},
-		  key: "h",
-		  modifiers: "shift-cmd",
-		}));
+  // Hide Aries
+  _aries.append(new nw.gui.MenuItem({
+    label: "Hide Aries",
 
+    click: function () {
+      console.log("Clicked 'Hide Aries'");
+    },
 
+    key: "h",
+    modifiers: "cmd"
+  }));
 
-		// Show All
-		_aries.append(new nw.gui.MenuItem({
-			label: "Show All",
-			click: function () {
-				console.log("Clicked 'Show All'");
-			}
-		}));
 
-		_aries.append(new nw.gui.MenuItem({ type: "separator" }));
-		*/
 
+  // Hide Others
+  _aries.append(new nw.gui.MenuItem({
+    label: "Hide Others",
 
+    click: function () {
+      console.log("Clicked 'Hide Others'");
+    },
 
-		// Quit Aries
-		_aries.append(new nw.gui.MenuItem({
-			label: "Quit Aries",
-			click: function () {
+    key: "h",
+    modifiers: "shift-cmd"
+  }));
 
-				nw.win.close();
-				console.log("Clicked 'Quit Aries'");
 
-			},
-		  key: "q",
-		  modifiers: "cmd",
-		}));
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "Aries",
-			submenu: _aries
-		}));
+  // Show All
+  _aries.append(new nw.gui.MenuItem({
+    label: "Show All",
 
-		/***********************************************/
+    click: function () {
+      console.log("Clicked 'Show All'");
+    }
+  }));
 
+  _aries.append(new nw.gui.MenuItem({ type: "separator" }));
+  */
 
 
-		// File Menu
-	  var _file = new nw.gui.Menu();
 
+  // Quit Aries
+  _aries.append(new nw.gui.MenuItem({
+    label: "Quit Aries",
 
+    click: function () {
+      nw.win.close();
+      console.log("Clicked 'Quit Aries'");
+    },
 
-		// New Tab
-	  _file.append(new nw.gui.MenuItem({
-			label: "New Tab",
-			click: function() {
-				console.log("Clicked 'New Tab'");
+    key: "q",
+    modifiers: "cmd"
+  }));
 
+  menubar.append(new nw.gui.MenuItem({
+    label: "Aries",
+    submenu: _aries
+  }));
 
+  /***********************************************/
 
-				// Remove focus from other tabs and windows
-				$(".tab, .tabs-pane").removeClass("active");
 
-				$("#tab-wrapper").append(tabInit);
-				$("#aries-showcase").append(iframeInit);
 
-				pageLoad();
+  // File Menu
+  var _file = new nw.gui.Menu();
 
-				$("#url-bar").val("").focus();
 
-				var tabID = 0, windowID = 0;
 
+  // New Tab
+  _file.append(new nw.gui.MenuItem({
+    label: "New Tab",
 
+    click: function () {
+      console.log("Clicked 'New Tab'");
 
-				// Add a new tab
-				$("#tab-wrapper .tab").each(function () {
 
-					tabID++;
-					$(this).attr("data-tab", "#tab" + tabID);
 
-					var dataPage = $(this).attr("data-page");
-					console.log(dataPage);
+      // Remove focus from other tabs and windows
+      $(".tab, .tabs-pane").removeClass("active");
 
-				});
+      $("#tab-wrapper").append(tabInit);
+      $("#aries-showcase").append(iframeInit);
 
+      pageLoad();
 
+      $("#url-bar").val("").focus();
 
-				// Add a new window
-				$("#aries-showcase iframe").each(function () {
+      var tabID = 0, windowID = 0;
 
-					windowID++;
-					$(this).attr("id", "tab" + windowID);
-					// $(this).attr("src", dataPage);
 
-				}).css({ "width": nw.win.window.innerWidth, "height": nw.win.window.innerHeight - 31 + "px" });
 
-				$("iframe.active").each(function () {
-				  this.contentWindow.location.reload(true);
-				});
+      // Add a new tab
+      $("#tab-wrapper .tab").each(function () {
+        tabID++;
+        $(this).attr("data-tab", "#tab" + tabID);
 
+        var dataPage = $(this).attr("data-page");
+        console.log(dataPage);
+      });
 
 
-				// Reinitialize tabby to recognize new tab and window
-				tabby.init();
-				tabHover();
 
-				// Make sure URL bar shows. Gets stuck when clicking links with _target.
-				$("#url-bar").css("top", "0");
-				$("#status-bar").css("top", "31px");
+      // Add a new window
+      $("#aries-showcase iframe").each(function () {
+        windowID++;
+        $(this).attr("id", "tab" + windowID);
+        // $(this).attr("src", dataPage);
+      }).css({ "width": nw.win.window.innerWidth, "height": nw.win.window.innerHeight - 31 + "px" });
 
-				console.log("New tab added to Aries");
-			},
-		  key: "t",
-		  modifiers: "cmd",
-		}));
+      $("iframe.active").each(function () {
+        this.contentWindow.location.reload(true);
+      });
 
 
 
-		/*
-		// New Window
-	  _file.append(new nw.gui.MenuItem({
-			label: "New Window",
-			click: function() {
-				console.log("Clicked 'New Window'");
-			},
-		  key: "n",
-		  modifiers: "cmd",
-		}));
+      // Reinitialize tabby to recognize new tab and window
+      tabby.init();
+      tabHover();
 
+      // Make sure URL bar shows. Gets stuck when clicking links with _target.
+      $("#url-bar").css("top", "0");
+      $("#status-bar").css("top", "31px");
 
+      console.log("New tab added to Aries");
+    },
 
-		// New Private Window
-	  _file.append(new nw.gui.MenuItem({
-			label: "New Private Window",
-			click: function() {
-				console.log("Clicked 'New Private Window'");
-			},
-		  key: "n",
-		  modifiers: "shift-cmd",
-		}));
+    key: "t",
+    modifiers: "cmd"
+  }));
 
 
 
-		// Open File
-	  _file.append(new nw.gui.MenuItem({
-			label: "Open File",
-			click: function() {
-				console.log("Clicked 'Open File'");
-			},
-		  key: "o",
-		  modifiers: "cmd",
-		}));
+  /*
+  // New Window
+  _file.append(new nw.gui.MenuItem({
+    label: "New Window",
 
+    click: function () {
+      console.log("Clicked 'New Window'");
+    },
 
+    key: "n",
+    modifiers: "cmd"
+  }));
 
-		// Open Location
-	  _file.append(new nw.gui.MenuItem({
-			label: "Open Location",
-			click: function() {
-				console.log("Clicked 'Open Location'");
-			},
-		  key: "l",
-		  modifiers: "cmd",
-		}));
-		*/
 
-		// _file.append(new nw.gui.MenuItem({ type: "separator" }));
 
+  // New Private Window
+  _file.append(new nw.gui.MenuItem({
+    label: "New Private Window",
 
+    click: function () {
+      console.log("Clicked 'New Private Window'");
+    },
 
-		// Reload Tab
-	  _file.append(new nw.gui.MenuItem({
-			label: "Reload Tab",
-			click: function() {
+    key: "n",
+    modifiers: "shift-cmd"
+  }));
 
-				$("iframe.active").attr("src", function (i, val) { return val; });
-				console.log("Reloaded Tab");
 
-			},
-		  key: "r",
-		  modifiers: "cmd",
-		}));
 
+  // Open File
+  _file.append(new nw.gui.MenuItem({
+    label: "Open File",
 
+    click: function () {
+      console.log("Clicked 'Open File'");
+    },
 
-		/*
-		// Close Tab
-	  _file.append(new nw.gui.MenuItem({
-			label: "Close Tab",
-			click: function() {
+    key: "o",
+    modifiers: "cmd"
+  }));
 
-				console.log("Clicked 'Close Tab'");
 
-			},
-		  key: "w",
-		  modifiers: "cmd",
-		}));
 
+  // Open Location
+  _file.append(new nw.gui.MenuItem({
+    label: "Open Location",
 
+    click: function () {
+      console.log("Clicked 'Open Location'");
+    },
 
-		// Close Other Tabs
-	  _file.append(new nw.gui.MenuItem({
-			label: "Close Other Tabs",
-			click: function() {
-				console.log("Clicked 'Close Other Tabs'");
-			}
-		}));
+    key: "l",
+    modifiers: "cmd"
+  }));
+  */
 
+  // _file.append(new nw.gui.MenuItem({ type: "separator" }));
 
 
-		// Close Window
-	  _file.append(new nw.gui.MenuItem({
-			label: "Close Window",
-			click: function() {
-				console.log("Clicked 'Close Window'");
-			},
-		  key: "w",
-		  modifiers: "shift-cmd",
-		}));
 
-		_file.append(new nw.gui.MenuItem({ type: "separator" }));
+  // Reload Tab
+  _file.append(new nw.gui.MenuItem({
+    label: "Reload Tab",
 
+    click: function () {
+      $("iframe.active").attr("src", function (i, val) { return val; });
+      console.log("Reloaded Tab");
+    },
 
+    key: "r",
+    modifiers: "cmd"
+  }));
 
-		// Save Page As
-	  _file.append(new nw.gui.MenuItem({
-			label: "Save Page As",
-			click: function() {
-				console.log("Clicked 'Save Page As'");
-			},
-		  key: "s",
-		  modifiers: "shift-cmd",
-		}));
 
-		_file.append(new nw.gui.MenuItem({ type: "separator" }));
 
+  /*
+  // Close Tab
+  _file.append(new nw.gui.MenuItem({
+    label: "Close Tab",
 
+    click: function () {
+      console.log("Clicked 'Close Tab'");
+    },
 
-		// Print
-	  _file.append(new nw.gui.MenuItem({
-			label: "Print",
-			click: function() {
-				console.log("Clicked 'Print'");
-			},
-		  key: "p",
-		  modifiers: "cmd",
-		}));
-		*/
+    key: "w",
+    modifiers: "cmd"
+  }));
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "File",
-			submenu: _file
-		}));
 
-		/***********************************************/
 
+  // Close Other Tabs
+  _file.append(new nw.gui.MenuItem({
+    label: "Close Other Tabs",
 
+    click: function () {
+      console.log("Clicked 'Close Other Tabs'");
+    }
+  }));
 
-		// Edit Menu
-		var _edit = new nw.gui.Menu();
 
 
+  // Close Window
+  _file.append(new nw.gui.MenuItem({
+    label: "Close Window",
 
-		/*
-		// Undo
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Undo",
-			click: function() {
-				console.log("Clicked 'Undo'");
-			},
-		  key: "z",
-		  modifiers: "cmd",
-		}));
+    click: function () {
+      console.log("Clicked 'Close Window'");
+    },
 
+    key: "w",
+    modifiers: "shift-cmd"
+  }));
 
+  _file.append(new nw.gui.MenuItem({ type: "separator" }));
 
-		// Redo
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Redo",
-			click: function() {
-				console.log("Clicked 'Redo'");
-			},
-		  key: "z",
-		  modifiers: "shift-cmd",
-		}));
 
-		_edit.append(new nw.gui.MenuItem({ type: "separator" }));
-		*/
 
+  // Save Page As
+  _file.append(new nw.gui.MenuItem({
+    label: "Save Page As",
 
+    click: function () {
+      console.log("Clicked 'Save Page As'");
+    },
 
-		// Cut
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Cut",
-			click: function() {
+    key: "s",
+    modifiers: "shift-cmd",
+  }));
 
-				document.execCommand("cut");
-				console.log("Cut something");
+  _file.append(new nw.gui.MenuItem({ type: "separator" }));
 
-			},
-		  key: "x",
-		  modifiers: "cmd",
-		}));
 
 
+  // Print
+  _file.append(new nw.gui.MenuItem({
+    label: "Print",
 
-		// Copy
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Copy",
-			click: function() {
+    click: function () {
+      console.log("Clicked 'Print'");
+    },
 
-				document.execCommand("copy");
-				console.log("Copied something");
+    key: "p",
+    modifiers: "cmd"
+  }));
+  */
 
-			},
-		  key: "c",
-		  modifiers: "cmd",
-		}));
+  menubar.append(new nw.gui.MenuItem({
+    label: "File",
+    submenu: _file
+  }));
 
+  /***********************************************/
 
 
-		// Paste
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Paste",
-			click: function() {
 
-				document.execCommand("paste");
-				console.log("Pasted something");
+  // Edit Menu
+  var _edit = new nw.gui.Menu();
 
-			},
-		  key: "v",
-		  modifiers: "cmd",
-		}));
 
 
+  /*
+  // Undo
+  _edit.append(new nw.gui.MenuItem({
+    label: "Undo",
 
-		// Select All
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Select All",
-			click: function() {
+    click: function () {
+      console.log("Clicked 'Undo'");
+    },
 
-				document.execCommand("SelectAll");
-				console.log("Clicked 'Select All'");
+    key: "z",
+    modifiers: "cmd"
+  }));
 
-			},
-		  key: "a",
-		  modifiers: "cmd",
-		}));
 
-		_edit.append(new nw.gui.MenuItem({ type: "separator" }));
 
+  // Redo
+  _edit.append(new nw.gui.MenuItem({
+    label: "Redo",
 
+    click: function () {
+      console.log("Clicked 'Redo'");
+    },
 
-		/*
-		// Find
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Find",
-			click: function() {
-				console.log("Clicked 'Find'");
-			},
-		  key: "f",
-		  modifiers: "cmd",
-		}));
+    key: "z",
+    modifiers: "shift-cmd"
+  }));
 
+  _edit.append(new nw.gui.MenuItem({ type: "separator" }));
+  */
 
 
-		// Find Next
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Find Next",
-			click: function() {
-				console.log("Clicked 'Find Next'");
-			},
-		  key: "g",
-		  modifiers: "cmd",
-		}));
 
+  // Cut
+  _edit.append(new nw.gui.MenuItem({
+    label: "Cut",
 
+    click: function () {
 
-		// Find Previous
-	  _edit.append(new nw.gui.MenuItem({
-			label: "Find Previous",
-			click: function() {
-				console.log("Clicked 'Find Previous'");
-			},
-		  key: "g",
-		  modifiers: "shift-cmd",
-		}));
-		*/
+      document.execCommand("cut");
+      console.log("Cut something");
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "Edit",
-			submenu: _edit
-		}));
+    },
 
-		/***********************************************/
+    key: "x",
+    modifiers: "cmd"
+  }));
 
 
 
-		/*
-		// View Menu
-		var _view = new nw.gui.Menu();
+  // Copy
+  _edit.append(new nw.gui.MenuItem({
+    label: "Copy",
 
-	  _view.append(new nw.gui.MenuItem({
-			label: "Test 002",
-			click: function() {
-				console.log("Clicked 'Test 002'");
-			},
-		  key: "",
-		  modifiers: "",
-		}));
+    click: function () {
 
-		_view.append(new nw.gui.MenuItem({ type: "separator" }));
+      document.execCommand("copy");
+      console.log("Copied something");
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "View",
-			submenu: _view
-		}));
-		*/
+    },
 
-		/***********************************************/
+    key: "c",
+    modifiers: "cmd"
+  }));
 
 
 
-		/*
-		// History Menu
-		var _history = new nw.gui.Menu();
+  // Paste
+  _edit.append(new nw.gui.MenuItem({
+    label: "Paste",
 
-	  _history.append(new nw.gui.MenuItem({
-			label: "Test 003",
-			click: function() {
-				console.log("Clicked 'Test 003'");
-			},
-		  key: "",
-		  modifiers: "",
-		}));
+    click: function () {
 
-		_history.append(new nw.gui.MenuItem({ type: "separator" }));
+      document.execCommand("paste");
+      console.log("Pasted something");
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "History",
-			submenu: _history
-		}));
-		*/
+    },
 
-		/***********************************************/
+    key: "v",
+    modifiers: "cmd"
+  }));
 
 
 
-		// Developer Menu
-		var _developer = new nw.gui.Menu();
+  // Select All
+  _edit.append(new nw.gui.MenuItem({
+    label: "Select All",
 
+    click: function () {
 
+      document.execCommand("SelectAll");
+      console.log("Clicked 'Select All'");
 
-		// Web Inspector
-	  _developer.append(new nw.gui.MenuItem({
-			label: "Web Inspector",
+    },
 
-			click: function() {
+    key: "a",
+    modifiers: "cmd"
+  }));
 
-				nw.win.showDevTools();
+  _edit.append(new nw.gui.MenuItem({ type: "separator" }));
 
-				// nw.win.showDevTools([id | iframe, headless]);
-				// nw.win.showDevTools("", false);
-				// nw.win.showDevTools("devtools", headless);
 
-				// http://127.0.0.1:2000/devtools/inspector.html
 
-				console.log("Dev Mode, ON");
+  /*
+  // Find
+  _edit.append(new nw.gui.MenuItem({
+    label: "Find",
 
-			},
-		  key: "i",
-		  modifiers: "shift-cmd",
-		}));
+    click: function () {
+      console.log("Clicked 'Find'");
+    },
 
-		/*
-		var win = nwgui.Window.get();
+    key: "f",
+    modifiers: "cmd"
+  }));
 
-		win.showDevTools("", true);
 
-		win.on("devtools-opened", function(url) {
 
-			console.log("devtools-opened: " + url);
-			document.getElementById('devtools').src = url;
+  // Find Next
+  _edit.append(new nw.gui.MenuItem({
+    label: "Find Next",
 
-		});
-		*/
+    click: function () {
+      console.log("Clicked 'Find Next'");
+    },
 
-		// Ghostery
-		_developer.append(new nw.gui.MenuItem({
-			label: "Ghostery",
-			click: function() {
+    key: "g",
+    modifiers: "cmd"
+  }));
 
-				console.log("Ghostery!");
-				_ghostery();
 
-			},
-			key: "g",
-			modifiers: "shift-cmd",
-		}));
 
-		// Reload Aries
-	  _developer.append(new nw.gui.MenuItem({
-			label: "Reload Aries",
-			click: function() {
+  // Find Previous
+  _edit.append(new nw.gui.MenuItem({
+    label: "Find Previous",
 
-				nw.win.reload();
-				// nw.win.maximize(); // gotta be a better solution than this
-				console.log("Reloaded Aries");
+    click: function () {
+      console.log("Clicked 'Find Previous'");
+    },
 
-			},
-		  key: "r",
-		  modifiers: "shift-cmd",
-		}));
+    key: "g",
+    modifiers: "shift-cmd",
+  }));
+  */
 
-		/*
-		_developer.append(new nw.gui.MenuItem({ type: "separator" }));
+  menubar.append(new nw.gui.MenuItem({
+    label: "Edit",
+    submenu: _edit
+  }));
 
+  /***********************************************/
 
 
-		// View Source
-	  _developer.append(new nw.gui.MenuItem({
-			label: "View Source",
-			click: function() {
-				console.log("Clicked 'View Source'");
-			},
-		  key: "u",
-		  modifiers: "cmd",
-		}));
-		*/
 
-		/*
-		_developer.append(new nw.gui.MenuItem({ type: "separator" }));
+  /*
+  // View Menu
+  var _view = new nw.gui.Menu();
 
+  _view.append(new nw.gui.MenuItem({
+    label: "Test 002",
 
+    click: function () {
+      console.log("Clicked 'Test 002'");
+    },
 
-		// Task Manager
-	  _developer.append(new nw.gui.MenuItem({
-			label: "Task Manager",
-			click: function() {
-				console.log("Clicked 'Task Manager'");
-			},
-		  key: "",
-		  modifiers: "",
-		}));
+    key: "",
+    modifiers: "",
+  }));
 
+  _view.append(new nw.gui.MenuItem({ type: "separator" }));
 
+  menubar.append(new nw.gui.MenuItem({
+    label: "View",
+    submenu: _view
+  }));
+  */
 
-		// Plugins
-	  _developer.append(new nw.gui.MenuItem({
-			label: "Plugins",
-			click: function() {
-				console.log("Clicked 'Plugins'");
-			},
-		  key: "",
-		  modifiers: "",
-		}));
-		*/
+  /***********************************************/
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "Developer",
-			submenu: _developer
-		}));
 
-		/***********************************************/
 
+  /*
+  // History Menu
+  var _history = new nw.gui.Menu();
 
+  _history.append(new nw.gui.MenuItem({
+    label: "Test 003",
 
-		/*
-		// Window Menu
-		var _window = new nw.gui.Menu();
+    click: function () {
+      console.log("Clicked 'Test 003'");
+    },
 
-	  _window.append(new nw.gui.MenuItem({
-			label: "Test 005",
-			click: function() {
-				console.log("Clicked 'Test 005'");
-			},
-		  key: "",
-		  modifiers: "",
-		}));
+    key: "",
+    modifiers: "",
+  }));
 
-		_window.append(new nw.gui.MenuItem({ type: "separator" }));
+  _history.append(new nw.gui.MenuItem({ type: "separator" }));
 
-		menubar.append(new nw.gui.MenuItem({
-			label: "Window",
-			submenu: _window
-		}));
-		*/
+  menubar.append(new nw.gui.MenuItem({
+    label: "History",
+    submenu: _history
+  }));
+  */
 
-		/***********************************************/
+  /***********************************************/
 
 
 
-		// Help Menu
-	  var _help = new nw.gui.Menu();
+  // Developer Menu
+  var _developer = new nw.gui.Menu();
 
 
 
-		/*
-		// Aries Help
-	  _help.append(new nw.gui.MenuItem({
-			label: "Aries Help",
-			click: function() {
-				console.log("Clicked 'Aries Help'");
-			}
-		}));
+  // Web Inspector
+  _developer.append(new nw.gui.MenuItem({
+    label: "Web Inspector",
 
+    click: function () {
+      nw.win.showDevTools();
 
+      // nw.win.showDevTools([id | iframe, headless]);
+      // nw.win.showDevTools("", false);
+      // nw.win.showDevTools("devtools", headless);
 
-		// Keyboard Shortcuts
-	  _help.append(new nw.gui.MenuItem({
-			label: "Keyboard Shortcuts",
-			click: function() {
-				console.log("Clicked 'Keyboard Shortcuts'");
-			}
-		}));
+      // http://127.0.0.1:2000/devtools/inspector.html
 
-		_help.append(new nw.gui.MenuItem({ type: "separator" }));
-		*/
+      console.log("Dev Mode, ON");
+    },
 
+    key: "i",
+    modifiers: "shift-cmd",
+  }));
 
+  /*
+  var win = nwgui.Window.get();
 
-		// Report Issues
-	  _help.append(new nw.gui.MenuItem({
-			label: "Report Issues",
-			click: function() {
+  win.showDevTools("", true);
 
-				console.log("Clicked 'Report Issues'");
+  win.on("devtools-opened", function (url) {
+    console.log("devtools-opened: " + url);
+    document.getElementById('devtools').src = url;
+  });
+  */
 
-				// TODO:
-				// Maybe open a new tab instead of taking over the current active one
-				$("iframe.active").attr("src", "https://github.com/IdeasNeverCease/Aries/issues");
-				$("button.active").attr("data-page", "https://github.com/IdeasNeverCease/Aries/issues");
+  // Ghostery
+  _developer.append(new nw.gui.MenuItem({
+    label: "Ghostery",
 
-				var currentTitle = $("iframe.active").contents().find("title").html();
-				$("#aries-titlebar h1").text(currentTitle);
-				$("button.active .tab-title").text("Issues · IdeasNeverCease/Aries");
-			}
-		}));
+    click: function () {
+      console.log("Ghostery!");
+      _ghostery();
+    },
 
-	  menu_help = new nw.gui.MenuItem({ label: "Help" });
-	  menu_help.submenu = _help;
+    key: "g",
+    modifiers: "shift-cmd",
+  }));
 
-		menubar.append(menu_help);
+  // Reload Aries
+  _developer.append(new nw.gui.MenuItem({
+    label: "Reload Aries",
 
-		/***********************************************/
+    click: function () {
+      nw.win.reload();
+      // nw.win.maximize(); // gotta be a better solution than this
+      console.log("Reloaded Aries");
+    },
 
+    key: "r",
+    modifiers: "shift-cmd",
+  }));
 
+  /*
+  _developer.append(new nw.gui.MenuItem({ type: "separator" }));
 
-		// Assign the menubars to window menu
-		nw.win.menu = menubar;
-	}
+
+
+  // View Source
+  _developer.append(new nw.gui.MenuItem({
+    label: "View Source",
+
+    click: function () {
+      console.log("Clicked 'View Source'");
+    },
+
+    key: "u",
+    modifiers: "cmd"
+  }));
+  */
+
+  /*
+  _developer.append(new nw.gui.MenuItem({ type: "separator" }));
+
+
+
+  // Task Manager
+  _developer.append(new nw.gui.MenuItem({
+    label: "Task Manager",
+
+    click: function () {
+      console.log("Clicked 'Task Manager'");
+    },
+
+    key: "",
+    modifiers: "",
+  }));
+
+
+
+  // Plugins
+  _developer.append(new nw.gui.MenuItem({
+    label: "Plugins",
+
+    click: function () {
+      console.log("Clicked 'Plugins'");
+    },
+
+    key: "",
+    modifiers: "",
+  }));
+  */
+
+  menubar.append(new nw.gui.MenuItem({
+    label: "Developer",
+    submenu: _developer
+  }));
+
+  /***********************************************/
+
+
+
+  /*
+  // Window Menu
+  var _window = new nw.gui.Menu();
+
+  _window.append(new nw.gui.MenuItem({
+    label: "Test 005",
+
+    click: function () {
+      console.log("Clicked 'Test 005'");
+    },
+
+    key: "",
+    modifiers: "",
+  }));
+
+  _window.append(new nw.gui.MenuItem({ type: "separator" }));
+
+  menubar.append(new nw.gui.MenuItem({
+    label: "Window",
+    submenu: _window
+  }));
+  */
+
+  /***********************************************/
+
+
+
+  // Help Menu
+  var _help = new nw.gui.Menu();
+
+
+
+  /*
+  // Aries Help
+  _help.append(new nw.gui.MenuItem({
+    label: "Aries Help",
+
+    click: function () {
+      console.log("Clicked 'Aries Help'");
+    }
+  }));
+
+
+
+  // Keyboard Shortcuts
+  _help.append(new nw.gui.MenuItem({
+    label: "Keyboard Shortcuts",
+
+    click: function () {
+      console.log("Clicked 'Keyboard Shortcuts'");
+    }
+  }));
+
+  _help.append(new nw.gui.MenuItem({ type: "separator" }));
+  */
+
+
+
+  // Report Issues
+  _help.append(new nw.gui.MenuItem({
+    label: "Report Issues",
+
+    click: function () {
+      console.log("Clicked 'Report Issues'");
+
+      // TODO:
+      // Maybe open a new tab instead of taking over the current active one
+      $("iframe.active").attr("src", "https://github.com/IdeasNeverCease/Aries/issues");
+      $("button.active").attr("data-page", "https://github.com/IdeasNeverCease/Aries/issues");
+
+      var currentTitle = $("iframe.active").contents().find("title").html();
+      $("#aries-titlebar h1").text(currentTitle);
+      $("button.active .tab-title").text("Issues · IdeasNeverCease/Aries");
+    }
+  }));
+
+  menu_help = new nw.gui.MenuItem({ label: "Help" });
+  menu_help.submenu = _help;
+
+  menubar.append(menu_help);
+
+  /***********************************************/
+
+
+
+  // Assign the menubars to window menu
+  nw.win.menu = menubar;
+}

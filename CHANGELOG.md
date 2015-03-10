@@ -1,15 +1,29 @@
-1.1.3 / 02-27-2015
+1.1.4 / 03.09.2015
+==================
+* updated RequireJS
+* updated SmartUnderline
+* updated NW.js to version 12
+* minified JavaScript not liable to change anytime soon
+* changed the "About" page red to teal, it was glaring
+* optimized images
+* added fonts from Brick.im
+
+
+
+1.1.3 / 02.27.2015
 ==================
 * started working on ad-blocking via Content Security Policy (need to work on whitelisting so social buttons work
 
-1.1.1 / 02-03-2015
+
+
+1.1.1 / 02.03.2015
 ==================
 * resizing the browser doesn't mess up windows. Need to make this more fluid though.
 * made user-agent dynamic
 
 
 
-1.1.0 / 01-31-2015
+1.1.0 / 01.31.2015
 ==================
 * refactored and deleted lots of stuff
 * finally found a solution to the double-loading irritation that has been plauging Aries since its inception. FINALLY!
@@ -25,13 +39,13 @@
 
 
 
-1.0.0 / 01-18-2015
+1.0.0 / 01.18.2015
 ==================
 * migrated from node-webkit to NW.js
 
 
 
-0.6.0 / 12-24-2014
+0.6.0 / 12.24.2014
 ==================
 * created a CHANGELOG
 * node-webkit updated to 0.11.4

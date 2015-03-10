@@ -1,3 +1,7 @@
+// browser.js
+// @IdeasNeverCease
+// ========================================================
+
 _stylesInit = "";
 _stylesInit += "<style id='aries__style'>";
 
