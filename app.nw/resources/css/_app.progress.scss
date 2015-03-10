@@ -2,37 +2,37 @@
 ///////////////////////////////////////////////////////////////////////////////// APP.PROGRESS/SCSS ///
 
 #nprogress {
-	pointer-events: none;
+  pointer-events: none;
 
-	.bar {
-		width: 100%; height: 5px;
-		top: 0; left: 0;
+  .bar {
+    width: 100%; height: 5px;
+    top: 0; left: 0;
 
-	  background-color: $teal;
-	  position: fixed;
-	  z-index: 1031;
-	}
+    background-color: $teal;
+    position: fixed;
+    z-index: 1031;
+  }
 
-	.peg {
-		width: 100px; height: 100%;
+  .peg {
+    width: 100px; height: 100%;
 
-	  box-shadow: 0 0 10px $teal, 0 0 5px $teal;
-	  display: block;
-		opacity: 1;
-	  position: absolute;
-	  right: 0;
-		transform: rotate(3deg) translate(0, -4px);
-	}
+    box-shadow: 0 0 10px $teal, 0 0 5px $teal;
+    display: block;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    transform: rotate(3deg) translate(0, -4px);
+  }
 }
 
 .nprogress-custom-parent {
   overflow: hidden;
   position: relative;
 
-	#nprogress {
-		.spinner,
-		.bar {
-			position: absolute;
-		}
-	}
+  #nprogress {
+    .spinner,
+    .bar {
+      position: absolute;
+    }
+  }
 }

@@ -3,18 +3,18 @@
 // test these styles here: http://hikar.io/test.html
 
 iframe {
-	background-color: $white;
+  background-color: $white;
 
-	body {
-		h1 {
-			color: rgba($black, 0.3);
-			font-size: 30px;
-		}
+  body {
+    h1 {
+      color: rgba($black, 0.3);
+      font-size: 30px;
+    }
 
-		input,
-		input:checked,
-		input:focus {
-			outline: none !important;
-		}
-	}
+    input,
+    input:checked,
+    input:focus {
+      outline: none !important;
+    }
+  }
 }
