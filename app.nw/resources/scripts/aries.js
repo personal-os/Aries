@@ -103,12 +103,14 @@ $(function () {
   $("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
   $("#status-bar").css("width", nw.win.window.innerWidth - 190 + "px");
 
+  /*
   // Set showcase width and height
   // $("#aries-showcase, iframe").css({
   $("#aries-showcase").css({
     "width": nw.win.window.innerWidth - 1 + "px",
     "height": nw.win.window.innerHeight - 33 + "px" // minus URL bar height + 1px
   });
+  */
 
   // Prevent popups from occurring
   // Memory Leak
@@ -125,12 +127,14 @@ $(function () {
     // Set URL bar width
     $("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
 
+    /*
     // Set showcase width and height
     // $("#aries-showcase, iframe").css({
     $("#aries-showcase").css({
       "width": nw.win.window.innerWidth - 1 + "px",
       "height": nw.win.window.innerHeight - 33 + "px"
     });
+    */
 
     process.setMaxListeners(0);
 

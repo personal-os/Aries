@@ -316,7 +316,7 @@ button.app-close {
 #aries-showcase,
 iframe {
   // width: 100%; height: 100%;
-  width: 100vw; height: calc(100vh - 56px);
+  width: 100vw !important; height: calc(100vh - 56px) !important;
 }
 
 #aries-showcase {
