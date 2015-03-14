@@ -2,6 +2,8 @@
 // @IdeasNeverCease
 // ========================================================
 
+var _stylesInit, _contextInit, _scrollbarBody;
+
 _stylesInit = "";
 _stylesInit += "<style id='aries__style'>";
 
@@ -131,11 +133,16 @@ _stylesInit += "<style id='aries__style'>";
 
   // Polygon
   _stylesInit += ".ad_slidedown, .m-ad, .m-ad__leaderboard, .dfp_ad, .ad_chunk_a { display: none !important; }";
-  _stylesInit += "";
+
+  // scrollbar
+_stylesInit += "html::-webkit-scrollbar{width:0!important}#scrollbar,#scrollthumb{top:0;right:0;position:absolute}#scrollbar{background-color:transparent;border-left:1px solid rgba(25,25,25,.05);height:100%;transition:all .2s ease;width:10px;z-index:2}#scrollbar:hover{background-color:rgba(25,25,25,.1);border-left-color:rgba(25,25,25,.1)}#scrollthumb{background-color:rgba(25,25,25,.3);right:6px;transition:background-color .2s ease,right .2s ease,width .2s ease;width:4px}#scrollbar:hover #scrollthumb{background-color:#50bebf;right:0;width:100%}";
+
   _stylesInit += "";
   _stylesInit += "";
 
 _stylesInit += "</style>";
+
+
 
 _contextInit = "";
 
@@ -159,7 +166,34 @@ _contextInit += "<ul id='aries-contextMenu__image'>";
   _contextInit += "<li class='aries-contextMenu__item'>Open Image in New Tab</li>";
 _contextInit += "</ul>";
 
-$.each($("iframe.active"), function() {
+
+
+_scrollbarBody = "";
+
+_scrollbarBody += "<script id='scrollThing'>document.onreadystatechange = function () { if (document.readyState === 'complete') {";
+// _scrollbarBody += "<script id='scrollThing'>window.onload = function () {;"
+_scrollbarBody += 'var CustomScrollbar=function(e){function t(e){return Number(e)+"px"}function o(e,t){var o=document.createElement("div"),i=t||u;return o.id=e,i.appendChild(o),o}function i(){u=document.querySelector("body"),h=o(w.selectors.scrollbar),f=o(w.selectors.scrollbarThumb,h)}function s(){u&&(f.style.top=t(Math.floor(u.scrollTop/a)<u.scrollHeight-f.offsetHeight?u.scrollTop/a:u.scrollHeight-f.offsetHeight))}function n(){w.thumbHeight&&f&&(f.style.height=t(u.offsetHeight*(w.thumbHeight/100))),u&&(m.isWebkit?(g=u.scrollHeight-u.offsetHeight,b=u.scrollHeight-f.offsetHeight,h.style.visibility=u.offsetHeight>=u.scrollHeight?"hidden":"visible"):(u.style.height=t(window.innerHeight),g=u.scrollHeight-u.offsetHeight,b=u.offsetHeight-f.offsetHeight,f.style.visibility=u.offsetHeight>=u.scrollHeight?"hidden":"visible"),a=g/b,f.style.top=t(u.scrollTop/a))}function l(){m.isWebkit&&(h.style.height=t(0),f.style.top=0,h.style.height=t(u.scrollHeight))}function r(){var e=document.createElement("style");e.type="text/css",m.isWebkit||(e.innerHTML=m.isIE?"html, body { overflow: hidden; }":"html, body { overflow: hidden; } body { overflow-y:scroll; }"),w.bodyPaddingRight&&(e.innerHTML+="body { padding-right: "+w.bodyPaddingRight+"px; }"),u.appendChild(e),u.className+=(u.className.length>0?" ":"")+"has-customscrollbar"+(m.isFirefox?" has-customscrollbar-firefox":"")}function c(){var e="ontouchstart"in window||window.DocumentTouch&&document instanceof DocumentTouch;return{isFirefox:navigator.userAgent.match(/(firefox)/i)?!0:!1,isIE:navigator.userAgent.match(/(trident)/i)?!0:!1,isWebkit:navigator.userAgent.match(/(chrome|safari)/i)?!0:!1,useScrollbar:!e&&!navigator.msMaxTouchPoints}}function d(){window.addEventListener("load",function(){setTimeout(function(){p=window.pageYOffset,i(),r(),n(),n(),f.addEventListener("mousedown",function(e){y=!0,H=m.isWebkit?e.offsetY:v-u.offsetTop-f.offsetTop,e.preventDefault()}),m.isWebkit?h.style.height=t(u.scrollHeight):(u.addEventListener("scroll",s),m.isIE&&(u.addEventListener("mousewheel",function(e){u.scrollTop-=e.wheelDelta}),window.addEventListener("keydown",function(e){u.scrollTop+=32===e.keyCode?u.offsetHeight/1.5:45*(40===e.keyCode?1:38===e.keyCode?-1:0)}))),m.isFirefox&&setTimeout(function(){u.scrollTop=p},0)},0)}),document.addEventListener("mouseup",function(){y=!1}),document.addEventListener("mousemove",function(e){v=e.clientY,y&&(u.scrollTop=m.isWebkit?(v-H)*(g/(u.offsetHeight-f.offsetHeight)):(v-u.offsetTop-H)*a)}),window.addEventListener("scroll",s),window.addEventListener("resize",function(){l(),setTimeout(function(){n(),n()},0)})}var h,f,u,a,g,b,m,y=!1,H=0,v=0,p=0,w={thumbHeight:e&&e.thumbHeight,bodyPaddingRight:e&&e.bodyPaddingRight,selectors:e&&e.selectors||{scrollbar:"scrollbar",scrollbarThumb:"scrollthumb"}};m=c(),m.useScrollbar&&d()};';
+_scrollbarBody += "var scrollbar = CustomScrollbar({thumbHeight: 40});";
+// _scrollbarBody += "};</script>";
+_scrollbarBody += "}}</script>";
+
+
+
+/*
+$("iframe").each(function(){
+  var body = $("body",this.contentWindow.document);
+  body.jScrollPane();
+});
+*/
+/*
+$("iframe").each(function () {
+  var body = $("body", this.contentWindow.document);
+  // body.jScrollPane();
+  Ps.initialize(body);
+});
+*/
+
+$.each($("iframe.active"), function () {
 
   // Context Menu
   var
@@ -173,6 +207,13 @@ $.each($("iframe.active"), function() {
     $frameHead.prepend(_stylesInit);
     console.log("Injected default Aries styles");
   }
+
+
+
+  // scrollbar
+  $frameBody.append(_scrollbarBody);
+
+
 
   if ($frameBody.find("#aries-contextMenu__default, #aries-contextMenu__text, #aries-contextMenu__image").length > 0) {
     console.log("Menus already exist");

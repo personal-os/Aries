@@ -14,6 +14,7 @@
     /-->
 
     <link rel="stylesheet" href="../resources/css/style.css"/>
+    <link rel="stylesheet" href="../resources/scripts/scroll/scrollbar.css"/>
     <link rel="shortcut icon" href="../resources/images/favicon-default.png"/>
 
     <style>
@@ -81,7 +82,7 @@
       }
     </style>
 
-    <script src="../resources/scripts/smartUnderline.js"></script>
+    <script src="../resources/scripts/plugins/smartUnderline.js"></script>
 
     <script>
       SmartUnderline.init({
@@ -93,7 +94,7 @@
   <body>
     <header>
       <div class="wrapper">
-        <h1>Aries<sup>v1.1.4</sup></h1>
+        <h1>Aries<sup>v1.1.5</sup></h1>
         <h3>Your browser for the 'Net</h3>
       </div>
     </header>
@@ -111,6 +112,14 @@
         <p>Dedicated to the memory of Zoe Elise Webb. With love, always.</p>
       </div>
     </section>
+
+    <script src="../resources/scripts/scroll/scrollbar.js"></script>
+
+    <script>
+      var scrollbar = CustomScrollbar({
+        thumbHeight: 40
+      });
+    </script>
   </body>
 
 </html>

@@ -630,6 +630,82 @@ if (os.platform() === "darwin") {
     click: function () {
       nw.win.showDevTools();
 
+      // "pages/devtools.html" opens
+      // "http://127.0.0.1:2000/devtools/inspector.html"
+      // TODO: Figure out why localhost:2000 isn't working
+
+      /*
+      var winnnn = nw.gui.Window.open("pages/devtools.html", {
+        "width": 1066,
+        "height": 568,
+        "focus": true,
+        "frame": false,
+        "fullscreen": false,
+        "icon": "app.nw/resources/images/aries.icns",
+        "position": "center",
+        "resizable": true,
+        "title": "Aries"
+      });
+
+      winnnn;
+      */
+
+      /*
+      // var url = "pages/devtools.html";
+      nw.win.showDevTools(false, true);
+
+      nw.win.on("devtools-opened", function(url) {
+        console.log("devtools-opened: " + url);
+
+        var winnnn = nw.gui.Window.open("pages/devtools.html", {
+          "width": 1066,
+          "height": 568,
+          "focus": true,
+          "frame": false,
+          "fullscreen": false,
+          "icon": "app.nw/resources/images/aries.icns",
+          "position": "center",
+          "resizable": true,
+          "title": "Aries"
+        });
+
+        $("#devtools").src(url);
+
+        winnnn;
+
+        var tools=document.createElement("iframe");
+        tools.src = url;
+        document.querySelector("body").appendChild(tools);
+        tools.style.background="black";
+        tools.style.position="absolute";
+        tools.style.top= "0";
+        tools.style.left= "0";
+        tools.style.width= "100%";
+        tools.style.height= "100%";
+        tools.style.border= "none";
+        tools.style.color= "white";
+      });
+      */
+
+      /*
+      nw.win.showDevTools(false, true);
+
+      nw.win.on("devtools-opened", function(url) {
+        console.log("devtools-opened: " + url);
+        var tools=document.createElement('iframe');
+        tools.src = url;
+        document.querySelector('body').appendChild(tools);
+        tools.style.background='black';
+        tools.style.position='absolute';
+        tools.style.top='0px';
+        tools.style.left='0px';
+        tools.style.width='100%';
+        tools.style.height='100%';
+        tools.style.border='none';
+        tools.style.color='white';
+      });
+      */
+
       // nw.win.showDevTools([id | iframe, headless]);
       // nw.win.showDevTools("", false);
       // nw.win.showDevTools("devtools", headless);

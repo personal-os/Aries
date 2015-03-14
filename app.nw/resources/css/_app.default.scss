@@ -5,6 +5,10 @@
 iframe {
   background-color: $white;
 
+  html::-webkit-scrollbar {
+    width: 0 !important;
+  }
+
   body {
     h1 {
       color: rgba($black, 0.3);
