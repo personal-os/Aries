@@ -26,12 +26,10 @@ $(function () {
 
 
 
-  // menubar.js
-  include("resources/scripts/menubar.js");
-
-  var
-    tabInit = "",
-    iframeInit = "";
+  // For some reason, declaring these two as variables breaks the app. Weird.
+  // Hooray for bad JavaScript!
+  tabInit = "",
+  iframeInit = "";
 
   // Build initial tab
   tabInit += "<button class='tab active'";
@@ -53,6 +51,11 @@ $(function () {
 
   iframeInit += "nwdisable nwfaketop ";
   iframeInit += "id=''>";
+
+  // menubar.js
+  include("resources/scripts/menubar.js");
+
+
 
   // Minimize Aries
   $(".app-minimize").on("click", function () {
