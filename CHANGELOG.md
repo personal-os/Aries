@@ -1,9 +1,19 @@
+1.1.6 / 05.10.2015
+==================
+* updated TLD support
+* updated NW.js to 0.12.1
+* changed folder structure to try and get cross-platform app generation working
+
+
+
 1.1.5 / 03.00.2015
 ==================
 * `scripts` folder cleanup
 * Developer Tools isn't working like I'd like it to, due to something in NW.js. Try again later.
 * updated TLD support
 * custom scrollbar (...on internal pages, need to figure out how to make this work inside iframes)!
+
+
 
 1.1.4 / 03.09.2015
 ==================

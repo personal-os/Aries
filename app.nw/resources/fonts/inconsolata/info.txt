@@ -1,7 +1,0 @@
----
-class: mono
-use: body
-
-styles:
-  "500": "Inconsolata"
----
