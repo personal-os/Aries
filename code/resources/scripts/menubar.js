@@ -2,6 +2,9 @@
 // @IdeasNeverCease
 // ========================================================
 
+/* jshint undef: true, unused: true */
+/* global $, document, require, _pageAbout, tabInit, iframeInit, pageLoad, tabby, tabHover */
+
 // Initialize Node Webkit
 var nw = {
   gui: require("nw.gui"),
@@ -13,6 +16,7 @@ var nw = {
   path: require("path")
 },
 os = require("os"),
+// do I need the below variables? // TODO
 winState,
 currWinMode,
 resizeTimeout,

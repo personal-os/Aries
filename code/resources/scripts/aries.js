@@ -2,33 +2,36 @@
 // @IdeasNeverCease
 // ========================================================
 
+/* jshint undef: true, unused: true */
+/* global $, window, require, document, include, setTimeout */
+
 $(function () {
 
   // Initialize Node Webkit
   var
-  $vW = $(window).width(),
-  $vH = $(window).height(),
-  // child_process = require("child_process"),
-  nw = {
-    gui: require("nw.gui"),
-    win: require("nw.gui").Window.get(),
-    platform: require("os").platform,
-    spawn: require("child_process").spawn,
-    exec: require("child_process").exec,
-    fs: require("fs"),
-    path: require("path")
-  },
-  os = require("os"),
-  winState,
-  currWinMode,
-  resizeTimeout,
-  isMaximizationEvent = false;
+    // $vW = $(window).width(),
+    $vH = $(window).height(),
+    // child_process = require("child_process"),
+    nw = {
+      gui: require("nw.gui"),
+      win: require("nw.gui").Window.get(),
+      platform: require("os").platform,
+      spawn: require("child_process").spawn,
+      exec: require("child_process").exec,
+      fs: require("fs"),
+      path: require("path")
+    },
+    os = require("os"),
+    winState,
+    currWinMode,
+    resizeTimeout,
+    isMaximizationEvent = false;
 
 
 
   // For some reason, declaring these two as variables breaks the app. Weird.
   // Hooray for bad JavaScript!
-  tabInit = "",
+  tabInit = "";
   iframeInit = "";
 
   // Build initial tab
