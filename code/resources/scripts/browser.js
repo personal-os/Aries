@@ -2,14 +2,17 @@
 // @IdeasNeverCease
 // ========================================================
 
+/* jshint undef: true, unused: true */
+/* global $, frameBody, mouseX, mouseY */
+
 var _stylesInit, _contextInit, _scrollbarBody;
 
 _stylesInit = "";
 _stylesInit += "<style id='aries__style'>";
 
   // Basic styles
-  _stylesInit += "html, body, article, aside, footer, header, hgroup, main, nav, section, h1, h2, h3, h4, h5, h6," +
-                 "p, ul, ol, menu, dir, pre, code { ";
+  _stylesInit += "html, body, article, aside, footer, header, hgroup, main, nav, section, h1, h2, h3, h4, h5, h6,";
+    _stylesInit += "p, ul, ol, menu, dir, pre, code { ";
     _stylesInit += "display: block; ";
   _stylesInit += "} ";
 
@@ -197,32 +200,32 @@ $.each($("iframe.active"), function () {
 
   // Context Menu
   var
-  $frameHead = $(this).contents().find("head"),
-  $frameBody = $(this).contents().find("body"),
-  mouseX, mouseY;
+    frameHead = $(this).contents().find("head"),
+    frameBody = $(this).contents().find("body"),
+    mouseX, mouseY;
 
-  if ($frameHead.find("#aries__style").length > 0) {
+  if (frameHead.find("#aries__style").length > 0) {
     console.log("Styles already exist");
   } else {
-    $frameHead.prepend(_stylesInit);
+    frameHead.prepend(_stylesInit);
     console.log("Injected default Aries styles");
   }
 
 
 
   // scrollbar
-  $frameBody.append(_scrollbarBody);
+  frameBody.append(_scrollbarBody);
 
 
 
-  if ($frameBody.find("#aries-contextMenu__default, #aries-contextMenu__text, #aries-contextMenu__image").length > 0) {
+  if (frameBody.find("#aries-contextMenu__default, #aries-contextMenu__text, #aries-contextMenu__image").length > 0) {
     console.log("Menus already exist");
   } else {
-    $frameBody.append(_contextInit);
+    frameBody.append(_contextInit);
     console.log("Injected context menus");
   }
 
-  $frameBody[0].addEventListener("mousemove", function (e) {
+  frameBody[0].addEventListener("mousemove", function (e) {
 
     mouseX = e.pageX;
     mouseY = e.pageY;
@@ -232,7 +235,7 @@ $.each($("iframe.active"), function () {
 
   // http://hikar.io/test.html
 
-  $frameBody[0].addEventListener("contextmenu", function (event) {
+  frameBody[0].addEventListener("contextmenu", function (event) {
 
     event.preventDefault();
     var target = event.target;

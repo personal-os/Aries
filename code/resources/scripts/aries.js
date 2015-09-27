@@ -2,55 +2,59 @@
 // @IdeasNeverCease
 // ========================================================
 
+/* jshint undef: true, unused: true */
+/* global $, require, document, include, setTimeout */
+
 $(function () {
 
   // Initialize Node Webkit
   var
-  $vW = $(window).width(),
-  $vH = $(window).height(),
+    nw = {
+      gui: require("nw.gui"),
+      win: require("nw.gui").Window.get(),
+      platform: require("os").platform,
+      spawn: require("child_process").spawn,
+      exec: require("child_process").exec,
+      fs: require("fs"),
+      path: require("path")
+    },
+    currWinMode,
+    isMaximizationEvent = false
+  ;
+
+  // $vW = $(window).width(),
+  // $vH = $(window).height(),
   // child_process = require("child_process"),
-  nw = {
-    gui: require("nw.gui"),
-    win: require("nw.gui").Window.get(),
-    platform: require("os").platform,
-    spawn: require("child_process").spawn,
-    exec: require("child_process").exec,
-    fs: require("fs"),
-    path: require("path")
-  },
-  os = require("os"),
-  winState,
-  currWinMode,
-  resizeTimeout,
-  isMaximizationEvent = false;
+  // os = require("os"),
+  // winState,
+  // resizeTimeout,
 
 
 
   // For some reason, declaring these two as variables breaks the app. Weird.
   // Hooray for bad JavaScript!
-  tabInit = "",
-  iframeInit = "";
+  var
+    tabInit = "",
+    iframeInit = ""
+  ;
 
   // Build initial tab
-  tabInit += "<button class='tab active'";
-  tabInit += "data-tab=''";
-  tabInit += "data-page='pages/start.html'>";
-  tabInit += "<img class='tab-favicon' type='image/x-icon'";
-  tabInit += "src='resources/images/favicon-default.png'>";
-  tabInit += "<span class='tab-close'></span>";
-  tabInit += "<span class='tab-title'></span>";
-  tabInit += "</button>";
-
-  // Build initial iframe
-  iframeInit += "<iframe class='tabs-pane active' ";
-  iframeInit += "seamless='true' ";
+  tabInit +=
+    "<button class='tab active' data-tab='' data-page='pages/start.html'>" +
+      "<img class='tab-favicon' type='image/x-icon' src='resources/images/favicon-default.png'>" +
+      "<span class='tab-close'></span>" +
+      "<span class='tab-title'></span>" +
+    "</button>"
+  ;
 
   // iframeInit += "sandbox='allow-same-origin allow-scripts allow-forms'";
   // need to make user agent dynamic
   // iframeInit += "nwUserAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Aries/0.5-alpha' ";
 
-  iframeInit += "nwdisable nwfaketop ";
-  iframeInit += "id=''>";
+  // Build initial iframe
+  iframeInit +=
+    "<iframe class='tabs-pane active' seamless='true' nwdisable nwfaketop id=''></iframe>"
+  ;
 
   // menubar.js
   include("resources/scripts/menubar.js");
@@ -59,14 +63,14 @@ $(function () {
 
   // Minimize Aries
   $(".app-minimize").on("click", function () {
-
     nw.win.on("minimize", function () {
       currWinMode = "minimized";
     });
 
     nw.win.minimize();
-
   });
+
+
 
   // Restore Aries
   nw.win.on("restore", function () {
@@ -75,9 +79,10 @@ $(function () {
     process.setMaxListeners(0);
   });
 
+
+
   // Un/Maximize Aries
   $(".app-maximize").on("click", function () {
-
     nw.win.on("maximize", function () {
       isMaximizationEvent = true;
       currWinMode = "maximized";
@@ -89,24 +94,27 @@ $(function () {
     });
 
     nw.win.maximize();
-
   });
+
+
 
   // Close Aries
   $(".app-close").on("click", function () {
-
     nw.win.on("close", function () {
       // saveWindowState();
       this.close(true);
     });
 
     nw.win.close();
-
   });
+
+
 
   // Set URL/status bar width
   $("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
   $("#status-bar").css("width", nw.win.window.innerWidth - 190 + "px");
+
+
 
   /*
   // Set showcase width and height
@@ -117,6 +125,8 @@ $(function () {
   });
   */
 
+
+
   // Prevent popups from occurring
   // Memory Leak
   nw.win.on("new-win-policy", function (frame, url, policy) {
@@ -124,11 +134,12 @@ $(function () {
     process.setMaxListeners(0);
   });
 
+
+
   // Recalculate sizing of browser elements when scaling Aries
   // TODO: make this better
   // Memory Leak
   nw.win.on("resize", function () {
-
     // Set URL bar width
     $("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
 
@@ -142,8 +153,9 @@ $(function () {
     */
 
     process.setMaxListeners(0);
-
   });
+
+
 
   $(document).on("click", ".tab-title", function () {
 
