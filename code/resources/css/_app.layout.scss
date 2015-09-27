@@ -50,6 +50,7 @@ ul, ol, menu, dir {
 #status-bar {
   background-color: transparent;
   border: none;
+  font-family: inherit;
   height: 31px;
   left: 94px;
   line-height: 1;
@@ -57,6 +58,7 @@ ul, ol, menu, dir {
   padding: 0 0.5rem;
   transition: all 0.2s ease-in-out;
   white-space: pre; //
+
   -webkit-appearance: none;
 }
 

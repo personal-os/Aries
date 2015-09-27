@@ -3,11 +3,20 @@
 // ========================================================
 
 /* jshint undef: true, unused: true */
-/* global $, frameBody, mouseX, mouseY */
+/* global $, frameBody */
 
-var _stylesInit, _contextInit, _scrollbarBody;
+// TODO
+// Everything commented out needs to be in a module
 
-_stylesInit = "";
+/*
+var
+  _stylesInit = "",
+  _contextInit = "",
+  _scrollbarBody = ""
+;
+
+
+
 _stylesInit += "<style id='aries__style'>";
 
   // Basic styles
@@ -147,7 +156,6 @@ _stylesInit += "</style>";
 
 
 
-_contextInit = "";
 
 _contextInit += "<ul id='aries-contextMenu__default'>";
   _contextInit += "<li id='acMd__back' class='aries-contextMenu__item'>Back</li>";
@@ -171,7 +179,6 @@ _contextInit += "</ul>";
 
 
 
-_scrollbarBody = "";
 
 _scrollbarBody += "<script id='scrollThing'>document.onreadystatechange = function () { if (document.readyState === 'complete') {";
 // _scrollbarBody += "<script id='scrollThing'>window.onload = function () {;"
@@ -179,6 +186,7 @@ _scrollbarBody += 'var CustomScrollbar=function(e){function t(e){return Number(e
 _scrollbarBody += "var scrollbar = CustomScrollbar({thumbHeight: 40});";
 // _scrollbarBody += "};</script>";
 _scrollbarBody += "}}</script>";
+*/
 
 
 
@@ -196,13 +204,17 @@ $("iframe").each(function () {
 });
 */
 
-$.each($("iframe.active"), function () {
+
+
+// $.each($("iframe.active"), function () {
+$("iframe.active").each(function () {
 
   // Context Menu
   var
     frameHead = $(this).contents().find("head"),
-    frameBody = $(this).contents().find("body"),
-    mouseX, mouseY;
+    frameBody = $(this).contents().find("body")
+    // mouseX, mouseY
+  ;
 
   if (frameHead.find("#aries__style").length > 0) {
     console.log("Styles already exist");
@@ -225,20 +237,28 @@ $.each($("iframe.active"), function () {
     console.log("Injected context menus");
   }
 
+  /*
   frameBody[0].addEventListener("mousemove", function (e) {
 
-    mouseX = e.pageX;
-    mouseY = e.pageY;
-    // console.log(e.pageX + "px + " + e.pageY + "px");
+    var mouseX = e.pageX;
+    var mouseY = e.pageY;
+
+    console.log(mouseX + "px + " + mouseY + "px");
 
   });
+  */
 
   // http://hikar.io/test.html
 
-  frameBody[0].addEventListener("contextmenu", function (event) {
+  frameBody[0].addEventListener("contextmenu", function (e) {
 
-    event.preventDefault();
-    var target = event.target;
+    e.preventDefault();
+
+    var
+      target = e.target,
+      mouseX = e.pageX,
+      mouseY = e.pageY
+    ;
 
     if ($(target).is("img")) {
 

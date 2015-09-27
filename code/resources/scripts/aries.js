@@ -3,7 +3,23 @@
 // ========================================================
 
 /* jshint undef: true, unused: true */
-/* global $, require, document, include, setTimeout */
+/* global process, $, require, emitter, document, include, setTimeout, NProgress */
+
+
+
+console.log(
+  process.platform + " " + process.arch,
+  "\nPID: " + process.pid
+);
+
+
+
+var
+  tabInit = "",
+  iframeInit = ""
+;
+
+
 
 $(function () {
 
@@ -22,21 +38,7 @@ $(function () {
     isMaximizationEvent = false
   ;
 
-  // $vW = $(window).width(),
-  // $vH = $(window).height(),
-  // child_process = require("child_process"),
-  // os = require("os"),
-  // winState,
-  // resizeTimeout,
 
-
-
-  // For some reason, declaring these two as variables breaks the app. Weird.
-  // Hooray for bad JavaScript!
-  var
-    tabInit = "",
-    iframeInit = ""
-  ;
 
   // Build initial tab
   tabInit +=
@@ -56,7 +58,7 @@ $(function () {
     "<iframe class='tabs-pane active' seamless='true' nwdisable nwfaketop id=''></iframe>"
   ;
 
-  // menubar.js
+  // Bring in menu bar
   include("resources/scripts/menubar.js");
 
 
@@ -74,9 +76,11 @@ $(function () {
 
   // Restore Aries
   nw.win.on("restore", function () {
-    // Memory Leak
     currWinMode = "normal";
+
+    // Memory Leak // Might be fixed now...
     process.setMaxListeners(0);
+    emitter.setMaxListeners(0);
   });
 
 
@@ -128,17 +132,18 @@ $(function () {
 
 
   // Prevent popups from occurring
-  // Memory Leak
   nw.win.on("new-win-policy", function (frame, url, policy) {
     policy.ignore();
+
+    // Memory Leak // Might be fixed now...
     process.setMaxListeners(0);
+    emitter.setMaxListeners(0);
   });
 
 
 
   // Recalculate sizing of browser elements when scaling Aries
   // TODO: make this better
-  // Memory Leak
   nw.win.on("resize", function () {
     // Set URL bar width
     $("#url-bar").css("width", nw.win.window.innerWidth - 190 + "px");
@@ -152,151 +157,12 @@ $(function () {
     });
     */
 
+    // Memory Leak // Uncommenting "emitter" results in error, why?!
     process.setMaxListeners(0);
+    // emitter.setMaxListeners(0);
   });
 
 
-
-  $(document).on("click", ".tab-title", function () {
-
-    var tabID = $(this).parent().attr("data-tab");
-    // var tabID = $(this).attr("data-tab");
-    var gotIT = $("iframe" + tabID).attr("src");
-    var title = $("iframe" + tabID).contents().find("title").html();
-
-    // Remove active states for other tabs/windows
-    $("iframe").removeClass("active");
-    $("#tab-wrapper button").removeClass("active");
-
-    // Add active states for selected tab/window
-    $("iframe" + tabID).addClass("active");
-    $(this).parent().addClass("active");
-
-    // Populate title/address bar, tab title, and
-    // tab icon with appropriate information
-    $("#url-bar").val(gotIT);
-    $(".tab-title", this).text(title);
-    $("#aries-titlebar h1").text(title);
-    $(".tab-favicon", this).attr("src", getFavicon);
-
-    // Don't show anything in address bar if on start page,
-    // but put it in focus
-    if (gotIT === "pages/start.html") {
-      $("#url-bar").val("").focus();
-    }
-
-    console.log(tabID);
-    console.log(gotIT);
-
-  });
-
-  $(document).on("click", ".tab-close", function () {
-
-    // TODO
-    // Make this a function so I can use this for keyboard shortcuts
-    var tabID = $(this).parent().attr("data-tab");
-    var gotIT = $("iframe" + tabID);
-
-    var
-    tab = $(this).closest("#tab-wrapper").find(".tab"),
-    win = $(gotIT).closest("#aries-showcase").find("iframe"),
-    tabCount = tab.length,
-    winCount = win.length;
-
-    if ((tabCount == 1) && (winCount == 1)) { // if there is only one window left
-
-      console.log("This is the last tab and window.");
-
-      $(this).parent(".tab").addClass("active");
-      $(gotIT).attr("src", "pages/start.html");
-      $(gotIT).addClass("active");
-
-    } else if ((tabCount > 1) && (winCount > 1)) { // if there is more than one window
-
-      if ($(this).parent().hasClass("active") && $(gotIT).hasClass("active")) {
-
-        var prevTab = $(this).parent(".tab").prev(".tab");
-        var nextTab = $(this).parent(".tab").next(".tab");
-
-        if (prevTab.length) {
-          $(this).parent(".tab").prev(".tab").addClass("active");
-        } else if (nextTab.length) {
-          $(this).parent(".tab").next(".tab").addClass("active");
-        }
-
-        var prevWin = $(gotIT).prev("iframe");
-        var nextWin = $(gotIT).next("iframe");
-
-        if (prevWin.length) {
-          $(gotIT).prev("iframe").addClass("active");
-        } else if (nextWin.length) {
-          $(gotIT).next("iframe").addClass("active");
-        }
-
-      }
-
-      setTimeout(function () {
-        var location = $("iframe.active").attr("src");
-        $("#url-bar").val(location);
-      }, 10);
-
-      $(this).parent(".tab").remove();
-      $(gotIT).remove();
-
-    } else if ((tabCount < 1) && (winCount < 1)) { // just create new tab and window
-
-      console.log("Create new tab and window");
-
-      $("#tab-wrapper").append(tabInit);
-      $("#aries-showcase").append(iframeInit);
-
-      if ($("#url-bar").val() == "pages/start.html") {
-        $("#url-bar").val("").focus();
-      } else {
-        $("#url-bar").val("").focus();
-      }
-
-    }
-
-  });
-
-  // TODO
-  // The Back and Forward buttons need to work for every tab/window
-
-  // Back Button
-  $(document).on("click", ".app-go-back", function () {
-
-    w = $(".tabs-pane.active")[0];
-    w.contentWindow.history.go(-1);
-
-    console.log("--- Went back");
-
-  });
-
-  // Forward Button
-  $(document).on("click", ".app-go-forth", function () {
-
-    w = $(".tabs-pane.active")[0];
-    w.contentWindow.history.go(1);
-
-    console.log("--- Went forward");
-
-  });
-
-  $(document).on("click", ".app-settings", function (e) {
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    $("#bt-menu").toggleClass("bt-menu--is-open");
-
-    $(document).one("click", function (e) {
-      if ($("#bt-menu").has(e.target).length === 0) {
-        $("#bt-menu").removeClass("bt-menu--is-open");
-      }
-    });
-
-  });
 
   // Things to do before Aries starts
   onload = function () {
@@ -351,6 +217,151 @@ $(function () {
 
 });
 
+
+
+$(document).on("click", ".tab-title", function () {
+
+  var tabID = $(this).parent().attr("data-tab");
+  // var tabID = $(this).attr("data-tab");
+  var gotIT = $("iframe" + tabID).attr("src");
+  var title = $("iframe" + tabID).contents().find("title").html();
+
+  // Remove active states for other tabs/windows
+  $("iframe").removeClass("active");
+  $("#tab-wrapper button").removeClass("active");
+
+  // Add active states for selected tab/window
+  $("iframe" + tabID).addClass("active");
+  $(this).parent().addClass("active");
+
+  // Populate title/address bar, tab title, and
+  // tab icon with appropriate information
+  $("#url-bar").val(gotIT);
+  $(".tab-title", this).text(title);
+  $("#aries-titlebar h1").text(title);
+  $(".tab-favicon", this).attr("src", getFavicon);
+
+  // Don't show anything in address bar if on start page,
+  // but put it in focus
+  if (gotIT === "pages/start.html") {
+    $("#url-bar").val("").focus();
+  }
+
+  console.log(tabID);
+  console.log(gotIT);
+
+});
+
+$(document).on("click", ".tab-close", function () {
+
+  // TODO
+  // Make this a function so I can use this for keyboard shortcuts
+  var tabID = $(this).parent().attr("data-tab");
+  var gotIT = $("iframe" + tabID);
+
+  var
+  tab = $(this).closest("#tab-wrapper").find(".tab"),
+      win = $(gotIT).closest("#aries-showcase").find("iframe"),
+      tabCount = tab.length,
+      winCount = win.length;
+
+  if ((tabCount == 1) && (winCount == 1)) { // if there is only one window left
+
+    console.log("This is the last tab and window.");
+
+    $(this).parent(".tab").addClass("active");
+    $(gotIT).attr("src", "pages/start.html");
+    $(gotIT).addClass("active");
+
+  } else if ((tabCount > 1) && (winCount > 1)) { // if there is more than one window
+
+    if ($(this).parent().hasClass("active") && $(gotIT).hasClass("active")) {
+
+      var prevTab = $(this).parent(".tab").prev(".tab");
+      var nextTab = $(this).parent(".tab").next(".tab");
+
+      if (prevTab.length) {
+        $(this).parent(".tab").prev(".tab").addClass("active");
+      } else if (nextTab.length) {
+        $(this).parent(".tab").next(".tab").addClass("active");
+      }
+
+      var prevWin = $(gotIT).prev("iframe");
+      var nextWin = $(gotIT).next("iframe");
+
+      if (prevWin.length) {
+        $(gotIT).prev("iframe").addClass("active");
+      } else if (nextWin.length) {
+        $(gotIT).next("iframe").addClass("active");
+      }
+
+    }
+
+    setTimeout(function () {
+      var location = $("iframe.active").attr("src");
+      $("#url-bar").val(location);
+    }, 10);
+
+    $(this).parent(".tab").remove();
+    $(gotIT).remove();
+
+  } else if ((tabCount < 1) && (winCount < 1)) { // just create new tab and window
+
+    console.log("Create new tab and window");
+
+    $("#tab-wrapper").append(tabInit);
+    $("#aries-showcase").append(iframeInit);
+
+    if ($("#url-bar").val() == "pages/start.html") {
+      $("#url-bar").val("").focus();
+    } else {
+      $("#url-bar").val("").focus();
+    }
+
+  }
+
+});
+
+// TODO
+// The Back and Forward buttons need to work for every tab/window
+
+// Back Button
+$(document).on("click", ".app-go-back", function () {
+
+  w = $(".tabs-pane.active")[0];
+  w.contentWindow.history.go(-1);
+
+  console.log("--- Went back");
+
+});
+
+// Forward Button
+$(document).on("click", ".app-go-forth", function () {
+
+  w = $(".tabs-pane.active")[0];
+  w.contentWindow.history.go(1);
+
+  console.log("--- Went forward");
+
+});
+
+$(document).on("click", ".app-settings", function (e) {
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  $("#bt-menu").toggleClass("bt-menu--is-open");
+
+  $(document).one("click", function (e) {
+    if ($("#bt-menu").has(e.target).length === 0) {
+      $("#bt-menu").removeClass("bt-menu--is-open");
+    }
+  });
+
+});
+
+
+
 function tabHover() {
 
   $(".tab").each(function () {
@@ -398,7 +409,9 @@ function pageLoad() {
 
   NProgress.start();
 
-  $("iframe").on("load", function () {
+  $("iframe.active").on("load", function () {
+
+    console.log("Loaded iframe");
 
     var iframe = $(this)[0];
     $frameHead = $(this).contents().find("head");
@@ -411,7 +424,7 @@ function pageLoad() {
     $frameHead.prepend(m);
 
     // Inject menus and default styles
-    include("resources/scripts/browser.js");
+    // include("resources/scripts/browser.js");
     // include("resources/scripts/scroll/CustomScrollbar.js");
 
 
@@ -848,11 +861,7 @@ function goThere() {
 
 }
 
-var process;
 
-console.log("Platform: " + process.platform);
-console.log("Processor architecture: " + process.arch);
-console.log("PID: " + process.pid);
 
 /*
 // This isn't the best way to deal with errors, but at least Aries doesn't crash
