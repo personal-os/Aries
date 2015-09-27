@@ -661,7 +661,7 @@ function pageLoad() {
       var fbNotify = iframe.find("#notificationsCountValue").text();
 
       if (fbNotify > 0) {
-        $("button.active .tab-favicon").before("<span class='notification-count'>"+ fbNotify +"</span>");
+        $("button.active .tab-favicon").before("<span class='notification-count'>" + fbNotify + "</span>");
         // $(".notification-count").css("opacity", "1");
       } else {
         $(".notification-count").css("opacity", "0");
@@ -672,7 +672,7 @@ function pageLoad() {
       var daNotify = $.trim(iframe.find("#oh-menu-split .oh-l").text());
 
       if (daNotify !== "undefined") {
-        $("button.active .tab-favicon").before("<span class='notification-count'>"+ daNotify +"</span>");
+        $("button.active .tab-favicon").before("<span class='notification-count'>" + daNotify + "</span>");
         // $(".notification-count").css("opacity", "1");
       } else {
         // $(".notification-count").css("opacity", "0");
