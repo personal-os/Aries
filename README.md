@@ -17,4 +17,4 @@ For updates on [hikari](https://github.com/IdeasNeverCease/hikari) and [Aries](h
 * Typing `aries://about` or `aries://credits` in the URL bar will give you some more information about the browser.
 * Hovering links will *not* make an unsightly status bar appear with the link inside. Instead, this is done in the URL bar! Sometimes gets stuck, but it's mostly okay (like, 99.8%).
 
-&copy; [!NC](http://the-inc.co)
+&copy; [!NC](https://the-inc.co)
