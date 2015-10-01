@@ -4,6 +4,7 @@
 
 /* jshint undef: true, unused: true */
 /* global process, $, require, emitter, document, include, setTimeout, NProgress, URI */
+/* global navigator, window */
 
 
 
@@ -18,6 +19,20 @@ var
   tabInit = "",
   iframeInit = ""
 ;
+
+
+
+// Detect if offline or online (pretty cool)
+// var stat = document.querySelector(".status");
+function update() {
+  // stat.innerHTML = navigator.onLine ? "online": "offline";
+  console.log(navigator.onLine ? "online": "offline");
+}
+
+window.addEventListener("offline", update);
+window.addEventListener("online", update);
+
+update();
 
 
 

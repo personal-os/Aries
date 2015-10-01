@@ -1,3 +1,8 @@
+1.1.7 / 10.01.2015
+==================
+* breaking things to fix things, but this is good, I promise
+* need to rethink Aries design, for some things that are limited at the moment
+
 1.1.6 / 05.10.2015
 ==================
 * updated TLD support
