@@ -2,8 +2,8 @@
 _sass
 .sass-cache
 build
+node_modules
 
 # files
 .DS_Store
 Thumbs.db
-notes.txt

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <title>Aries</title>
+
+    <!--/
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    010000010111001011010010110010101110011
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    A R I E S
+    ░░░░░░░░░
+    /-->
+
+    <meta name="application-name" content="Aries"/>
+    <meta name="author" content="Paul Anthony Webb × Ideas Never Cease"/>
+    <meta name="description" content="Browser for the OS of the future. http://hikar.io"/>
+
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link rel="shortcut icon" href="resources/images/favicon-default.png"/>
+
+    <script src="resources/scripts/vendor/jquery.min.js"></script>
+    <script src="resources/scripts/plugins/nprogress.js"></script>
+    <script src="resources/scripts/plugins/uri.js"></script>
+    <!--/ <script src="resources/scripts/vendor/require.js"></script> /-->
+
+    <script src="resources/scripts/plugins/tabby.js"></script>
+    <script src="resources/scripts/plugins/include.js"></script>
+    <script src="resources/scripts/plugins/history.js"></script>
+
+    <script src="resources/scripts/aries.js"></script>
+  </head>
+
+  <body>
+    <section id="aries-titlebar">
+      <h1>Aries</h1>
+    </section>
+
+    <section id="aries-powerbar">
+      <div id="browsing-actions" class="button-group">
+        <button class="app-settings"></button>
+        <button id="-aries-history-back" class="app-go-back"></button>
+        <button id="-aries-history-forth" class="app-go-forth"></button>
+      </div>
+
+      <input id="url-bar" type="text" placeholder="Input an address or query" onkeydown="if (event.keyCode == 13 || event.which == 13) { goThere(); }"/>
+      <div id="status-bar"></div>
+
+      <div id="tab-wrapper">
+      </div>
+
+      <div id="window-actions" class="button-group">
+        <button class="app-minimize"></button>
+        <button class="app-maximize"></button>
+        <button class="app-close"></button>
+      </div>
+    </section>
+
+    <section id="aries-showcase">
+      <nav id="bt-menu" class="bt-menu">
+        <ul>
+          <li><a href="#">Link #01</a></li>
+          <li><a href="#">Link #02</a></li>
+          <li><a href="#">Link #03</a></li>
+          <li><a href="#">Link #04</a></li>
+          <li><a href="#">Link #05</a></li>
+        </ul>
+      </nav>
+
+      <div id="showcase__loader"></div>
+    </section>
+
+    <script>
+      tabby.init();
+
+
+
+      var ipc = require("ipc");
+
+      $(function () {
+        var webview = document.getElementsByClassName("tabs-pane active")[0];
+
+        webview.addEventListener("ipc-message", function (e) {
+          if (e.channel === "mouseover-href") {
+            console.log(
+              // "href: " + e.args[0]
+            );
+          }
+        });
+      });
+    </script>
+
+    <!--/
+      We are using node <script>document.write(process.versions.node)</script>,
+      Chrome <script>document.write(process.versions.chrome)</script>,
+      and Electron <script>document.write(process.versions.electron)</script>.
+    /-->
+  </body>
+
+</html>
