@@ -3,7 +3,7 @@
 // ========================================================
 
 /* jshint undef: true, unused: true */
-/* global window, require, __dirname, navigator, process, $, setTimeout, document */
+/* global window, require, __dirname, navigator, process, $, setTimeout, document, macKeys */
 
 
 
@@ -13,10 +13,7 @@
 
 window.$ = window.jQuery = require(__dirname + "/resources/scripts/vendor/jquery.min.js");
 
-var
-  remote = require("remote"),
-  ipc = require("ipc")
-;
+var remote = require("remote");
 
 
 
@@ -55,6 +52,9 @@ update();
 //------------------------------
 
 function init() {
+  $(".tab").removeClass("active");
+  $("webview").removeClass("active");
+
   var
     tabInit = "",
     iframeInit = ""
@@ -83,9 +83,33 @@ function init() {
   $("#tab-wrapper").append(tabInit);
   $("#aries-showcase").append(iframeInit);
 
-  // Set the first tab and window to actually have an ID
-  $(".tab.active").attr("data-tab", "#tab1");
-  $("webview.active").attr("id", "tab1");
+  var tabID = $(".tab").length;
+  var webviewID = $("webview").length;
+
+  /*
+  $('div.three_paj_els').each(function () {
+    ID++;
+    $(this).attr('id', 'id'+ID);
+  });
+  */
+
+  $(".tab.active").each(function () {
+    tabID++;
+    $(this).attr("data-tab", "#tab" + tabID);
+  });
+
+  $("webview.active").each(function () {
+    webviewID++;
+    $(this).attr("id", "tab" + webviewID);
+  });
+
+  /*
+  if ($(".tab").length === 1 && $("webview").length === 1) {
+    // Set the first tab and window to actually have an ID
+    $(".tab.active").attr("data-tab", "#tab0");
+    $("webview.active").attr("id", "tab0");
+  }
+  */
 
 
 
@@ -96,11 +120,37 @@ function init() {
   // $("#url-bar").css("width", window.innerWidth - 190 + "px");
   // $("#status-bar").css("width", window.innerWidth - 190 + "px");
 
-
+  $("#url-bar").css("color", "transparent");
 
   setTimeout(function () {
-    $("#url-bar").val("").focus();
-  }, 100);
+    $("#url-bar").css("color", "initial");
+  }, 300);
+
+
+
+  var webview = document.getElementsByClassName("tabs-pane active")[0];
+
+  webview.addEventListener("ipc-message", function (e) {
+    if (e.channel === "window-data") {
+      // console.log(e.args[0]);
+
+      $(".tab.active .tab-favicon").attr("src", e.args[0].favicon);
+      $(".tab.active .tab-title").html(e.args[0].title);
+      $("#url-bar").val(e.args[0].url);
+
+      $("#aries-titlebar h1").html("Aries | " + e.args[0].title);
+    }
+
+    $("webview.active").focus();
+  });
+
+  webview.addEventListener("did-finish-load", function () {
+    if ($("webview.active").attr("src") === "file://" + __dirname + "/pages/start.html") {
+      $(".tab.active .tab-favicon").attr("src", "resources/images/favicon-default.png");
+      $("#url-bar").val("").focus();
+    }
+  });
+
 }
 
 
@@ -116,28 +166,11 @@ $(function () {
 
 
 
-  var webview = document.getElementsByClassName("tabs-pane active")[0];
-
-  webview.addEventListener("ipc-message", function (e) {
-    if (e.channel === "window-data") {
-      // console.log(e.args[0]);
-
-      $(".tab.active .tab-favicon").attr("src", e.args[0].favicon);
-      $(".tab.active .tab-title").html(e.args[0].title);
-      $("#url-bar").val(e.args[0].url);
-
-      /*
-      if ($(".tab.active").data("page") === "pages/start.html") {
-        $(".tab.active .tab-title").html(e.args[0].title);
-      } else {
-      }
-      */
-    }
-  });
 
 
 
-  pageLoad();
+
+  // pageLoad();
   tabHover();
 
 
@@ -180,38 +213,51 @@ $(function () {
 
 
 
+/*
+e.altKey
+e.ctrlKey
+e.metaKey
+e.shiftKey
+*/
 
 
-$(document).on("click", ".tab-title", function () {
 
-  var tabID = $(this).parent().attr("data-tab");
-  // var tabID = $(this).attr("data-tab");
-  var gotIT = $("webview" + tabID).attr("src");
+$(document).on("keydown", function (e) {
+  if (e.cmdKey || macKeys.cmdKey && e.which === 84) {
+    console.log("Cmd + T");
+    new init();
+  }
+});
+
+$(document).on("click", ".tab", function () {
+
+  var tabID = $(this).attr("data-tab");
+  var targetWebview = $("webview" + tabID).attr("src");
   var title = $("webview" + tabID).contents().find("title").html();
 
   // Remove active states for other tabs/windows
+  $(".tab").removeClass("active");
   $("webview").removeClass("active");
-  $("#tab-wrapper button").removeClass("active");
 
   // Add active states for selected tab/window
+  $(this).addClass("active");
   $("webview" + tabID).addClass("active");
-  $(this).parent().addClass("active");
 
   // Populate title/address bar, tab title, and
   // tab icon with appropriate information
-  $("#url-bar").val(gotIT);
+  $("#url-bar").val(targetWebview);
   $(".tab-title", this).text(title);
   $("#aries-titlebar h1").text(title);
-  $(".tab-favicon", this).attr("src", getFavicon);
+  // $(".tab-favicon", this).attr("src", getFavicon);
 
   // Don't show anything in address bar if on start page,
   // but put it in focus
-  if (gotIT === "pages/start.html") {
+  if (targetWebview === "pages/start.html") {
     $("#url-bar").val("").focus();
   }
 
   console.log(tabID);
-  console.log(gotIT);
+  console.log(targetWebview);
 
 });
 
@@ -220,25 +266,26 @@ $(document).on("click", ".tab-close", function () {
   // TODO
   // Make this a function so I can use this for keyboard shortcuts
   var tabID = $(this).parent().attr("data-tab");
-  var gotIT = $("webview" + tabID);
+  var targetWebview = $("webview" + tabID);
 
   var
-  tab = $(this).closest("#tab-wrapper").find(".tab"),
-      win = $(gotIT).closest("#aries-showcase").find("webview"),
-      tabCount = tab.length,
-      winCount = win.length;
+    tab = $(this).closest(".tab"),
+    win = $(targetWebview).closest("#aries-showcase").find("webview"),
+    tabCount = tab.length,
+    winCount = win.length
+  ;
 
   if ((tabCount == 1) && (winCount == 1)) { // if there is only one window left
 
     console.log("This is the last tab and window.");
 
     $(this).parent(".tab").addClass("active");
-    $(gotIT).attr("src", "pages/start.html");
-    $(gotIT).addClass("active");
+    $(targetWebview).attr("src", "pages/start.html");
+    $(targetWebview).addClass("active");
 
   } else if ((tabCount > 1) && (winCount > 1)) { // if there is more than one window
 
-    if ($(this).parent().hasClass("active") && $(gotIT).hasClass("active")) {
+    if ($(this).parent().hasClass("active") && $(targetWebview).hasClass("active")) {
 
       var prevTab = $(this).parent(".tab").prev(".tab");
       var nextTab = $(this).parent(".tab").next(".tab");
@@ -249,13 +296,13 @@ $(document).on("click", ".tab-close", function () {
         $(this).parent(".tab").next(".tab").addClass("active");
       }
 
-      var prevWin = $(gotIT).prev("webview");
-      var nextWin = $(gotIT).next("webview");
+      var prevWin = $(targetWebview).prev("webview");
+      var nextWin = $(targetWebview).next("webview");
 
       if (prevWin.length) {
-        $(gotIT).prev("webview").addClass("active");
+        $(targetWebview).prev("webview").addClass("active");
       } else if (nextWin.length) {
-        $(gotIT).next("webview").addClass("active");
+        $(targetWebview).next("webview").addClass("active");
       }
 
     }
@@ -266,20 +313,12 @@ $(document).on("click", ".tab-close", function () {
     }, 10);
 
     $(this).parent(".tab").remove();
-    $(gotIT).remove();
+    $(targetWebview).remove();
 
   } else if ((tabCount < 1) && (winCount < 1)) { // just create new tab and window
 
     console.log("Create new tab and window");
-
-    $("#tab-wrapper").append(tabInit);
-    $("#aries-showcase").append(iframeInit);
-
-    if ($("#url-bar").val() == "pages/start.html") {
-      $("#url-bar").val("").focus();
-    } else {
-      $("#url-bar").val("").focus();
-    }
+    init();
 
   }
 
@@ -320,6 +359,7 @@ function tabHover() {
 
 }
 
+/*
 // Grab favicons for tabs
 var getFavicon = function () {
 
@@ -334,44 +374,22 @@ var getFavicon = function () {
       favicon = nodeList[i].href; // get absolute path
     } // else { favicon = "resources/images/favicon-default.png"; }
 
-    /*
-    if (nodeListII[i].getAttribute("property") == "og:image") {
-      favicon = nodeListII[i].content;
-    }
-    */
+    // if (nodeListII[i].getAttribute("property") == "og:image") { favicon = nodeListII[i].content; }
 
   };
 
   return favicon;
 
 };
+*/
 
 
 
 function pageLoad() {
 
-  console.log("Loaded webview");
-  // console.log($("webview").contents().find("title").html());
-
   $("webview.active").on("load", function () {
 
-    // var currentTitle = $("#aries-showcase iframe" + dataTab).contents().find("title").html();
-
     var
-      /*
-      nw = {
-        gui: require("nw.gui"), // Load native UI library
-        win: require("nw.gui").Window.get(), // Get the current window
-        platform: require("os").platform,
-        spawn: require("child_process").spawn,
-        exec: require("child_process").exec,
-        fs: require("fs"),
-        path: require("path")
-      },
-      // $frameBody = $(this).contents().find("body")
-      // currentURL = $("#url-bar").val(baseURL),
-      // iframe = $(this)[0],
-      */
       webview = $(this).contents(),
       $frameHead = $(this).contents().find("head"),
       m = document.createElement("meta"),
@@ -407,18 +425,6 @@ function pageLoad() {
       /stumbleupon.com\/.*badge/,
       /cdn.stumble-upon.com/
     ]
-    */
-
-    /*
-    nw.win.on("resize", function () {
-      // Set iframe width and height
-      $("iframe").css({
-        "width": "100vw",
-        "height": "100vh"
-      });
-
-      process.setMaxListeners(0);
-    });
     */
 
 
@@ -580,7 +586,7 @@ function pageLoad() {
     if ($("a[href*='/pdf']").length > 0) {
       _pagePDF();
     }
-    */
+    */gf
 
 
 
@@ -625,11 +631,6 @@ function pageLoad() {
       }
     }
 
-    /*
-    if ($("#url-bar").val() == "http://data:test/html,chromewebdata") {
-      console.log("nope");
-    }
-    */
   });
 
 }
@@ -776,30 +777,22 @@ function goThere() {
 
 
 
-  var currentTitle = $("webview.active").contents().find("title").html(); // get current webview title
+  // var currentTitle = $("webview.active").contents().find("title").html(); // get current webview title
 
-  $("button.active .tab-title").html(currentTitle);
-  $("button.active .tab-favicon").attr("src", getFavicon);
+  // $("button.active .tab-title").html(currentTitle);
+  // $("button.active .tab-favicon").attr("src", getFavicon);
 
   if (encodeURL.match(/(^https:\/\/)/) !== null) {
     $("button.active").addClass("secure-site");
   }
 
-  $("#aries-titlebar h1").html(currentTitle);
+  // $("#aries-titlebar h1").html(currentTitle);
 
 
 
   if (url.test($("#url-bar").val()) === true) {
 
     console.log(a); // should be true, go to actual site
-
-    /*
-    if (a === "data:test/html,chromewebdata") {
-      console.log("sdgffdg");
-    }
-
-    process.on("net::ERR_NAME_NOT_RESOLVED", function (error) { console.log("Aries Error: " + error); });
-    */
 
   } else {
 

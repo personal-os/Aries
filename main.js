@@ -5,7 +5,6 @@
 
 var
   app = require("app"), // Module to control application life
-  ipc = require("ipc"), // webview/renderer communication
   BrowserWindow = require("browser-window") // Module to create native browser window
 ;
 
@@ -43,10 +42,10 @@ app.on("ready", function () {
   mainWindow.loadUrl("file://" + __dirname + "/index.html");
   // mainWindow.loadUrl("http://hikar.io/test.html");
 
-
-
   // Open the DevTools.
   mainWindow.openDevTools();
+
+
 
   // Emitted when the window is closed.
   mainWindow.on("closed", function () {

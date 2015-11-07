@@ -7,8 +7,8 @@ var ipc = require("ipc");
 
 
 
-document.addEventListener("mouseover", function (event) {
-  var hoveredEl = event.target;
+document.addEventListener("mouseover", function (e) {
+  var hoveredEl = e.target;
 
   if (hoveredEl.tagName !== "A") {
     return;
