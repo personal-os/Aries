@@ -60,7 +60,7 @@ function init() {
     iframeInit = ""
   ;
 
-  // Build initial tab
+  // Build tab
   tabInit +=
     "<button class='tab active' data-tab='' data-page='pages/start.html'>" +
       "<img class='tab-favicon' type='image/x-icon' src='resources/images/favicon-default.png'>" +
@@ -74,7 +74,7 @@ function init() {
   // nwUserAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Aries/1.0
   // console.log(process.versions.chrome);
 
-  // Build initial window
+  // Build window
   iframeInit += "<webview class='tabs-pane active' id='' src='file://" + __dirname + "/pages/start.html' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent=''></webview>";
 
 
@@ -83,48 +83,33 @@ function init() {
   $("#tab-wrapper").append(tabInit);
   $("#aries-showcase").append(iframeInit);
 
-  var tabID = $(".tab").length;
-  var webviewID = $("webview").length;
 
-  /*
-  $('div.three_paj_els').each(function () {
-    ID++;
-    $(this).attr('id', 'id'+ID);
-  });
-  */
+
+  // Manage new tabs and windows
+  var random = Math.random()*100000000000000000;
 
   $(".tab.active").each(function () {
-    tabID++;
-    $(this).attr("data-tab", "#tab" + tabID);
+    $(this).attr("data-tab", "#tab" + random);
   });
 
   $("webview.active").each(function () {
-    webviewID++;
-    $(this).attr("id", "tab" + webviewID);
+    $(this).attr("id", "tab" + random);
   });
-
-  /*
-  if ($(".tab").length === 1 && $("webview").length === 1) {
-    // Set the first tab and window to actually have an ID
-    $(".tab.active").attr("data-tab", "#tab0");
-    $("webview.active").attr("id", "tab0");
-  }
-  */
 
 
 
   // Bring in menu bar
   // include("resources/scripts/menubar.js");
 
-  // Set URL/status bar width
-  // $("#url-bar").css("width", window.innerWidth - 190 + "px");
-  // $("#status-bar").css("width", window.innerWidth - 190 + "px");
-
+  /*
   $("#url-bar").css("color", "transparent");
 
   setTimeout(function () {
     $("#url-bar").css("color", "initial");
   }, 300);
+  */
+
+  tabHover();
 
 
 
@@ -164,14 +149,7 @@ $(function () {
 
   init();
 
-
-
-
-
-
-
   // pageLoad();
-  tabHover();
 
 
 
@@ -197,6 +175,14 @@ $(function () {
     // doesn't actually close out the app
   });
 
+
+
+  // TODO
+  // Can't rely on default history stuff for webviews
+  // Gotta create own system
+
+  var webview = document.getElementsByClassName("tabs-pane active")[0];
+
   // Back Button
   $(document).on("click", ".app-go-back", function () {
     webview.goBack();
@@ -213,14 +199,15 @@ $(function () {
 
 
 
-/*
-e.altKey
-e.ctrlKey
-e.metaKey
-e.shiftKey
-*/
-
-
+//------------------------------
+// Keyboard Shortcuts
+  /*
+    e.altKey
+    e.ctrlKey
+    e.metaKey
+    e.shiftKey
+  */
+//------------------------------
 
 $(document).on("keydown", function (e) {
   if (e.cmdKey || macKeys.cmdKey && e.which === 84) {
@@ -229,9 +216,15 @@ $(document).on("keydown", function (e) {
   }
 });
 
-$(document).on("click", ".tab", function () {
 
-  var tabID = $(this).attr("data-tab");
+
+//------------------------------
+// Tab Controls
+//------------------------------
+
+$(document).on("click", ".tab-title", function () {
+
+  var tabID = $(this).closest(".tab").attr("data-tab");
   var targetWebview = $("webview" + tabID).attr("src");
   var title = $("webview" + tabID).contents().find("title").html();
 
@@ -240,7 +233,7 @@ $(document).on("click", ".tab", function () {
   $("webview").removeClass("active");
 
   // Add active states for selected tab/window
-  $(this).addClass("active");
+  $(this).closest(".tab").addClass("active");
   $("webview" + tabID).addClass("active");
 
   // Populate title/address bar, tab title, and
@@ -248,11 +241,10 @@ $(document).on("click", ".tab", function () {
   $("#url-bar").val(targetWebview);
   $(".tab-title", this).text(title);
   $("#aries-titlebar h1").text(title);
-  // $(".tab-favicon", this).attr("src", getFavicon);
 
   // Don't show anything in address bar if on start page,
   // but put it in focus
-  if (targetWebview === "pages/start.html") {
+  if (targetWebview === "file://" + __dirname + "/pages/start.html") {
     $("#url-bar").val("").focus();
   }
 
@@ -261,16 +253,18 @@ $(document).on("click", ".tab", function () {
 
 });
 
+
+
 $(document).on("click", ".tab-close", function () {
 
   // TODO
   // Make this a function so I can use this for keyboard shortcuts
-  var tabID = $(this).parent().attr("data-tab");
-  var targetWebview = $("webview" + tabID);
+  var tabID = $(this).closest(".tab").attr("data-tab");
+  var targetWebview = $(tabID);
 
   var
-    tab = $(this).closest(".tab"),
-    win = $(targetWebview).closest("#aries-showcase").find("webview"),
+    tab = $(".tab"),
+    win = $("webview"),
     tabCount = tab.length,
     winCount = win.length
   ;
@@ -279,8 +273,8 @@ $(document).on("click", ".tab-close", function () {
 
     console.log("This is the last tab and window.");
 
-    $(this).parent(".tab").addClass("active");
-    $(targetWebview).attr("src", "pages/start.html");
+    $(this).closest(".tab").addClass("active");
+    $(targetWebview).attr("src", "file://" + __dirname + "/pages/start.html");
     $(targetWebview).addClass("active");
 
   } else if ((tabCount > 1) && (winCount > 1)) { // if there is more than one window
@@ -289,6 +283,8 @@ $(document).on("click", ".tab-close", function () {
 
       var prevTab = $(this).parent(".tab").prev(".tab");
       var nextTab = $(this).parent(".tab").next(".tab");
+      var prevWin = $(targetWebview).prev("webview");
+      var nextWin = $(targetWebview).next("webview");
 
       if (prevTab.length) {
         $(this).parent(".tab").prev(".tab").addClass("active");
@@ -296,14 +292,16 @@ $(document).on("click", ".tab-close", function () {
         $(this).parent(".tab").next(".tab").addClass("active");
       }
 
-      var prevWin = $(targetWebview).prev("webview");
-      var nextWin = $(targetWebview).next("webview");
-
       if (prevWin.length) {
         $(targetWebview).prev("webview").addClass("active");
       } else if (nextWin.length) {
         $(targetWebview).next("webview").addClass("active");
       }
+
+    } else {
+
+      $(this).parent(".tab").remove();
+      $(targetWebview).remove();
 
     }
 
