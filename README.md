@@ -22,10 +22,14 @@ $ npm install && npm start
 
 ## Ingredients
 
+* [Buoy](https://github.com/cferdinandi/buoy)
 * [Electron](https://github.com/atom/electron)
 * [jQuery](http://jquery.com)
-* [Signet](https://github.com/HubSpot/signet)
 * [MacKeys](https://github.com/MichaelZelensky/jsLibraries)
+* [NProgress](https://github.com/rstacruz/nprogress)
+* [Signet](https://github.com/HubSpot/signet)
+* [Tabby](https://github.com/cferdinandi/tabby)
+* [URI.js](https://github.com/medialize/URI.js)
 
 
 

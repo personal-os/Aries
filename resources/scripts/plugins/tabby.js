@@ -1,11 +1,19 @@
-// Tabby.js (include Buoy.js)
-// both written by Chris Ferdinandi
-//
-// @IdeasNeverCease
+// Buoy
+// Chris Ferdinandi
+// https://github.com/cferdinandi/buoy
+// MIT licensed
 // ========================================================
+// @IdeasNeverCease
 
 window.buoy=function(t,e){"document"in self&&!("classList"in e.createElement("_"))&&!function(t){"use strict";if("Element"in t){var e="classList",n="prototype",i=t.Element[n],r=Object,s=String[n].trim||function(){return this.replace(/^\s+|\s+$/g,"")},a=Array[n].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1},o=function(t,e){this.name=t,this.code=DOMException[t],this.message=e},u=function(t,e){if(""===e)throw new o("SYNTAX_ERR","An invalid or illegal string was specified");if(/\s/.test(e))throw new o("INVALID_CHARACTER_ERR","String contains an invalid character");return a.call(t,e)},c=function(t){for(var e=s.call(t.getAttribute("class")||""),n=e?e.split(/\s+/):[],i=0,r=n.length;r>i;i++)this.push(n[i]);this._updateClassName=function(){t.setAttribute("class",this.toString())}},l=c[n]=[],h=function(){return new c(this)};if(o[n]=Error[n],l.item=function(t){return this[t]||null},l.contains=function(t){return t+="",-1!==u(this,t)},l.add=function(){var t,e=arguments,n=0,i=e.length,r=!1;do t=e[n]+"",-1===u(this,t)&&(this.push(t),r=!0);while(++n<i);r&&this._updateClassName()},l.remove=function(){var t,e=arguments,n=0,i=e.length,r=!1;do{t=e[n]+"";var s=u(this,t);-1!==s&&(this.splice(s,1),r=!0)}while(++n<i);r&&this._updateClassName()},l.toggle=function(t,e){t+="";var n=this.contains(t),i=n?e!==!0&&"remove":e!==!1&&"add";return i&&this[i](t),!n},l.toString=function(){return this.join(" ")},r.defineProperty){var f={get:h,enumerable:!0,configurable:!0};try{r.defineProperty(i,e,f)}catch(d){-2146823252===d.number&&(f.enumerable=!1,r.defineProperty(i,e,f))}}else r[n].__defineGetter__&&i.__defineGetter__(e,h)}}(self)}(window,document);
 
-// Tabby.js ===============================================||
+
+
+// Tabby
+// Chris Ferdinandi
+// https://github.com/cferdinandi/tabby
+// MIT licensed
+// ========================================================
+// @IdeasNeverCease
 
 window.tabby=function(t,e){"use strict";var a={toggleActiveClass:"active",contentActiveClass:"active",initClass:"js-tabby",callbackBefore:function(){},callbackAfter:function(){}},c=function(t,e){for(var a in e)t[a]=e[a];return t},n=function(t){for(var e=[],a=t.parentNode.firstChild;a;a=a.nextSibling)1==a.nodeType&&a!=t&&e.push(a);return e},r=function(t){var e=t.querySelector("iframe"),a=t.querySelector("video");if(null!==e){var c=e.src;e.src=c}null!==a&&a.pause()},o=function(t,e,a){Array.prototype.forEach.call(t,function(t){t.classList.remove(a.toggleActiveClass)}),Array.prototype.forEach.call(e,function(t){"LI"===t.tagName&&t.classList.remove(a.toggleActiveClass)})},l=function(t,e){Array.prototype.forEach.call(t,function(t){t.classList.contains(e.contentActiveClass)&&(r(t),t.classList.remove(e.contentActiveClass))})},i=function(t,e){Array.prototype.forEach.call(t,function(t){var a=n(t);t.classList.add(e.contentActiveClass),l(a,e)})},s=function(t,r,l,s){l=c(a,l||{});var u=e.querySelectorAll(r),f=t.parentNode,v=n(t),d=n(f);t&&"A"===t.tagName&&s&&s.preventDefault(),l.callbackBefore(t,r),t.classList.add(l.toggleActiveClass),f&&"LI"===f.tagName&&f.classList.add(l.toggleActiveClass),o(v,d,l),i(u,l),l.callbackAfter(t,r)},u=function(n){if("querySelector"in e&&"addEventListener"in t&&Array.prototype.forEach){n=c(a,n||{});var r=e.querySelectorAll("[data-tab]");e.documentElement.classList.add(n.initClass),Array.prototype.forEach.call(r,function(t){t.addEventListener("click",s.bind(null,t,t.getAttribute("data-tab"),n),!1)})}};return{init:u,toggleTab:s}}(window,document);

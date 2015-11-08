@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var data = {
     "title": document.title,
     "url": window.location.href,
+    // need to make my own version, can't rely on Google forever
+    // maybe have this URL fetcher hosted on hikar.io?
     "favicon": "https://www.google.com/s2/favicons?domain=" + window.location.href
   };
 

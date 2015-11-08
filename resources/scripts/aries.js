@@ -126,6 +126,19 @@ function init() {
       $("#aries-titlebar h1").html("Aries | " + e.args[0].title);
     }
 
+    var timer;
+
+    if (e.channel === "mouseover-href") {
+      // console.log(e.args[0]);
+      $(".linker").html(e.args[0]).stop().addClass("active");
+
+      clearTimeout(timer);
+
+      timer = setTimeout(function () {
+        $(".linker").stop().removeClass("active");
+      }, 1500);
+    }
+
     $("webview.active").focus();
   });
 
@@ -584,7 +597,7 @@ function pageLoad() {
     if ($("a[href*='/pdf']").length > 0) {
       _pagePDF();
     }
-    */gf
+    */
 
 
 

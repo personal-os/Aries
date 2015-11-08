@@ -21,12 +21,10 @@
     <link rel="shortcut icon" href="resources/images/favicon-default.png"/>
 
     <script src="resources/scripts/vendor/jquery.min.js"></script>
+
     <script src="resources/scripts/plugins/nprogress.js"></script>
     <script src="resources/scripts/plugins/uri.js"></script>
-
     <script src="resources/scripts/plugins/tabby.js"></script>
-    <script src="resources/scripts/plugins/include.js"></script>
-
     <script src="resources/scripts/plugins/macKeys.js"></script>
 
     <script src="resources/scripts/aries.js"></script>
@@ -69,26 +67,11 @@
       </nav>
 
       <div id="showcase__loader"></div>
+      <div class="linker"></div>
     </section>
 
     <script>
       tabby.init();
-
-
-
-      var ipc = require("ipc");
-
-      $(function () {
-        var webview = document.getElementsByClassName("tabs-pane active")[0];
-
-        webview.addEventListener("ipc-message", function (e) {
-          if (e.channel === "mouseover-href") {
-            console.log(
-              // "href: " + e.args[0]
-            );
-          }
-        });
-      });
     </script>
 
     <!--/
