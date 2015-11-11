@@ -1,28 +1,31 @@
 {
-  "name": "electron-quick-start",
+  "name": "Aries",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Default browser for hikari",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atom/electron-quick-start.git"
+    "url": "git+https://github.com/IdeasNeverCease/Aries.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "Aries",
+    "browser",
+    "hikari",
+    "mmbn"
   ],
-  "author": "GitHub",
+  "author": "NetOperatorWibby",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/atom/electron-quick-start/issues"
+    "url": "https://github.com/IdeasNeverCease/Aries/issues"
   },
-  "homepage": "https://github.com/atom/electron-quick-start#readme",
+  "homepage": "https://github.com/IdeasNeverCease/Aries#readme",
   "devDependencies": {
     "electron-prebuilt": "^0.34.0"
+  },
+  "dependencies": {
+    "delete": "^0.2.1"
   }
 }

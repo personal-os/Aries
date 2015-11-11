@@ -1,5 +1,4 @@
 // Buoy
-// Chris Ferdinandi
 // https://github.com/cferdinandi/buoy
 // MIT licensed
 // ========================================================
@@ -10,7 +9,6 @@ window.buoy=function(t,e){"document"in self&&!("classList"in e.createElement("_"
 
 
 // Tabby
-// Chris Ferdinandi
 // https://github.com/cferdinandi/tabby
 // MIT licensed
 // ========================================================

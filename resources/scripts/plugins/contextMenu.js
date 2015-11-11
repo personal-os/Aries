@@ -1,5 +1,4 @@
 // contextMenu
-// Rodney Rehm + Addy Osmani
 // https://github.com/medialize/jQuery-contextMenu
 // MIT + GPL licensed
 // ========================================================

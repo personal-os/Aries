@@ -2,7 +2,7 @@
 
 [![GitHub](http://img.shields.io/badge/GitHub-IdeasNeverCease/Aries-07d0eb.svg?style=flat-square)](https://github.com/IdeasNeverCease/Aries)
 
-Default browser for [hikari](https://github.com/IdeasNeverCease/hikari)
+Default browser for [hikari](https://github.com/IdeasNeverCease/hikari), under heavy development, OOH YEAH BABY!
 
 ![Awesomesauce](https://cloud.githubusercontent.com/assets/1288356/4346885/d8127aba-411d-11e4-91d6-75f73d19058b.png)
 ^^ This is an old screenshot, new one with slight visual changes to come soon.
@@ -23,7 +23,8 @@ $ npm install && npm start
 ## Ingredients
 
 * [Buoy](https://github.com/cferdinandi/buoy)
-* [Electron](https://github.com/atom/electron)
+* [Delete](https://github.com/jonschlinkert/delete)
+* [Electron Quick Start](https://github.com/atom/electron-quick-start)
 * [jQuery](http://jquery.com)
 * [MacKeys](https://github.com/MichaelZelensky/jsLibraries)
 * [NProgress](https://github.com/rstacruz/nprogress)
