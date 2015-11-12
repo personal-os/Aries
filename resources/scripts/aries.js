@@ -13,10 +13,12 @@
 
 window.$ = window.jQuery = require(__dirname + "/resources/scripts/vendor/jquery.min.js");
 
-var remote = require("remote");
-var fs = require("fs");
-var del = require("delete");
-var readline = require("readline");
+var
+  remote = require("remote"),
+  fs = require("fs"),
+  del = require("delete"),
+  readline = require("readline")
+;
 
 
 
@@ -54,7 +56,7 @@ update();
 // Boot
 //------------------------------
 
-function init() {
+function init(url) {
 
   $(".tab").removeClass("active");
   $("webview").removeClass("active");
@@ -79,7 +81,11 @@ function init() {
   // console.log(process.versions.chrome);
 
   // Build window
-  iframeInit += "<webview class='tabs-pane active' id='' src='file://" + __dirname + "/pages/start.html' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent=''></webview>";
+  if (url) {
+  iframeInit += "<webview class='tabs-pane active' id='' src='" + url + "' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent=''></webview>";
+  } else {
+    iframeInit += "<webview class='tabs-pane active' id='' src='file://" + __dirname + "/pages/start.html' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent=''></webview>";
+  }
 
 
 
@@ -90,7 +96,7 @@ function init() {
 
 
   // Manage new tabs and windows
-  var random = Math.random() * 100000000000000000;
+  var random = Math.round(Math.random() * 100000000000000000);
 
   $(".tab.active").each(function () {
     $(this).attr("data-tab", "#tab" + random);
@@ -102,12 +108,14 @@ function init() {
 
 
 
+  /*
   // Put these files into a folder and flush 'em on exit
   fs.writeFile("" + random + ".txt", $("webview.active").attr("src") + "\n", function (err) {
     if (err) {
       throw err;
     }
   });
+  */
 
   // Bring in menu bar
   // include("resources/scripts/menubar.js");
@@ -131,6 +139,13 @@ function init() {
 
 
 
+    if (e.channel === "clicked-href") {
+      console.log(e.args[0]);
+      new init(e.args[0]);
+    }
+
+
+
     // TODO
     // Make this better...cancel out setTimeout?
     var timer;
@@ -139,7 +154,7 @@ function init() {
       // console.log(e.args[0]);
       $(".linker").html(e.args[0]).stop().addClass("active");
 
-      clearTimeout(timer);
+      // clearTimeout(timer);
 
       timer = setTimeout(function () {
         $(".linker").stop().removeClass("active");
@@ -203,14 +218,15 @@ $(function () {
   // Can't rely on default history stuff for webviews
   // Gotta create own system
 
-  var webview = document.getElementsByClassName("tabs-pane active")[0];
+  // var webview = document.getElementsByClassName("tabs-pane active")[0];
 
   // Back Button
   $(document).on("click", ".app-go-back", function () {
 
-    console.log("--- Went back");
+    // console.log("--- Went back");
     // webview.goBack();
 
+    /*
     var
       ID = $("webview.active").attr("id").replace(/tab/g, ""),
       // url = $("webview.active").attr("src"),
@@ -232,6 +248,7 @@ $(function () {
       $("webview.active").attr("src", prev);
       // console.log(prev);
     });
+    */
 
     /*
     rl.on("close", function () {
@@ -246,8 +263,8 @@ $(function () {
 
   // Forward Button
   $(document).on("click", ".app-go-forth", function () {
-    webview.goForward();
-    console.log("--- Went forward");
+    // console.log("--- Went forth");
+    // webview.goForward();
   });
 
 });
@@ -444,69 +461,9 @@ function pageLoad() {
 
   $("webview.active").on("load", function () {
 
-    var
-      webview = $(this).contents(),
-      $frameHead = $(this).contents().find("head"),
-      m = document.createElement("meta"),
-      baseURL = this.contentWindow.location.href,
-      currentTitle = $(this).contents().find("title").html()
-    ;
-
-    m.httpEquiv = "content-security-policy";
-    // m.content = "script-src 'self' 'unsafe-inline';";
-    m.content = "script-src 'self' 'unsafe-inline' *.google.com platform.twitter.com https://facebook.com *.facebook.net *.skimresources.com *.ytimg.com;";
-    $frameHead.prepend(m);
-
     // Inject menus and default styles
     // include("resources/scripts/browser.js");
     // include("resources/scripts/scroll/CustomScrollbar.js");
-
-
-
-    ///
-    /*
-    blockers = [
-      /platform.twitter.com\/widgets.js/,
-      /twitter.com\/widgets\/tweet_button.html/,
-      /linkedin.com\/analytics/,
-      /platform.linkedin.com\/in.js/,
-      /platform.linkedin.com\/js\/nonSecureAnonymousFramework/,
-      /connect.facebook.net\/en_US\/all.js/,
-      /facebook.com\/plugins\/like/,
-      /plusone.google.com/,
-      /googleapis.client__plusone.js/,
-      /plusone.*png/,
-      /sharethis.com/,
-      /stumbleupon.com\/.*badge/,
-      /cdn.stumble-upon.com/
-    ]
-    */
-
-
-
-    /*
-    $("#tab-wrapper .tab").each(function () {
-      var dataTab = $(this).attr("data-tab");
-      var dataPage = $(this).attr("data-page");
-
-      // Set window URL via associated tab [data-page]
-      $("#aries-showcase iframe" + dataTab).attr("src", dataPage);
-    });
-    */
-
-
-
-    $("#url-bar").val(baseURL);
-    // $("button.active").attr("data-page", baseURL);
-    $("button.active .tab-title").text(currentTitle);
-    $("#aries-titlebar h1").text(currentTitle);
-    $("button.active .tab-favicon").attr("src", getFavicon);
-
-    /*
-    var title = $("iframe" + tabID).contents().find("title").html();
-    $(".tab-title", this).text(title);
-    $("#aries-titlebar h1").text(title);
-    */
 
 
 
@@ -524,48 +481,6 @@ function pageLoad() {
 
       if ($(this).attr("target") === "_blank") {
         console.log("New tab from _blank");
-
-        /*
-        // Remove focus from other tabs and windows
-        $(".tab, .tabs-pane").removeClass("active");
-
-        $("#tab-wrapper").append(tabInit);
-        $("#aries-showcase").append(iframeInit);
-
-        $("#url-bar").val("").focus();
-
-        var tabID = 0, windowID = 0;
-
-        // Add a new tab
-        $("#tab-wrapper .tab").each(function () {
-
-          tabID++;
-          $(this).attr("data-tab", "#tab" + tabID);
-
-          var dataPage = $(this).attr("data-page");
-          console.log(dataPage);
-
-        });
-
-        // Add a new window
-        $("#aries-showcase iframe").each(function () {
-
-          windowID++;
-          $(this).attr("id", "tab" + windowID);
-          // $(this).attr("src", dataPage);
-
-        }).css({ "width": nw.win.window.innerWidth, "height": nw.win.window.innerHeight - 31 + "px" });
-
-        $("iframe.active").each(function () {
-          this.contentWindow.location.reload(true);
-        });
-        */
-
-        /*
-        // Reinitialize tabby to recognize new tab and window
-        tabby.init();
-        tabHover();
-        */
       }
 
       if ($(this).attr("href").indexOf(".pdf") >-1) {
@@ -747,6 +662,7 @@ function _searchDDG() {
   $("button.active").attr("data-page", encodeSearch);
 
   // Make sure to mention !bangs in the future readme: https://duckduckgo.com/bang.html
+  // Also, try to get my app icon for Aries in DDG's "Add to browser" thing
 
 }
 
@@ -775,6 +691,7 @@ function goThere() {
 
 
 
+    /*
     var
       ID = $(this).attr("id").replace(/tab/g, ""),
       url = $(this).attr("src"),
@@ -801,13 +718,12 @@ function goThere() {
     });
 
     rl.on("close", function () {
-      /*
       console.log(
         "Prev line: ", prev +
         "\nLast line: ", current
       );
-      */
     });
+    */
   });
 
 
@@ -862,10 +778,6 @@ function goThere() {
   if (encodeURL.match(/(^https:\/\/)/) !== null) {
     $("button.active").addClass("secure-site");
   }
-
-  // $("#aries-titlebar h1").html(currentTitle);
-
-
 
   if (url.test($("#url-bar").val()) === true) {
 
