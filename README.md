@@ -20,6 +20,13 @@ $ npm install && npm start
 
 
 
+## What you can do with Aries
+* Go to web pages
+* Open new tabs
+* Click on links with `target="_blank"` and have those open in new tabs
+
+
+
 ## Ingredients
 
 * [Buoy](https://github.com/cferdinandi/buoy)
@@ -30,7 +37,7 @@ $ npm install && npm start
 * [NProgress](https://github.com/rstacruz/nprogress)
 * [Signet](https://github.com/HubSpot/signet)
 * [Tabby](https://github.com/cferdinandi/tabby)
-* [URI.js](https://github.com/medialize/URI.js)
+* [URI](https://github.com/medialize/URI.js)
 
 
 

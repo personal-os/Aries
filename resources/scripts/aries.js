@@ -4,6 +4,7 @@
 
 /* jshint undef: true, unused: true */
 /* global window, require, __dirname, navigator, process, $, setTimeout, document, macKeys */
+/* global NProgress */
 
 
 
@@ -17,7 +18,8 @@ var
   remote = require("remote"),
   fs = require("fs"),
   del = require("delete"),
-  readline = require("readline")
+  readline = require("readline"),
+  os = require("os")
 ;
 
 
@@ -76,15 +78,14 @@ function init(url) {
   ;
 
   // TODO:
-  // make user-agent dynamic
-  // nwUserAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Aries/1.0
-  // console.log(process.versions.chrome);
+  // make user-agent dynamic / add platform architecture
+  // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36 OPR/33.0.1990.58
 
   // Build window
   if (url) {
-  iframeInit += "<webview class='tabs-pane active' id='' src='" + url + "' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent=''></webview>";
+    iframeInit += "<webview class='tabs-pane active' id='' src='" + url + "' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent='Mozilla/5.0 (" + os.type() + " " + os.release() + " " + os.arch() + "; KHTML, like Gecko) Chrome/" + process.versions.chrome + " Aries/1.2'></webview>";
   } else {
-    iframeInit += "<webview class='tabs-pane active' id='' src='file://" + __dirname + "/pages/start.html' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent=''></webview>";
+    iframeInit += "<webview class='tabs-pane active' id='' src='file://" + __dirname + "/pages/start.html' preload='file://" + __dirname + "/resources/scripts/browser.js' autosize='on' useragent='Mozilla/5.0 (" + os.type() + " " + os.release() + " " + os.arch() + "; KHTML, like Gecko) Chrome/" + process.versions.chrome + " Aries/1.2'></webview>";
   }
 
 
@@ -140,7 +141,7 @@ function init(url) {
 
 
     if (e.channel === "clicked-href") {
-      console.log(e.args[0]);
+      // console.log(e.args[0]);
       new init(e.args[0]);
     }
 
@@ -344,6 +345,9 @@ $(document).on("click", ".tab-close", function () {
 
   // Delete the file
   del.sync("" + ID + ".txt");
+
+  // If page is still loading, end it
+  NProgress.done();
 
 
 
