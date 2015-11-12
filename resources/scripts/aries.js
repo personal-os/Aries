@@ -73,13 +73,12 @@ function init(url) {
     "<button class='tab active' data-tab='' data-page='pages/start.html'>" +
       "<img class='tab-favicon' type='image/x-icon' src='resources/images/favicon-default.png'>" +
       "<span class='tab-close'></span>" +
-      "<span class='tab-title'></span>" + // figure out how to deal with webpages that have no title
+      "<span class='tab-title'></span>" +
     "</button>"
   ;
 
   // TODO:
-  // make user-agent dynamic / add platform architecture
-  // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36 OPR/33.0.1990.58
+  // make user-agent (more) dynamic
 
   // Build window
   if (url) {
@@ -694,6 +693,10 @@ function goThere() {
     NProgress.done();
 
 
+
+    if ($(".tab.active .tab-title").html() === "") {
+      $(".tab.active .tab-title").html("&nbsp;");
+    }
 
     /*
     var
