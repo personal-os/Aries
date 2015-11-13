@@ -190,6 +190,15 @@ $(function () {
 
 
 
+  $("#-url-bar-mask").click(function () {
+    $(this).hide();
+    $("#url-bar").focus().select();
+  }).blur(function () {
+    $(this).show();
+  });
+
+
+
   //------------------------------
   // Buttons
   //------------------------------
@@ -692,7 +701,13 @@ function goThere() {
   $("webview.active").on("did-finish-load", function () {
     NProgress.done();
 
+    var url = $(this).attr("src");
 
+    $("#-url-bar-mask").html(url.replace(/(http:\/\/)|(https:\/\/)|(file:\/\/)/g, "<span style='color: green;'>$&</span>")).show();
+
+    // /(http:\/\/)|(https:\/\/)|(file://)/g
+
+    // url.replace(/(http:\/\/)|(https:\/\/)|(file:\/\/)/g, "<span style='color: green;'>$1</span>");
 
     if ($(".tab.active .tab-title").html() === "") {
       $(".tab.active .tab-title").html("&nbsp;");

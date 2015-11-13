@@ -17,6 +17,7 @@
     <meta name="author" content="Paul Anthony Webb × Ideas Never Cease"/>
     <meta name="description" content="Browser for the OS of the future. http://hikar.io"/>
 
+    <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Muli:200,300,400,600,700"/>
     <link rel="stylesheet" href="resources/css/style.css"/>
     <link rel="shortcut icon" href="resources/images/favicon-default.png"/>
 
@@ -43,6 +44,7 @@
       </div>
 
       <input id="url-bar" type="text" placeholder="Input an address or query" onkeydown="if (event.keyCode == 13 || event.which == 13) { goThere(); }"/>
+      <div id="-url-bar-mask"></div>
       <div id="status-bar"></div>
 
       <div id="tab-wrapper">
