@@ -62,6 +62,7 @@ function init(url) {
 
   $(".tab").removeClass("active");
   $("webview").removeClass("active");
+  $("#-url-bar-mask").hide();
 
   var
     tabInit = "",
@@ -328,6 +329,8 @@ $(document).on("click", ".tab-title", function () {
   if (targetWebview === "file://" + __dirname + "/pages/start.html") {
     $("#url-bar").val("").focus();
   }
+
+  $("#-url-bar-mask").html(targetWebview.replace(/(https:\/\/)/g, "<span style='color: green;'>$&</span>"));
 
   console.log(tabID);
   console.log(targetWebview);
@@ -703,7 +706,7 @@ function goThere() {
 
     var url = $(this).attr("src");
 
-    $("#-url-bar-mask").html(url.replace(/(http:\/\/)|(https:\/\/)|(file:\/\/)/g, "<span style='color: green;'>$&</span>")).show();
+    $("#-url-bar-mask").html(url.replace(/(https:\/\/)/g, "<span style='color: green;'>$&</span>")).show();
 
     // /(http:\/\/)|(https:\/\/)|(file://)/g
 
