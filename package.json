@@ -26,6 +26,7 @@
     "electron-prebuilt": "^0.34.0"
   },
   "dependencies": {
-    "delete": "^0.2.1"
+    "delete": "^0.2.1",
+    "openssl-wrapper": "^0.2.1"
   }
 }

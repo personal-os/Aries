@@ -19,7 +19,8 @@ var
   fs = require("fs"),
   del = require("delete"),
   readline = require("readline"),
-  os = require("os")
+  os = require("os"),
+  openssl = require("openssl-wrapper")
 ;
 
 
@@ -708,13 +709,27 @@ function goThere() {
 
     $("#-url-bar-mask").html(url.replace(/(https:\/\/)/g, "<span style='color: green;'>$&</span>")).show();
 
-    // /(http:\/\/)|(https:\/\/)|(file://)/g
-
-    // url.replace(/(http:\/\/)|(https:\/\/)|(file:\/\/)/g, "<span style='color: green;'>$1</span>");
-
     if ($(".tab.active .tab-title").html() === "") {
       $(".tab.active .tab-title").html("&nbsp;");
     }
+
+
+
+    var ssl = url.split("/")[2] + ":443";
+
+    openssl.exec("s_client", {
+      showcerts: true, connect: ssl
+    }, function (err, results) {
+      console.log(
+        // results.toString().match(/subject=\/(.*)/)[1].match(/CN=(.*)/)[1] // Subject Common Name
+        // results.toString().match(/subject=\/(.*)/)[1].match(/O=(.*)\//)[1] // Subject Organization Name
+
+        // results.toString().match(/issuer=\/(.*)/)[1].match(/CN=(.*)/)[1] // Issuer Common Name
+        // results.toString().match(/issuer=\/(.*)/)[1].match(/O=(.*)\//)[1] // Issuer Organization Name
+      );
+    });
+
+
 
     /*
     var
