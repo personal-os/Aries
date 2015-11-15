@@ -1,8 +1,0 @@
----
-class: serif
-use: body
-
-styles:
-  "400" : "Domine"
-  "700" : "Domine Bold"
----
