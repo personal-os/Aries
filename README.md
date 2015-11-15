@@ -24,6 +24,7 @@ $ npm install && npm start
 * Go to web pages
 * Open new tabs
 * Click on links with `target="_blank"` and have those open in new tabs
+* See all tabs when you have many, by scrolling horizontally on the tab area
 
 
 
@@ -35,6 +36,7 @@ $ npm install && npm start
 * [jQuery](http://jquery.com)
 * [MacKeys](https://github.com/MichaelZelensky/jsLibraries)
 * [NProgress](https://github.com/rstacruz/nprogress)
+* [OpenSSL Wrapper](https://github.com/mgcrea/node-openssl-wrapper)
 * [Signet](https://github.com/HubSpot/signet)
 * [Tabby](https://github.com/cferdinandi/tabby)
 * [URI](https://github.com/medialize/URI.js)
